@@ -4,57 +4,38 @@ import { IoClose ,IoChevronDown} from "react-icons/io5";
 import * as Yup from "yup";
 import Input from "../../components/commonComponents/Input";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useDispatch } from "react-redux";
-import { createRoute } from "../../redux/featuer/admin/AdminSlice";
 
 const validationSchema = Yup.object().shape({
-    route_name: Yup.string().required("Route Name is required"),
+    amount: Yup.string().required("Amount is required"),
     // stores: Yup.string().required("Store Name is required"),
     
 });
 
-const RouteCreateModal = ({ onClose }) => {
+const StoreAmoundAddModal = ({ onClose }) => {
     
 
     const { register, handleSubmit, formState: { errors }, setValue } = useForm({
         resolver: yupResolver(validationSchema),
     });
 
-    // const onSubmit = (data) => {
-    //     console.log(data);
-    //     onClose(); // Close the modal
-    // };
-
-
-    const dispatch = useDispatch();
-
     const onSubmit = (data) => {
-        console.log(data,'ssss');
-        dispatch(createRoute(data))
-        .then(() => {
-        //   toast.success('Executive created successfully!'); // Display success message
-        
-        })
-        .catch((error) => {
-          console.error('Error adding college:', error);
-          // Handle error if college addition fails
-        });
-        // onClose();
-      };
+        console.log(data);
+        onClose(); // Close the modal
+    };
 
     return (
         <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50 bg-black/70">
             <div className="bg-white border flex-row py-8 rounded-xl px-20 b-slate-700 g-white relative">
-                <h2 className="font-medium text-xl text-[#343C6A]">Add Route</h2>
+                <h2 className="font-medium text-xl text-[#343C6A]">Add Amount-Store Name</h2>
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col mt-4">
                     <div className="flex gap-6">
                         <Input
                             type="text"
-                            id="route_name"
-                            label="Route Name"
+                            id="amount"
+                            label="Amount"
                             register={register}
                             errors={errors}
-                            placeholder="Route Name"
+                            placeholder="Add Amount "
                         />
                     
                     <div className="mt-7">
@@ -95,4 +76,4 @@ const RouteCreateModal = ({ onClose }) => {
     );
 };
 
-export default RouteCreateModal;
+export default StoreAmoundAddModal;

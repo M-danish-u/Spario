@@ -6,21 +6,60 @@ import { useState,useMemo } from "react";
 import ExecutiveCreateModal from "./ExecutiveCreateModal";
 import ExecutiveEditModal from "./ExecutiveEditModal";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllExecutive, getSingleExecutive } from "../../redux/featuer/admin/AdminSlice";
+import { useEffect } from "react";
 
 const Executive = () => {
 const navigate=useNavigate()
     const [showModal, setShowModal] = useState(false);
     const [editShowModal, setEditShowModal] = useState(false);
     const [edingExecutive,setEditingExecutive]=useState({})
+    const dispatch=useDispatch()
+
+    useEffect(() => {
+      dispatch(getAllExecutive());
+  
+      
+    }, [dispatch]); // Dependency array ensures the effect runs only when dispatch changes
+  
+
+    const executiveData = useSelector((state) => state?.admin?.AllExecutiveData?.executives || []);
+
+    console.log(executiveData);
+
 
     const handleModal = () => {
         setShowModal(true); // Show the modal
       };
 
-      const handleViewExecutive = async (college) => {
+      // const handleViewExecutive = async (college) => {
       
-        navigate("/admin/executiveprofile");
-      };
+      //   navigate("/admin/executiveprofile");
+      // };
+
+
+      const handleViewExecutive = async (executive) => {
+        console.log(executive,'ccc');
+        if (!executive || !executive.id) {
+            console.error('Invalid executive object or ID');
+            return;
+        }
+    
+        try {
+            // Dispatch action to get single college
+            await dispatch(getSingleExecutive(executive.id));
+    
+            // Log college ID
+            console.log(executive.id, 'executive ID');
+    
+            // Navigate to college detail page
+            navigate("/admin/executiveprofile");
+        } catch (error) {
+            console.error('Error fetching college data:', error);
+            // Handle error gracefully, such as displaying a message to the user
+        }
+    };
     
 
       const handleEdit = (executive) => {
@@ -153,7 +192,7 @@ const navigate=useNavigate()
         <Button className='' title="+ Add Executive" />
         </div>
         </div>
-      <Table heading={""} DATA={executives} COLUMNS={columns} />
+      <Table heading={""} DATA={executiveData} COLUMNS={columns} />
 
       {showModal && (
         <ExecutiveCreateModal

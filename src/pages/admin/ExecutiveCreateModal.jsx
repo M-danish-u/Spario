@@ -4,13 +4,17 @@ import { IoClose ,IoChevronDown} from "react-icons/io5";
 import * as Yup from "yup";
 import Input from "../../components/commonComponents/Input";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useDispatch } from "react-redux";
+import { createExecutive } from "../../redux/featuer/admin/AdminSlice";
 
 const validationSchema = Yup.object().shape({
-  executiveName: Yup.string().required("Executive Name is required"),
+  name: Yup.string().required("Executive Name is required"),
     address: Yup.string().required("Address is required"),
-    mobile1: Yup.string().required("Mobile 1 is required"),
-    Mobile2: Yup.string().required("Mobile 2 is required"),
-    userName: Yup.string().required("UserName is required"),
+    contact_one: Yup.string().required("Mobile 1 is required"),
+    contact_two: Yup.string().required("Mobile 2 is required"),
+    email: Yup.string().required("UserName is required"),
+    password: Yup.string().required("Password is required"),
+
 });
 
 const ExecutiveCreateModal = ({ onClose }) => {
@@ -20,10 +24,24 @@ const ExecutiveCreateModal = ({ onClose }) => {
         resolver: yupResolver(validationSchema),
     });
 
+    const dispatch = useDispatch();
+
     const onSubmit = (data) => {
-        console.log(data);
-        onClose(); // Close the modal
-    };
+        dispatch(createExecutive(data))
+        .then(() => {
+        //   toast.success('Executive created successfully!'); // Display success message
+        
+        })
+        .catch((error) => {
+          console.error('Error adding college:', error);
+          // Handle error if college addition fails
+        });
+      };
+
+    // const onSubmit = (data) => {
+    //     console.log(data);
+    //     onClose(); // Close the modal
+    // };
 
     return (
         <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50 bg-black/70">
@@ -33,7 +51,7 @@ const ExecutiveCreateModal = ({ onClose }) => {
                     <div className="flex gap-5">
                         <Input
                             type="text"
-                            id="executiveName"
+                            id="name"
                             label="Executive Name"
                             register={register}
                             errors={errors}
@@ -43,7 +61,7 @@ const ExecutiveCreateModal = ({ onClose }) => {
                    
                    <Input
                             type="text"
-                            id="mobile1"
+                            id="contact_one"
                             label="Mobile 1"
                             register={register}
                             errors={errors}
@@ -64,7 +82,7 @@ const ExecutiveCreateModal = ({ onClose }) => {
                         />
                         <Input
                             type="text"
-                            id="Mobile2"
+                            id="contact_two"
                             label="Mobile 2"
                             register={register}
                             errors={errors}
@@ -75,14 +93,25 @@ const ExecutiveCreateModal = ({ onClose }) => {
                     <div className="flex gap-5">
                     <Input
                             type="text"
-                            id="userName"
+                            id="email"
                             label="User Name"
                             register={register}
                             errors={errors}
                             placeholder="User Name"
                         />
+
+                        <Input
+                            type="password"
+                            id="password"
+                            label="Password"
+                            register={register}
+                            errors={errors}
+                            placeholder="Password"
+                        />
                             
-                        <div className="mt-7">
+                        
+                    </div>
+                    <div className="mt-7">
                             <button
                                 type="submit"
                                 className="px-2 py-2 w-[270px]  justify-center h-max bg-[#2723F4] text-white flex items-center rounded-md"
@@ -90,7 +119,6 @@ const ExecutiveCreateModal = ({ onClose }) => {
                                 + Add Executive
                             </button>
                         </div>
-                    </div>
                 </form>
 
                 <div className="absolute top-2 right-2" onClick={onClose}>

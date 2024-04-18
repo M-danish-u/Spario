@@ -1,9 +1,11 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import Button from '../../components/commonComponents/Button'
 import { RoutesCollumn } from '../../components/table/RoutesCollumn';
 import Table from '../../components/table/Table';
 import RouteCreateModal from './RouteCreateModal';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllRoute, getSingleRouteStore } from '../../redux/featuer/admin/AdminSlice';
 
 const Route = () => {
     const [showModal, setShowModal] = useState(false);
@@ -69,12 +71,48 @@ const Route = () => {
           ],
         },
       ];
-      const handleViewStore = async (store) => {
-      console.log(store,'store');
-      setSelectedStore(store)
-        navigate("/admin/routeprofile");
-      };
+
+      const dispatch=useDispatch()
+
+      useEffect(() => {
+        dispatch(getAllRoute());
+        
+        
+      }, [dispatch]); // Dependency array ensures the effect runs only when dispatch changes
     
+  
+      const routeData = useSelector((state) => state?.admin?.AllRouteData?.routes || []);
+  
+      // console.log(executiveData);
+
+      // const handleViewStore = async (store) => {
+      // console.log(store,'store');
+      // setSelectedStore(store)
+      //   navigate("/admin/routeprofile");
+      // };
+    
+
+      const handleViewStore = async (route) => {
+        console.log(route,'ccc');
+        if (!route || !route.id) {
+            console.error('Invalid executive object or ID');
+            return;
+        }
+    
+        try {
+            // Dispatch action to get single college
+            await dispatch(getSingleRouteStore(route.id));
+    
+            // Log college ID
+            console.log(route.id, 'route ID');
+    
+            // Navigate to college detail page
+            navigate("/admin/routeprofile");
+        } catch (error) {
+            console.error('Error fetching store data:', error);
+            // Handle error gracefully, such as displaying a message to the user
+        }
+    };
      
       const columns = useMemo(
         () => RoutesCollumn(handleViewStore),
@@ -94,7 +132,7 @@ const Route = () => {
 
       <div className='mt-3 '>
 
-      <Table heading={""} DATA={routes} COLUMNS={columns} />
+      <Table heading={""} DATA={routeData} COLUMNS={columns} />
       </div>
 
 

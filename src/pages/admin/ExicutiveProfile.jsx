@@ -4,8 +4,12 @@ import { FaHandHoldingDollar, FaSackDollar } from 'react-icons/fa6'
 import { GrTransaction } from 'react-icons/gr'
 import Table2 from '../../components/table/Table2'
 import { ExecutiveStoreCollumn } from '../../components/table/ExicutiveStoresCollumn'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { getSingleExecutive } from '../../redux/featuer/admin/AdminSlice'
 
 const ExicutiveProfile = () => {
+
 
 
     const ExecutiveStoreData=[{no:'1',executiveName:'Executive 1', total:'200000' ,paid:'500000',due:'30000',date:'05/23/2024' },
@@ -22,12 +26,26 @@ const ExicutiveProfile = () => {
         () => ExecutiveStoreCollumn(),
         []
       );
+
+      const dispatch=useDispatch()
+
+    useEffect(() => {
+      dispatch(getSingleExecutive());
+  
+      
+    }, [dispatch]); // Dependency array ensures the effect runs only when dispatch changes
+  
+
+    const executiveProfile = useSelector((state) => state?.admin?.ExecutiveProfile?.executive );
+    console.log(executiveProfile,'ppp');
+    console.log(executiveProfile.stores,'OOOO');
+
   return (
     <div>
         <div className='w-full p- bg-re-400 mt- grid grid-cols-3  gap-10'>
-        <Card title="Total Amount" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount="150,0000"/>
-        <Card title="Due Amount" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount="2,500"/>
-        <Card title="Paid Amount" Icon={GrTransaction} iconColor="text-[#396AFF]" color="bg-[#E7EDFF]" amount="100,000"/>
+        <Card title="Total Amount" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount={executiveProfile.totalAmount}/>
+        <Card title="Due Amount" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount={executiveProfile.dueAmount}/>
+        <Card title="Paid Amount" Icon={GrTransaction} iconColor="text-[#396AFF]" color="bg-[#E7EDFF]" amount={executiveProfile.paidAmount}/>
         {/* <Card title="No. of Exicutive" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount="200"/>
         <Card title="No.of Store" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount="100"/> */}
       </div>
@@ -40,17 +58,17 @@ const ExicutiveProfile = () => {
 <div className='w-full grid grid-cols-3 mt-10'>
 {/* <div className=' flex flex-row gap-12'> */}
     <span className=' flex flex-col gap-4'>
-    <h3 className='text-md text-[#718EBF]'>Exicutive Name</h3>
-    <p>Exivutive 1</p>
+    <h3 className='text-md text-[#718EBF]'>Executive Name</h3>
+    <p>{executiveProfile.name}</p>
     </span>
 
     <span className=' flex flex-col gap-4'>
     <h3 className='text-md text-[#718EBF]'>Mobile 1</h3>
-    <p>09887654334</p>
+    <p>{executiveProfile.contact_one}</p>
     </span>
     <span className=' flex flex-col gap-4'>
     <h3 className='text-md text-[#718EBF]'>Mobile 2</h3>
-    <p>12345567890</p>
+    <p>{executiveProfile.contact_two}</p>
     </span>
 {/* </div> */}
 </div>
@@ -62,9 +80,12 @@ const ExicutiveProfile = () => {
   {/* <div className='w-full bg-slate-300 py-10'></div> */}
   <div className='mt-'>
 
-<Table2 heading={""} DATA={ExecutiveStoreData} COLUMNS={columns} />
+<Table2 heading={""} DATA={executiveProfile.stores} COLUMNS={columns} />
+;
 </div>
+
     </div>
+    
   )
 }
 

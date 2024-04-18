@@ -6,11 +6,11 @@ import { LiaRupeeSignSolid } from "react-icons/lia";
 export const RouteProfileCollumn = (handleViewInvoices) => [
   {
     Header: "SL No",
-    accessor: "no",
+    accessor: "id",
   },
   {
     Header: "Store Name",
-    accessor: "store.storeName",
+    accessor: "store_name",
   },
   
   {

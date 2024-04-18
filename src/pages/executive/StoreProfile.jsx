@@ -1,14 +1,12 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import Card from '../../components/commonComponents/Card'
 import { FaHandHoldingDollar, FaSackDollar } from 'react-icons/fa6'
 import { GrTransaction } from 'react-icons/gr'
 import { StoreInvoiceCollumn } from '../../components/table/StoreInvoiceCollumn'
 import Table from '../../components/table/Table'
 import Table2 from '../../components/table/Table2'
-import { useDispatch, useSelector } from 'react-redux'
-import { getSingleStore } from '../../redux/featuer/admin/AdminSlice'
 
-const StoreProfile = () => {
+const ExecutiveStoreProfile = () => {
 
     const InvoiceData=[{no:'1',invoiceNo:'00 1', total:'200000' ,paid:'500000',due:'30000',date:'05/23/2024' },
     {no:'2',invoiceNo:'00 2', total:'200000' ,paid:'500000',due:'30000',date:'05/23/2024' },
@@ -21,18 +19,6 @@ const StoreProfile = () => {
     {no:'9',invoiceNo:'00 9', total:'200000' ,paid:'900000',due:'30000',date:'05/23/2024' },]
 
    
-    const dispatch=useDispatch()
-
-    useEffect(() => {
-      dispatch(getSingleStore());
-  
-      
-    }, [dispatch]); // Dependency array ensures the effect runs only when dispatch changes
-  
-
-    const storeProfile = useSelector((state) => state?.admin?.StoreProfile?.store );
-
-    console.log(storeProfile,'ppp');
 
     const columns = useMemo(
         () => StoreInvoiceCollumn(),
@@ -41,9 +27,9 @@ const StoreProfile = () => {
   return (
     <div>
          <div className='w-full p- bg-re-400 mt- grid grid-cols-3  gap-10'>
-        <Card title="Total Amount" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount={storeProfile.totalAmount}/>
-        <Card title="Due Amount" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount={storeProfile.dueAmount}/>
-        <Card title="Paid Amount" Icon={GrTransaction} iconColor="text-[#396AFF]" color="bg-[#E7EDFF]" amount={storeProfile.paidAmount}/>
+        <Card title="Total Amount" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount="150,0000"/>
+        <Card title="Due Amount" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount="2,500"/>
+        <Card title="Paid Amount" Icon={GrTransaction} iconColor="text-[#396AFF]" color="bg-[#E7EDFF]" amount="100,000"/>
         {/* <Card title="No. of Exicutive" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount="200"/>
         <Card title="No.of Store" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount="100"/> */}
       </div>
@@ -56,36 +42,36 @@ const StoreProfile = () => {
 <div className=' flex flex-col gap-12'>
     <span className=' flex flex-col gap-4'>
     <h3 className='text-md text-[#718EBF]'>Store Name</h3>
-    <p>{storeProfile.store_name}</p>
+    <p>ABC store</p>
     </span>
 
     <span className=' flex flex-col gap-4'>
     <h3 className='text-md text-[#718EBF]'>Address</h3>
-    <p>{storeProfile.address}</p>
+    <p>Beach Road</p>
     </span>
 </div>
 
 <div className=' flex flex-col gap-12'>
     <span className=' flex flex-col gap-4'>
     <h3 className='text-md text-[#718EBF]'>Exicutive Name</h3>
-    <p>{storeProfile.executive.name}</p>
+    <p>Exicutive 1</p>
     </span>
 
     <span className=' flex flex-col gap-4'>
     <h3 className='text-md text-[#718EBF]'>Mobile 1</h3>
-    <p>{storeProfile.contact_one}</p>
+    <p>1234567890</p>
     </span>
 </div>
 
 <div className=' flex flex-col gap-12'>
     <span className=' flex flex-col gap-4'>
     <h3 className='text-md text-[#718EBF]'>Route</h3>
-    <p>{storeProfile.route.route_name}</p>
+    <p>Calicut</p>
     </span>
 
     <span className=' flex flex-col gap-4'>
     <h3 className='text-md text-[#718EBF]'>Mobile 2</h3>
-    <p>{storeProfile.contact_two}</p>
+    <p>0987654321</p>
     </span>
 </div>
 </div>
@@ -97,7 +83,7 @@ const StoreProfile = () => {
         {/* <div className='w-full bg-slate-300 py-10'></div> */}
         <div className='mt-'>
 
-<Table2 heading={""} DATA={storeProfile.invoices} COLUMNS={columns} />
+<Table2 heading={""} DATA={InvoiceData} COLUMNS={columns} />
 </div>
 {/* </div> */}
 
@@ -105,4 +91,4 @@ const StoreProfile = () => {
   )
 }
 
-export default StoreProfile
+export default ExecutiveStoreProfile

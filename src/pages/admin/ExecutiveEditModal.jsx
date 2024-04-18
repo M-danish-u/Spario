@@ -4,40 +4,50 @@ import { IoClose } from "react-icons/io5";
 import * as Yup from "yup";
 import Input from "../../components/commonComponents/Input";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { editExicutive } from "../../redux/featuer/admin/AdminSlice";
+import { useDispatch } from "react-redux";
 
 const ExecutiveEditModal = ({ onEditClose, executive }) => {
     const validationSchema = Yup.object().shape({
-        executiveName: Yup.string().required("Executive Name is required"),
+        name: Yup.string().required("Executive Name is required"),
         address: Yup.string().required("Address is required"),
-        mobile1: Yup.string().required("Mobile 1 is required"),
-        mobile2: Yup.string().required("Mobile 2 is required"),
-        userName: Yup.string().required("User Name is required"),
+        contact_one: Yup.string().required("Mobile 1 is required"),
+        contact_two: Yup.string().required("Mobile 2 is required"),
+        email: Yup.string().required("User Name is required"),
     });
+    console.log(executive,'exxx');
 
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(validationSchema),
         defaultValues: {
-            executiveName: executive?.executiveName || "", 
+            name: executive?.name || "", 
             address: executive?.address || "",
-            mobile1: executive?.mobile1 || "",
-            mobile2: executive?.mobile2 || "",
-            userName: executive?.username || "",
+            contact_one: executive?.contact_one || "",
+            contact_two: executive?.contact_two || "",
+            email: executive?.email || "",
         }
     });
+    const dispatch=useDispatch()
 
     const onSubmit = (data) => {
         console.log("Form submitted with data:", data);
+        // Assuming handleSubmit handles form submission internally
         handleSubmit(async (formData) => {
             try {
+                // Validate form data
                 await validationSchema.validate(formData, { abortEarly: false });
                 console.log("Data validation successful!");
-                onEditClose(); // Close the modal
+                
+                // Dispatch action to edit executive
+                dispatch(editExicutive({ id: executive.id, data: formData }));
+                
+                // Close the modal
+                onEditClose();
             } catch (error) {
                 console.error("Validation error:", error.errors);
             }
         })();
     };
-
     return (
         <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50 bg-black/70">
             <div className="bg-white border flex-row py-8 rounded-xl px-20 b-slate-700 g-white relative">
@@ -46,7 +56,7 @@ const ExecutiveEditModal = ({ onEditClose, executive }) => {
                     <div className="flex gap-5">
                         <Input
                             type="text"
-                            id="executiveName"
+                            id="name"
                             label="Executive Name"
                             register={register}
                             errors={errors}
@@ -54,7 +64,7 @@ const ExecutiveEditModal = ({ onEditClose, executive }) => {
                         />
                         <Input
                             type="text"
-                            id="mobile1"
+                            id="contact_one"
                             label="Mobile 1"
                             register={register}
                             errors={errors}
@@ -72,7 +82,7 @@ const ExecutiveEditModal = ({ onEditClose, executive }) => {
                         />
                         <Input
                             type="text"
-                            id="mobile2"
+                            id="contact_two"
                             label="Mobile 2"
                             register={register}
                             errors={errors}
@@ -82,7 +92,7 @@ const ExecutiveEditModal = ({ onEditClose, executive }) => {
                     <div className="flex gap-5">
                         <Input
                             type="text"
-                            id="userName"
+                            id="email"
                             label="User Name"
                             register={register}
                             errors={errors}

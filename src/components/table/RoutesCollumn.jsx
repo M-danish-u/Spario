@@ -6,11 +6,11 @@ import { LiaRupeeSignSolid } from "react-icons/lia";
 export const RoutesCollumn = (handleViewStore) => [
   {
     Header: "SL No",
-    accessor: "no",
+    accessor: "id",
   },
   {
     Header: "Rout Name",
-    accessor: "routeName",
+    accessor: "route_name",
   },
   
   {

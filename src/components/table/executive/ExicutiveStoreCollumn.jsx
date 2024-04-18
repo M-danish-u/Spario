@@ -3,44 +3,66 @@ import { FaUserClock } from "react-icons/fa";
 import { FaRegEdit } from "react-icons/fa";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 
-export const StoreCollumn = (handleViewStore, handleEdit) => [
+export const ExecutiveStoreCollumn = (handleViewStore, handleAddAmount) => [
   {
     Header: "No",
-    accessor: "id",
+    accessor: "no",
   },
   {
     Header: "Store Name",
-    accessor: "store_name",
+    accessor: "storeName",
   },
   {
     Header: " Customer Name  ",
-    accessor: "customer_name",
+    accessor: "customerName",
   },
 
   {
     Header: " Total  ",
-    accessor: " totalAmount",
+    accessor: "total",
     Cell: ({ row }) => (
       <div className="flex flex-row items-center justify-cente ">
-        <LiaRupeeSignSolid /> {row.original.totalAmount} {/* Add the Rupee icon */}
+        <LiaRupeeSignSolid /> {row.original.total} {/* Add the Rupee icon */}
       </div>
     ),
   },
   {
     Header: " Due  ",
-    accessor: "dueAmount",
+    accessor: "due",
     Cell: ({ row }) => (
       <div className="flex flex-row items-center ">
         <LiaRupeeSignSolid className="text-red-600" />{" "}
-        <span style={{ color: row.original.dueAmount >-1? "red" : "inherit" }}>
-          {row.original.dueAmount}
+        <span style={{ color: row.original.due > 0 ? "red" : "inherit" }}>
+          {row.original.due}
         </span>
       </div>
     ),
   },
   {
-    Header: " Executive",
-    accessor: "executive.name",
+    Header: " Paid  ",
+    accessor: "paid",
+    Cell: ({ row }) => (
+      <div className="flex flex-row items-center ">
+        <LiaRupeeSignSolid className="text-green-700" />{" "}
+        <span style={{ color: row.original.paid > 0 ? "green" : "inherit" }}>
+          {row.original.paid}
+        </span>
+      </div>
+    ),
+  },
+  
+   
+  {
+    //   Header: 'View Profile',
+    accessor: "amount",
+    Cell: ({ row }) => (
+      <button
+        onClick={() => handleAddAmount(row.original)}
+        className="text-white p-2 rounded-md bg-green-500"
+      >
+        Add Amount
+      </button>
+    ),
   },
   {
     //   Header: 'View Profile',
@@ -55,18 +77,18 @@ export const StoreCollumn = (handleViewStore, handleEdit) => [
     ),
   },
 
-  {
-    //   Header: 'EDIT',
-    accessor: "edit",
-    Cell: ({ row }) => (
-      <button
-        onClick={() => handleEdit(row.original)}
-        className="text-[#B1B1B1] text-xl"
-      >
-        <FaRegEdit />
-      </button>
-    ),
-  },
+//   {
+//     //   Header: 'EDIT',
+//     accessor: "edit",
+//     Cell: ({ row }) => (
+//       <button
+//         onClick={() => handleEdit(row.original)}
+//         className="text-[#B1B1B1] text-xl"
+//       >
+//         <FaRegEdit />
+//       </button>
+//     ),
+//   },
 
   // {
   //   Header: 'Delete',

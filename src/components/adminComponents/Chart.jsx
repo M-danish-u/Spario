@@ -30,7 +30,7 @@ const Chart = () => {
   return (
     <div>
         <p className="font-medium text-xl text-[#343C6A]">Monthly Chart</p>
-    <BarChart className="mt-2 bg-white p-4 rounded-xl shadow-md" width={630} height={300} data={data}>
+    <BarChart className="mt-2 bg-white p-4 rounded-xl shadow-md" width={700} height={300} data={data}>
       {/* <CartesianGrid strokeDasharray=" 2" /> */}
       <XAxis dataKey="name" axisLine={false} />
       <YAxis axisLine={false} />

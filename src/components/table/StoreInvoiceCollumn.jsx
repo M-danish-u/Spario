@@ -6,27 +6,27 @@ import { LiaRupeeSignSolid } from "react-icons/lia";
 export const StoreInvoiceCollumn = () => [
   {
     Header: "SL No",
-    accessor: "no",
+    accessor: "id",
   },
   {
     Header: "Invoice No.",
-    accessor: "invoiceNo",
+    accessor: "invoice_number",
   },
   {
     Header: " Total  ",
-    accessor: "total",
+    accessor: "amount",
     Cell: ({ row }) => (
       <div className="flex flex-row items-center justify-cente ">
-        <LiaRupeeSignSolid /> {row.original.total} {/* Add the Rupee icon */}
+        <LiaRupeeSignSolid /> {row.original.amount} {/* Add the Rupee icon */}
       </div>
     ),
   },
   {
     Header: " Paid  ",
-    accessor: "paid",
+    accessor: "advance_paid",
     Cell: ({ row }) => (
       <div className="flex flex-row items-center justify-cente ">
-        <LiaRupeeSignSolid /> {row.original.total} {/* Add the Rupee icon */}
+        <LiaRupeeSignSolid /> {row.original.advance_paid} {/* Add the Rupee icon */}
       </div>
     ),
   },
@@ -34,19 +34,19 @@ export const StoreInvoiceCollumn = () => [
   
   {
     Header: " Due  ",
-    accessor: "due",
+    accessor: "balance_amount",
     Cell: ({ row }) => (
       <div className="flex flex-row items-center ">
         <LiaRupeeSignSolid className="text-red-600" />{" "}
-        <span style={{ color: row.original.due > 0 ? "red" : "inherit" }}>
-          {row.original.due}
+        <span style={{ color: row.original.balance_amount > 0 ? "red" : "inherit" }}>
+          {row.original.balance_amount}
         </span>
       </div>
     ),
   },
   {
     Header: " Date",
-    accessor: "date",
+    accessor: "due_date",
   },
  
 

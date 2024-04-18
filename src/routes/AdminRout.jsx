@@ -9,12 +9,16 @@ import ExicutiveProfile from '../pages/admin/ExicutiveProfile'
 import Rooute from '../pages/admin/Route'
 import RouteProfile from '../pages/admin/RouteProfile'
 import Transactions from '../pages/admin/Transactions'
+import AdminLogin from '../pages/admin/AdminLogin'
+import RouteStoreINvoices from '../pages/admin/RouteStoreINvoices'
 
 
 const AdminPortalRoute = () => {
     return (
       <div>  
          <Routes> 
+         <Route path="admin/login" element={<AdminLogin/>}></Route>
+
   
       <Route path='/admin' element={<AdminLayout />}>
     
@@ -26,6 +30,8 @@ const AdminPortalRoute = () => {
        <Route path='/admin/executiveprofile' element={<ExicutiveProfile/>}/>
        <Route path="/admin/route" element={<Rooute/>} />
        <Route path='/admin/routeprofile' element={<RouteProfile/>}/>
+       <Route path='/admin/routestoreprofile' element={<RouteStoreINvoices/>}/>
+
        <Route path="/admin/transactions" element={<Transactions/>} />
 
 

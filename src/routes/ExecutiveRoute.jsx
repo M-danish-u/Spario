@@ -2,6 +2,10 @@ import React from 'react'
 import { Route, Routes } from "react-router-dom"
 
 import ExecutiveLayout from '../layout/ExicutiveLayout'
+import ExecutiveDashboard from '../pages/executive/ExecutiveDashboard'
+import Store from '../pages/executive/Store'
+import ExecutiveStoreProfile from '../pages/executive/StoreProfile'
+import ExecutiveTransactions from '../pages/executive/Transactions'
 
 
 const ExecutivePortalRoute = () => {
@@ -11,15 +15,15 @@ const ExecutivePortalRoute = () => {
   
       <Route path='/executive' element={<ExecutiveLayout />}>
     
-      {/* <Route index element={<AdminDashboard />} />
-       <Route path="/admin/dashboard" element={<AdminDashboard />} />
-       <Route path="/admin/store" element={<Store/>} />
-       <Route path='/admin/storeprofile' element={<StoreProfile/>}/>
-       <Route path="/admin/executive" element={<Executive/>} />
-       <Route path='/admin/executiveprofile' element={<ExicutiveProfile/>}/>
-       <Route path="/admin/route" element={<Rooute/>} />
-       <Route path='/admin/routeprofile' element={<RouteProfile/>}/>
-       <Route path="/admin/transactions" element={<Transactions/>} /> */}
+       <Route index element={<ExecutiveDashboard />} />
+       <Route path="/executive/dashboard" element={<ExecutiveDashboard />} />
+       <Route path="/executive/store" element={<Store/>} />
+       <Route path='/executive/storeprofile' element={<ExecutiveStoreProfile/>}/>
+       {/* <Route path="/admin/executive" element={<Executive/>} /> */}
+       {/* <Route path='/admin/executiveprofile' element={<ExicutiveProfile/>}/> */}
+       {/* <Route path="/admin/route" element={<Rooute/>} /> */}
+       {/* <Route path='/admin/routeprofile' element={<RouteProfile/>}/> */}
+       <Route path="/executive/transactions" element={<ExecutiveTransactions/>} /> 
 
 
 

@@ -12,11 +12,11 @@ export const ExecutiveCollumn = (handleViewExecutive, handleEdit) => {
   return [
     {
       Header: "No",
-      accessor: "no",
+      accessor: "id",
     },
     {
       Header: "Executive Name",
-      accessor: "executiveName",
+      accessor: "name",
     },
     {
       Header: "No. of Stores",
@@ -26,7 +26,7 @@ export const ExecutiveCollumn = (handleViewExecutive, handleEdit) => {
       Header: "Total Amount",
       accessor: "totalAmount",
       Cell: ({ row }) => (
-        <div className="flex flex-row items-center justify-center">
+        <div className="flex flex-row items-center ">
           <LiaRupeeSignSolid /> {row.original.totalAmount} {/* Add the Rupee icon */}
         </div>
       ),
@@ -48,7 +48,7 @@ export const ExecutiveCollumn = (handleViewExecutive, handleEdit) => {
       accessor: "status",
       Cell: ({ row }) => (
         <Switch className=""
-          checked={row.original.status === "Active"}
+          checked={row.original.active_status === "1"}
           onChange={() => handleStatusChange(row.original)}
         />
       ),
