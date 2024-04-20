@@ -66,14 +66,14 @@ const StoreEditModal = ({ onEditClose, store }) => {
     // Check if the route and executive fields have been modified
     const routeId = watchRoute === store.route.route_name ? undefined : data.route_id;
     const executiveId = watchExecutive === store.executive.name ? undefined : data.executive_id;
-
+console.log(data,'sssssss');
     // Dispatch action to edit store, including selected route and executive IDs
     dispatch(editStore({
       id: store.id,
       data: {
         ...data,
-        route_id: routeId,
-        executive_id: executiveId
+        route_id: routeId | store.route.id,
+        executive_id: executiveId | store.executive.id
       }
     }))
       .then(() => {

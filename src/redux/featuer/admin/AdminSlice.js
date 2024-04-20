@@ -5,12 +5,15 @@ import {
   createInvoiceAPI,
   createRouteAPI,
   createStoreAPI,
+  getAdminDashboardAPI,
+  getAdminTransactionsAPI,
   getAllExecutiveAPI,
   getAllInvoiceAPI,
   getAllRouteAPI,
   getAllStoreAPI,
   getExecutiveProfileAPI,
   getRouteProfileAPI,
+  getStoreBalanceAPI,
   getStoreProfileAPI,
   updateExecutiveAPI,
   updateStoreAPI,
@@ -30,8 +33,30 @@ const initialState = {
   AllInvoiceData: null,
   CreateInvoices:null,
   RouteStoresProfile: null,
+  DashboardData:null,
+  AllTransactions: null,
+  BalanceStore:null,
 
 };
+
+// *************DASHBOARD*************
+
+export const getAdminDashboard = createAsyncThunk(
+  'admin/getAdminDashboard"',
+  async (thunkAPI) => {
+    try {
+      const response = await axios.get(`${getAdminDashboardAPI}`);
+      // console.log(response.data,'rrrrr');
+
+      return response.data;
+    } catch (error) {
+      console.log(error.response.data, "its rejecerd");
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+// **********INVOICES***********
 
 //   get invoices
 
@@ -65,6 +90,22 @@ export const createInvoices = createAsyncThunk(
     } catch (error) {
       // Handle error based on your application's needs
       throw error;
+    }
+  }
+);
+
+//    get balance
+
+export const getBalance = createAsyncThunk(
+  "admin/getBalance",
+  async (id, thunkAPI) => {
+    try {
+      const response = await axios.get(`${getStoreBalanceAPI}/${id}`);
+      console.log(response.data, "rrrrrrr");
+      return response.data;
+    } catch (error) {
+      console.log(error.response.data, "its rejecerd");
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
@@ -254,10 +295,30 @@ export const editStore = createAsyncThunk(
       // Validate parameters here if necessary
 
       const response = await axios.put(`${updateStoreAPI}/${id}`, data);
+      console.log(response.data,'resss');
       return response.data;
     } catch (error) {
       // Handle error based on your application's needs
       throw error;
+    }
+  }
+);
+
+// ***********************TRANSACTIONS********************
+
+//   get executive
+
+export const getAllTransactions = createAsyncThunk(
+  'admin/getAllTransactions"',
+  async (thunkAPI) => {
+    try {
+      const response = await axios.get(`${getAdminTransactionsAPI}`);
+      // console.log(response.data,'rrrrr');
+
+      return response.data;
+    } catch (error) {
+      console.log(error.response.data, "its rejecerdf");
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
@@ -268,6 +329,11 @@ const adminSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      //******************DASHBOARD**************
+      .addCase(getAdminDashboard.fulfilled, (state, action) => {
+        state.DashboardData = action.payload;
+      })
+    // ************EXECUTIVE***********
       .addCase(getAllExecutive.fulfilled, (state, action) => {
         state.AllExecutiveData = action.payload;
       })
@@ -328,6 +394,15 @@ const adminSlice = createSlice({
       state.CreateInvoices = action.payload;
     })
 
+    .addCase(getBalance.fulfilled, (state, action) => {
+      state.BalanceStore = action.payload;
+    })
+
+    // *************TRANSACTIONS***********
+
+.addCase(getAllTransactions.fulfilled, (state, action) => {
+      state.AllTransactions = action.payload;
+    })
   },
 });
 

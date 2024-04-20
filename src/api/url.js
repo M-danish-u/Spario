@@ -2,6 +2,13 @@
 
 export const loginAdminAPI = 'api/login'
 
+// admin dashboard
+
+export const getAdminDashboardAPI='api/admin/dashboard'
+
+// get Balance invoices
+
+export const getStoreBalanceAPI='api/admin/balance'
 
 // admin exicutive
 
@@ -48,4 +55,22 @@ export const createStoreAPI='/api/admin/stores'
 export const updateStoreAPI='/api/admin/stores'
 
 // (id)
-export const getStoreProfileAPI="/api/admin/stores" 
+export const getStoreProfileAPI="/api/stores" 
+
+// admin transactions
+
+export const getAdminTransactionsAPI='api/admin/transactions'
+
+
+
+// ****************************EXECUTIVE****************************
+
+export const getExecutiveDashboardAPI='api/executive/dashboard'
+
+export const getExecutiveStoreAPI='api/executive/stores'
+export const getExecutiveStoreStoreAPI='api/stores'
+
+export const addAmountAPI='api/executive/transactions'
+export const getTransactionsAPI='api/executive/transactions'
+
+

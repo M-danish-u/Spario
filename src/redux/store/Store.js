@@ -15,14 +15,18 @@ import {
 import storage from "redux-persist/lib/storage";
 import AdminAuthSlice from "../featuer/admin/AdminAuthSlice";
 import AdminSlice from "../featuer/admin/AdminSlice";
+import ExecutiveSlice from "../featuer/executive/ExecutiveSlice";
+import ExecutiveAuthSlice from "../featuer/executive/ExecutiveAuth";
+
 // import AdminSlice from "../features/admin/AdminSlice";
 // import StudentSlice from "../features/student/StudentSlice";
 
 const rootReducer = combineReducers({
   adminAuth:AdminAuthSlice,
-  admin:AdminSlice
-
-  
+ 
+  admin:AdminSlice,
+executive:ExecutiveSlice,
+executiveAuth: ExecutiveAuthSlice,
 });
 
 const persistConfig = {

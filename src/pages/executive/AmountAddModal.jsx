@@ -1,18 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoClose, IoChevronDown } from "react-icons/io5";
 import * as Yup from "yup";
 import Input from "../../components/commonComponents/Input";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useDispatch, useSelector } from "react-redux";
+import { AddAmount, getExecutiveStore } from "../../redux/featuer/executive/ExecutiveSlice";
 
 const validationSchema = Yup.object().shape({
   amount: Yup.string().required("Amount is required"),
-  route: Yup.string().required("Route is required"),
-  store: Yup.string().required("Store is required"),
+  store_id: Yup.string().required("Store is required"), // Change validation to store_id
 });
 
 const AmountAddModal = ({ onClose }) => {
-  const [showRouteList, setShowRouteList] = useState(false);
+  const [showStoreList, setShowStoreList] = useState(false);
+  const [selectedStore, setSelectedStore] = useState(null); // State to hold the selected store
 
   const {
     register,
@@ -23,16 +25,31 @@ const AmountAddModal = ({ onClose }) => {
     resolver: yupResolver(validationSchema),
   });
 
-  const handleRouteSelect = (routeName) => {
-    setValue("route", routeName);
-    setShowRouteList(false);
+  const executive_id = useSelector((state) => state?.executiveAuth?.executive.id);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getExecutiveStore(executive_id));
+  }, [dispatch, executive_id]);
+
+  const storeData = useSelector((state) => state?.executive?.StoreData || []);
+  const stores = storeData.stores.map(store => ({ id: store.id, name: store.store_name }));
+
+  const handleStoreSelect = (store) => {
+    setValue("store_id", store.id); // Set store_id instead of storeName
+    setSelectedStore(store);
+    setShowStoreList(false);
   };
 
-  const routes = ["Route 1", "Route 2", "Route 3"]; // List of routes
-
   const onSubmit = (data) => {
-    console.log(data);
-    onClose(); // Close the modal
+    dispatch(AddAmount({ id: executive_id, body: data }))
+      .then(() => {
+        console.log("Amount added successfully:", data);
+        onClose();
+      })
+      .catch((error) => {
+        console.error("Error adding amount:", error);
+      });
   };
 
   return (
@@ -49,30 +66,29 @@ const AmountAddModal = ({ onClose }) => {
               errors={errors}
               placeholder="Amount"
             />
-            <div className="relative  flex-grow">
-              <label className="">Route</label>
+            <div className="relative flex-grow">
+              <label className="">Stores</label>
               <div className="relative mt-3">
                 <input
                   type="text"
-                  id="route"
-                  {...register("route")}
-                  placeholder="Route"
+                  id="store_id"
+                  value={selectedStore ? selectedStore.name : ""}
+                  placeholder="Store"
                   className="peer block min-h-[auto] h-12 w-full rounded-lg text-[#718EBF] border-slate-200 border-[1px] bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none focus:placeholder:opacity-100 motion-reduce:transition-none dark:autofill:shadow-autofill dark:peer-focus:text-primary"
-                  readOnly // Make the input read-only to prevent direct typing
+                  readOnly
                 />
                 <IoChevronDown
                   className="absolute right-3 top-7 transform -translate-y-1/2 cursor-pointer text-gray-400"
-                  onClick={() => setShowRouteList(!showRouteList)}
+                  onClick={() => setShowStoreList(!showStoreList)}
                 />
-                {showRouteList && (
+                {showStoreList && (
                   <div className="absolute top-full left-0 w-full z-10 bg-white border border-gray-200 shadow-lg rounded-b-lg">
-                    {routes.map((routeName) => (
+                    {stores.map((store) => (
                       <div
-                        key={routeName}
+                        key={store.id}
                         className="px-4 py-2 cursor-pointer hover:bg-gray-100"
-                        onClick={() => handleRouteSelect(routeName)}
-                      >
-                        {routeName}
+                        onClick={() => handleStoreSelect(store)}>
+                        {store.name}
                       </div>
                     ))}
                   </div>
@@ -82,15 +98,6 @@ const AmountAddModal = ({ onClose }) => {
           </div>
 
           <div className="flex gap-5">
-            <Input
-              type="text"
-              id="store"
-              label="Store"
-              register={register}
-              errors={errors}
-              placeholder="Store"
-            />
-
             <div className="mt-7">
               <button
                 type="submit"

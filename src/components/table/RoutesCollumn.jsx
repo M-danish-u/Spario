@@ -14,7 +14,7 @@ export const RoutesCollumn = (handleViewStore) => [
   },
   
   {
-    //   Header: 'View Profile',
+      Header: 'View Store',
     accessor: "viewprofile",
     Cell: ({ row }) => (
       <button

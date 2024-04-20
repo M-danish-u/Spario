@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PerformanceCard = ({perfomanceColor,title,name,top}) => {
+const PerformingStore = ({perfomanceColor,title,name,top}) => {
   console.log(top,'tttop');
 
   const data = [
@@ -25,8 +25,8 @@ const PerformanceCard = ({perfomanceColor,title,name,top}) => {
           <tbody>
             {top.map((item, index) => (
               <tr key={index}>
-                <td className="px-4 py-2 text-cente">{item.name}</td>
-                <td className={`${perfomanceColor} px-4 py-2 text-center`}>{item.performancePercentage}%</td>
+                <td className="px-4 py-2 text-cente">{item.store_name}</td>
+                <td className={`${perfomanceColor} px-4 py-2 text-center`}>{item.performancePercentage} %</td>
               </tr>
             ))}
           </tbody>
@@ -36,4 +36,4 @@ const PerformanceCard = ({perfomanceColor,title,name,top}) => {
   );
 };
 
-export default PerformanceCard;
+export default PerformingStore;

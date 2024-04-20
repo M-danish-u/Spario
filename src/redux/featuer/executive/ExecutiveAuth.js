@@ -5,8 +5,8 @@ import {  loginAdminAPI } from "../../../api/url";
 const initialState = {
   loading: false,
   error: null,
-  admin: null ,
-  token: localStorage.getItem("token") || null,
+  admin: null ,// Assuming you want to store university data upon login
+  token: localStorage.getItem("token") || null, // Retrieve token from local storage
 
 };
 
@@ -15,7 +15,7 @@ const initialState = {
 
 
 
-export const adminLogin = createAsyncThunk("adminLogin", async (body, thunkAPI) => {
+export const executiveLogin = createAsyncThunk("executiveLogin", async (body, thunkAPI) => {
   try {
     const response = await axios.post(`${loginAdminAPI}`, body);
     
@@ -29,8 +29,8 @@ export const adminLogin = createAsyncThunk("adminLogin", async (body, thunkAPI) 
 
 
 
-const adminauthSlice = createSlice({
-  name: 'adminLogin',
+const executiveauthSlice = createSlice({
+  name: 'executiveLogin',
   initialState,
   reducers: {
     // You can add your custom reducers here if needed
@@ -39,13 +39,13 @@ const adminauthSlice = createSlice({
     builder
     
 
-    .addCase(adminLogin.fulfilled, (state,action) => {
+    .addCase(executiveLogin.fulfilled, (state,action) => {
         state.loading = false;
-        state.admin = action.payload.user;
+        state.executive = action.payload.user;
         state.token = action.payload.token;
         localStorage.setItem("token", action.payload.token); // Store token in local storage
       });
   }
 });
 
-export default adminauthSlice.reducer;
+export default executiveauthSlice.reducer;

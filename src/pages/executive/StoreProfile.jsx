@@ -1,10 +1,12 @@
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import Card from '../../components/commonComponents/Card'
 import { FaHandHoldingDollar, FaSackDollar } from 'react-icons/fa6'
 import { GrTransaction } from 'react-icons/gr'
 import { StoreInvoiceCollumn } from '../../components/table/StoreInvoiceCollumn'
 import Table from '../../components/table/Table'
 import Table2 from '../../components/table/Table2'
+import { useDispatch, useSelector } from 'react-redux'
+import { getSingleExecutiveStore,} from '../../redux/featuer/executive/ExecutiveSlice'
 
 const ExecutiveStoreProfile = () => {
 
@@ -18,7 +20,18 @@ const ExecutiveStoreProfile = () => {
     {no:'8',invoiceNo:'00 8', total:'200000' ,paid:'800000',due:'30000',date:'05/23/2024' },
     {no:'9',invoiceNo:'00 9', total:'200000' ,paid:'900000',due:'30000',date:'05/23/2024' },]
 
-   
+    const dispatch=useDispatch()
+
+    useEffect(() => {
+      dispatch(getSingleExecutiveStore());
+  
+      
+    }, [dispatch]); // Dependency array ensures the effect runs only when dispatch changes
+  
+
+    const storeProfile = useSelector((state) => state?.executive?.StoreProfileData?.store );
+
+    console.log(storeProfile,'ppp');
 
     const columns = useMemo(
         () => StoreInvoiceCollumn(),
@@ -27,9 +40,9 @@ const ExecutiveStoreProfile = () => {
   return (
     <div>
          <div className='w-full p- bg-re-400 mt- grid grid-cols-3  gap-10'>
-        <Card title="Total Amount" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount="150,0000"/>
-        <Card title="Due Amount" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount="2,500"/>
-        <Card title="Paid Amount" Icon={GrTransaction} iconColor="text-[#396AFF]" color="bg-[#E7EDFF]" amount="100,000"/>
+        <Card title="Total Amount" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount={storeProfile.total_amount}/>
+        <Card title="Due Amount" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount={storeProfile.balance_amount}/>
+        <Card title="Paid Amount" Icon={GrTransaction} iconColor="text-[#396AFF]" color="bg-[#E7EDFF]" amount={storeProfile.paid_amount}/>
         {/* <Card title="No. of Exicutive" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount="200"/>
         <Card title="No.of Store" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount="100"/> */}
       </div>
@@ -42,36 +55,36 @@ const ExecutiveStoreProfile = () => {
 <div className=' flex flex-col gap-12'>
     <span className=' flex flex-col gap-4'>
     <h3 className='text-md text-[#718EBF]'>Store Name</h3>
-    <p>ABC store</p>
+    <p>{storeProfile.store_name}</p>
     </span>
 
     <span className=' flex flex-col gap-4'>
     <h3 className='text-md text-[#718EBF]'>Address</h3>
-    <p>Beach Road</p>
+    <p>{storeProfile.address}</p>
     </span>
 </div>
 
 <div className=' flex flex-col gap-12'>
     <span className=' flex flex-col gap-4'>
-    <h3 className='text-md text-[#718EBF]'>Exicutive Name</h3>
-    <p>Exicutive 1</p>
+    <h3 className='text-md text-[#718EBF]'>Customer Name</h3>
+    <p>{storeProfile.customer_name}</p>
     </span>
 
     <span className=' flex flex-col gap-4'>
     <h3 className='text-md text-[#718EBF]'>Mobile 1</h3>
-    <p>1234567890</p>
+    <p>{storeProfile.contact_one}</p>
     </span>
 </div>
 
 <div className=' flex flex-col gap-12'>
     <span className=' flex flex-col gap-4'>
     <h3 className='text-md text-[#718EBF]'>Route</h3>
-    <p>Calicut</p>
+    <p>{storeProfile.route.route_name}</p>
     </span>
 
     <span className=' flex flex-col gap-4'>
     <h3 className='text-md text-[#718EBF]'>Mobile 2</h3>
-    <p>0987654321</p>
+    <p>{storeProfile.contact_two}</p>
     </span>
 </div>
 </div>
@@ -83,7 +96,7 @@ const ExecutiveStoreProfile = () => {
         {/* <div className='w-full bg-slate-300 py-10'></div> */}
         <div className='mt-'>
 
-<Table2 heading={""} DATA={InvoiceData} COLUMNS={columns} />
+<Table2 heading={""} DATA={storeProfile.invoices} COLUMNS={columns} />
 </div>
 {/* </div> */}
 

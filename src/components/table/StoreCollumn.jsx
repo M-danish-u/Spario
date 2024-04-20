@@ -18,32 +18,34 @@ export const StoreCollumn = (handleViewStore, handleEdit) => [
   },
 
   {
+    Header: " Executive",
+    accessor: "executive.name",
+  },
+
+  {
     Header: " Total  ",
-    accessor: " totalAmount",
+    accessor: " total_amount",
     Cell: ({ row }) => (
       <div className="flex flex-row items-center justify-cente ">
-        <LiaRupeeSignSolid /> {row.original.totalAmount} {/* Add the Rupee icon */}
+        <LiaRupeeSignSolid /> {row.original.total_amount} {/* Add the Rupee icon */}
       </div>
     ),
   },
   {
     Header: " Due  ",
-    accessor: "dueAmount",
+    accessor: "balance_amount",
     Cell: ({ row }) => (
       <div className="flex flex-row items-center ">
         <LiaRupeeSignSolid className="text-red-600" />{" "}
-        <span style={{ color: row.original.dueAmount >-1? "red" : "inherit" }}>
-          {row.original.dueAmount}
+        <span style={{ color: row.original.balance_amount >-1? "red" : "inherit" }}>
+          {row.original.balance_amount}
         </span>
       </div>
     ),
   },
+  
   {
-    Header: " Executive",
-    accessor: "executive.name",
-  },
-  {
-    //   Header: 'View Profile',
+      Header: 'View Store',
     accessor: "viewprofile",
     Cell: ({ row }) => (
       <button

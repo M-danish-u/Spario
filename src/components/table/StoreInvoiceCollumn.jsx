@@ -14,15 +14,15 @@ export const StoreInvoiceCollumn = () => [
   },
   {
     Header: " Total  ",
-    accessor: "amount",
+    accessor: "invoice_value",
     Cell: ({ row }) => (
       <div className="flex flex-row items-center justify-cente ">
-        <LiaRupeeSignSolid /> {row.original.amount} {/* Add the Rupee icon */}
+        <LiaRupeeSignSolid /> {row.original.invoice_value} {/* Add the Rupee icon */}
       </div>
     ),
   },
   {
-    Header: " Paid  ",
+    Header: "Advance   ",
     accessor: "advance_paid",
     Cell: ({ row }) => (
       <div className="flex flex-row items-center justify-cente ">
@@ -31,15 +31,25 @@ export const StoreInvoiceCollumn = () => [
     ),
   },
 
+  {
+    Header: "Total Paid  ",
+    accessor: "Collect_amount",
+    Cell: ({ row }) => (
+      <div className="flex flex-row items-center justify-cente ">
+        <LiaRupeeSignSolid /> {row.original.collect_amount} {/* Add the Rupee icon */}
+      </div>
+    ),
+  },
+
   
   {
     Header: " Due  ",
-    accessor: "balance_amount",
+    accessor: "invoice_balance_amount ",
     Cell: ({ row }) => (
       <div className="flex flex-row items-center ">
         <LiaRupeeSignSolid className="text-red-600" />{" "}
-        <span style={{ color: row.original.balance_amount > 0 ? "red" : "inherit" }}>
-          {row.original.balance_amount}
+        <span style={{ color: row.original.invoice_balance_amount > -1 ? "red" : "inherit" }}>
+          {row.original.invoice_balance_amount}
         </span>
       </div>
     ),

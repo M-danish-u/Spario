@@ -37,7 +37,7 @@ export const ExecutiveCollumn = (handleViewExecutive, handleEdit) => {
       Cell: ({ row }) => (
         <div className="flex flex-row items-center">
           <LiaRupeeSignSolid className="text-red-600" />{" "}
-          <span style={{ color: row.original.dueAmount > 0 ? "red" : "inherit" }}>
+          <span style={{ color: row.original.dueAmount > -1 ? "red" : "inherit" }}>
             {row.original.dueAmount}
           </span>
         </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from '../../components/commonComponents/Button'
 import Card from '../../components/commonComponents/Card'
 import { FaSackDollar,FaHandHoldingDollar } from "react-icons/fa6";
@@ -7,9 +7,35 @@ import Chart from '../../components/adminComponents/Chart';
 import ChartStore from '../../components/adminComponents/ChartStore';
 import PerfomanceCard from '../../components/adminComponents/PerfomanceCard';
 import InvoiceModal from './InvoiceModal';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAdminDashboard } from '../../redux/featuer/admin/AdminSlice';
+import PerformingStore from '../../components/adminComponents/TopPerformingStore';
+import TopDue from '../../components/adminComponents/TopDue';
 
 const AdminDashboard = () => {
   const [showModal, setShowModal] = useState(false);
+
+ 
+
+  const dispatch=useDispatch()
+
+  useEffect(() => {
+    dispatch(getAdminDashboard());
+
+    
+  }, [dispatch]); // Dependency array ensures the effect runs only when dispatch changes
+
+
+  const dashBoardData = useSelector((state) => state?.admin?.DashboardData || []);
+
+  console.log(dashBoardData,'llllllllllll');
+
+  const topExecutive=dashBoardData.topPerformingExecutive
+  const topStore=dashBoardData.topPerformingStores
+  const topDue=dashBoardData.topDueExecutives
+
+
+
 
   const handleEdit = () => {
     setShowModal(true); // Show the modal
@@ -23,11 +49,11 @@ const AdminDashboard = () => {
         </div>
       </div>
       <div className='w-full p-5 bg-re-400 mt- grid grid-cols-3  gap-10'>
-        <Card title="Total Amount" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount="150,0000"/>
-        <Card title="Due Amount" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount="2,500"/>
-        <Card title="Paid Amount" Icon={GrTransaction} iconColor="text-[#396AFF]" color="bg-[#E7EDFF]" amount="100,000"/>
-        <Card title="No. of Exicutive" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount="200"/>
-        <Card title="No.of Store" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount="100"/>
+        <Card title="Total Amount" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount={dashBoardData.totalAmount}/>
+        <Card title="Due Amount" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount={dashBoardData.dueAmount}/>
+        <Card title="Paid Amount" Icon={GrTransaction} iconColor="text-[#396AFF]" color="bg-[#E7EDFF]" amount={dashBoardData.paidAmount}/>
+        <Card title="No. of Exicutive" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount={dashBoardData.totalExecutives}/>
+        <Card title="No.of Store" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount={dashBoardData.totalStores}/>
       </div>
 
       <div className='w-full p-5 bg-re-500  grid grid-cols-2 ' >
@@ -36,9 +62,9 @@ const AdminDashboard = () => {
       </div>
 
       <div className='w-full p-5 b-red-500  grid grid-cols-3'>
-<PerfomanceCard title="Top Performing" perfomanceColor='text-[#16DBCC]'/>
-<PerfomanceCard title="Top Performing Store" perfomanceColor='text-[#16DBCC]'/>
-<PerfomanceCard title="Top Due" perfomanceColor='text-red-500'/>
+<PerfomanceCard title="Top Performing Executive" perfomanceColor='text-[#16DBCC]' name="Executive" top={topExecutive}/>
+<PerformingStore title="Top Performing Store" perfomanceColor='text-[#16DBCC]' name="Store" top={topStore}/>
+<TopDue title="Top Due" perfomanceColor='text-red-500' name="Store" top={topDue}/>
 
       </div>
       {showModal && (

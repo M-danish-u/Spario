@@ -1,86 +1,38 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { TransactionsCollumn } from '../../components/table/TransactionsCollumn';
 import { useMemo } from 'react';
 import Table2 from '../../components/table/Table2';
 import Table3 from '../../components/table/executive/Table3';
+import { useDispatch, useSelector } from 'react-redux';
+// import { getExecutivTransactions } from '../../redux/featuer/executive/ExecutiveSlice';
+import { ExecutiveTransCollumn } from '../../components/table/executive/ExecutiveTransCollumn';
+import { getExecutivTransactions } from '../../redux/featuer/executive/ExecutiveSlice';
 
 const ExecutiveTransactions = () => {
 
-    const transactions = [
-        {
-            no: 1,
-            executiveName: "Executive 1",
-            storeName: "Store A",
-            received: 1000,
-            remarks: "Payment received for products",
-            date: "2024-04-19",
-        },
-        {
-            no: 2,
-            executiveName: "Executive 2",
-            storeName: "Store B",
-            received: 500,
-            remarks: "Partial payment made",
-            date: "2024-04-20",
-        },
-        {
-            no: 3,
-            executiveName: "Executive 1",
-            storeName: "Store C",
-            received: 800,
-            remarks: "Full payment received",
-            date: "2024-04-21",
-        },
-        {
-            no: 4,
-            executiveName: "Executive 3",
-            storeName: "Store D",
-            received: 1200,
-            remarks: "Payment for new stock",
-            date: "2024-04-22",
-        },
-        {
-            no: 5,
-            executiveName: "Executive 4",
-            storeName: "Store E",
-            received: 1500,
-            remarks: "Payment for overdue balance",
-            date: "2024-04-23",
-        },
-        {
-            no: 6,
-            executiveName: "Executive 2",
-            storeName: "Store F",
-            received: 700,
-            remarks: "Partial payment made",
-            date: "2024-04-24",
-        },
-        {
-            no: 7,
-            executiveName: "Executive 3",
-            storeName: "Store G",
-            received: 900,
-            remarks: "Payment for new products",
-            date: "2024-04-25",
-        },
-        {
-            no: 8,
-            executiveName: "Executive 1",
-            storeName: "Store H",
-            received: 600,
-            remarks: "Payment for pending orders",
-            date: "2024-04-26",
-        },
-        // Add more transaction objects as needed
-    ];
+    const executive_id=useSelector((state)=>state?.executiveAuth?.executive.id)
+  
+    const transactionData=useSelector((state)=>state?.executive?.TransactionData?.transactions)
+
+    console.log(transactionData,'iiiiiiiiii');
+
+  
+    const dispatch=useDispatch()
+  
+    useEffect(() => {
+      dispatch(getExecutivTransactions(executive_id));
+  
+      
+    }, [dispatch]);
+
     
     const columns = useMemo(
-        () => TransactionsCollumn(),
+        () => ExecutiveTransCollumn(),
         []
       );
   return (
     <div>
-        <Table3 heading={""} DATA={transactions} COLUMNS={columns} />
+        <Table2 heading={""} DATA={transactionData} COLUMNS={columns} />
 
     </div>
   )

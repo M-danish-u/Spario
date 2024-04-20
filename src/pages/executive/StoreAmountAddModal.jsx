@@ -1,52 +1,74 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { IoClose ,IoChevronDown} from "react-icons/io5";
+import { IoClose, IoChevronDown } from "react-icons/io5";
 import * as Yup from "yup";
 import Input from "../../components/commonComponents/Input";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useDispatch } from "react-redux";
+import { AddAmount } from "../../redux/featuer/executive/ExecutiveSlice";
 
 const validationSchema = Yup.object().shape({
-    amount: Yup.string().required("Amount is required"),
-    // stores: Yup.string().required("Store Name is required"),
-    
+  amount: Yup.string().required("Amount is required"),
+  // stores: Yup.string().required("Store Name is required"),
 });
 
-const StoreAmoundAddModal = ({ onClose }) => {
+const StoreAmountAddModal = ({ onClose, store,}) => {
+  console.log(store, "ooooooooooooo");
+  const executive_id = store.executive_id;
+  const store_id = store.id;
+
+  console.log(store_id, "srid");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm({
+    resolver: yupResolver(validationSchema),
+  });
+
+  const dispatch=useDispatch()
+
+  const onSubmit = (data) => {
+    // Include store_id in the form data
+    const formData = { ...data, store_id };
     
+    dispatch(AddAmount({ id: executive_id, body: formData }))
+      .then(() => {
+        console.log("Amount added successfully:", formData);
+        onClose();
+      })
+      .catch((error) => {
+        console.error("Error adding amount:", error);
+      });
+  };
 
-    const { register, handleSubmit, formState: { errors }, setValue } = useForm({
-        resolver: yupResolver(validationSchema),
-    });
+  return (
+    <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50 bg-black/70">
+      <div className="bg-white border flex-row py-8 rounded-xl px-20 b-slate-700 g-white relative">
+        <h2 className="font-medium text-xl text-[#343C6A]">
+          Add Amount-Store Name
+        </h2>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col mt-4">
+          <div className="flex gap-6">
+            <Input
+              type="text"
+              id="amount"
+              label="Amount"
+              register={register}
+              errors={errors}
+              placeholder="Add Amount "
+            />
 
-    const onSubmit = (data) => {
-        console.log(data);
-        onClose(); // Close the modal
-    };
-
-    return (
-        <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50 bg-black/70">
-            <div className="bg-white border flex-row py-8 rounded-xl px-20 b-slate-700 g-white relative">
-                <h2 className="font-medium text-xl text-[#343C6A]">Add Amount-Store Name</h2>
-                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col mt-4">
-                    <div className="flex gap-6">
-                        <Input
-                            type="text"
-                            id="amount"
-                            label="Amount"
-                            register={register}
-                            errors={errors}
-                            placeholder="Add Amount "
-                        />
-                    
-                    <div className="mt-7">
-                            <button
-                                type="submit"
-                                className="px-2 py-2 w-[270px] mt-3  justify-center h-max bg-[#2723F4] text-white flex items-center rounded-md"
-                            >
-                                + Add Route
-                            </button>
-                        </div>
-                   {/* <Input
+            <div className="mt-7">
+              <button
+                type="submit"
+                className="px-2 py-2 w-[270px] mt-3  justify-center h-max bg-[#2723F4] text-white flex items-center rounded-md"
+              >
+                + Add Amount
+              </button>
+            </div>
+            {/* <Input
                             type="text"
                             id="stores"
                             label="Stores"
@@ -54,26 +76,19 @@ const StoreAmoundAddModal = ({ onClose }) => {
                             errors={errors}
                             placeholder="Stores"
                         /> */}
-                    
-                    </div>
+          </div>
 
-                   
+          <div className="flex gap-5"></div>
+        </form>
 
-                    <div className="flex gap-5">
-                    
-                            
-                      
-                    </div>
-                </form>
-
-                <div className="absolute top-2 right-2" onClick={onClose}>
-                    <button>
-                        <IoClose className="mt-5" size={24} />
-                    </button>
-                </div>
-            </div>
+        <div className="absolute top-2 right-2" onClick={onClose}>
+          <button>
+            <IoClose className="mt-5" size={24} />
+          </button>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
-export default StoreAmoundAddModal;
+export default StoreAmountAddModal;

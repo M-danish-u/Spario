@@ -14,10 +14,10 @@ export const ExecutiveStoreCollumn = () => [
   },
   {
     Header: " Total  ",
-    accessor: "totalAmount",
+    accessor: "total_amount",
     Cell: ({ row }) => (
       <div className="flex flex-row items-center justify-cente ">
-        <LiaRupeeSignSolid /> {row.original.totalAmount} {/* Add the Rupee icon */}
+        <LiaRupeeSignSolid /> {row.original.total_amount} {/* Add the Rupee icon */}
       </div>
     ),
   },
@@ -34,21 +34,34 @@ export const ExecutiveStoreCollumn = () => [
   
   {
     Header: " Due  ",
-    accessor: "dueAmount",
+    accessor: "balance_amount",
     Cell: ({ row }) => (
       <div className="flex flex-row items-center ">
         <LiaRupeeSignSolid className="text-red-600" />{" "}
-        <span style={{ color: row.original.dueAmount > -1 ? "red" : "inherit" }}>
-          {row.original.dueAmount}
+        <span style={{ color: row.original.balance_amount > -1 ? "red" : "inherit" }}>
+          {row.original.balance_amount}
         </span>
       </div>
     ),
   },
   {
-    Header: " Date",
+    Header: "Date",
     accessor: "created_at",
+    Cell: ({ row }) => {
+      // Parse the created_at string into a Date object
+      const date = new Date(row.original.created_at);
+      
+      // Extract day, month, and year components
+      const day = date.getDate();
+      const month = date.getMonth() + 1; // Month is zero-based, so add 1
+      const year = date.getFullYear();
+
+      // Format into dd/mm/yyyy format
+      const formattedDate = `${day}/${month}/${year}`;
+
+      return <span>{formattedDate}</span>;
+    },
   },
- 
 
   // {
   //   Header: 'Delete',

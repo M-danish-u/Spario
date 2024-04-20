@@ -6,46 +6,46 @@ import { LiaRupeeSignSolid } from "react-icons/lia";
 export const ExecutiveStoreCollumn = (handleViewStore, handleAddAmount) => [
   {
     Header: "No",
-    accessor: "no",
+    accessor: "id",
   },
   {
     Header: "Store Name",
-    accessor: "storeName",
+    accessor: "store_name",
   },
   {
     Header: " Customer Name  ",
-    accessor: "customerName",
+    accessor: "customer_name",
   },
 
   {
     Header: " Total  ",
-    accessor: "total",
+    accessor: "total_amount",
     Cell: ({ row }) => (
       <div className="flex flex-row items-center justify-cente ">
-        <LiaRupeeSignSolid /> {row.original.total} {/* Add the Rupee icon */}
+        <LiaRupeeSignSolid /> {row.original.total_amount} {/* Add the Rupee icon */}
       </div>
     ),
   },
   {
     Header: " Due  ",
-    accessor: "due",
+    accessor: "balance_amount",
     Cell: ({ row }) => (
       <div className="flex flex-row items-center ">
         <LiaRupeeSignSolid className="text-red-600" />{" "}
-        <span style={{ color: row.original.due > 0 ? "red" : "inherit" }}>
-          {row.original.due}
+        <span style={{ color: row.original.balance_amount > -1 ? "red" : "inherit" }}>
+          {row.original.balance_amount}
         </span>
       </div>
     ),
   },
   {
     Header: " Paid  ",
-    accessor: "paid",
+    accessor: "paidAmount",
     Cell: ({ row }) => (
       <div className="flex flex-row items-center ">
         <LiaRupeeSignSolid className="text-green-700" />{" "}
-        <span style={{ color: row.original.paid > 0 ? "green" : "inherit" }}>
-          {row.original.paid}
+        <span style={{ color: row.original.paidAmount > -1 ? "green" : "inherit" }}>
+          {row.original.paidAmount}
         </span>
       </div>
     ),
@@ -53,7 +53,7 @@ export const ExecutiveStoreCollumn = (handleViewStore, handleAddAmount) => [
   
    
   {
-    //   Header: 'View Profile',
+      Header: 'Add Amount',
     accessor: "amount",
     Cell: ({ row }) => (
       <button
@@ -65,7 +65,7 @@ export const ExecutiveStoreCollumn = (handleViewStore, handleAddAmount) => [
     ),
   },
   {
-    //   Header: 'View Profile',
+      Header: 'View Profile',
     accessor: "viewprofile",
     Cell: ({ row }) => (
       <button

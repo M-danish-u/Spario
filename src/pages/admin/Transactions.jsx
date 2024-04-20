@@ -1,11 +1,27 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { TransactionsCollumn } from '../../components/table/TransactionsCollumn';
 import { useMemo } from 'react';
 import Table2 from '../../components/table/Table2';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllTransactions } from '../../redux/featuer/admin/AdminSlice';
 
 const Transactions = () => {
 
-    const transactions = [
+    const dispatch=useDispatch()
+
+    useEffect(() => {
+      dispatch(getAllTransactions());
+  
+      
+    }, [dispatch]); // Dependency array ensures the effect runs only when dispatch changes
+  
+
+    const transactions = useSelector((state) => state?.admin?.AllTransactions.transactions || []);
+
+    console.log(transactions,'iiiiiiiiiii');
+
+
+    const transaction = [
         {
             no: 1,
             executiveName: "Executive 1",

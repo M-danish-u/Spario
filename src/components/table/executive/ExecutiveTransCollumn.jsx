@@ -3,22 +3,17 @@ import { FaUserClock } from "react-icons/fa";
 import { FaRegEdit } from "react-icons/fa";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 
-export const TransactionsCollumn = (handleViewStore, handleEdit) => [
+export const ExecutiveTransCollumn = () => [
   {
     Header: "No",
     accessor: "id",
   },
   {
-    Header: "Executive",
-    accessor: "executive.name",
-  },
-  {
-    Header: " Store  ",
+    Header: "Store Name",
     accessor: "store.store_name",
   },
-
   {
-    Header: " Received  ",
+    Header: "Received",
     accessor: "amount",
     Cell: ({ row }) => (
       <div className="flex flex-row items-center justify-cente ">
@@ -26,9 +21,6 @@ export const TransactionsCollumn = (handleViewStore, handleEdit) => [
       </div>
     ),
   },
-  
-  
-
   {
     Header: "Date",
     accessor: "created_at",
@@ -47,32 +39,4 @@ export const TransactionsCollumn = (handleViewStore, handleEdit) => [
       return <span>{formattedDate}</span>;
     },
   },
-//   {
-//     //   Header: 'View Profile',
-//     accessor: "viewprofile",
-//     Cell: ({ row }) => (
-//       <button
-//         onClick={() => handleViewStore(row.original)}
-//         className="text-[#2723F4]"
-//       >
-//         View More
-//       </button>
-//     ),
-//   },
-
-//   {
-//     //   Header: 'EDIT',
-//     accessor: "edit",
-//     Cell: ({ row }) => (
-//       <button
-//         onClick={() => handleEdit(row.original)}
-//         className="text-[#B1B1B1] text-xl"
-//       >
-//         <FaRegEdit />
-//       </button>
-//     ),
-//   },
-
- 
 ];
-

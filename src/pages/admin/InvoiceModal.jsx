@@ -7,21 +7,24 @@ import * as Yup from "yup";
 import Input from "../../components/commonComponents/Input";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
-import { createInvoices, getAllStores } from "../../redux/featuer/admin/AdminSlice";
+import {
+  createInvoices,
+  getAllStores,
+  getBalance,
+} from "../../redux/featuer/admin/AdminSlice";
 
 const validationSchema = Yup.object().shape({
   storeName: Yup.string().required("Store Name is required"),
   invoice_number: Yup.string().required("Invoice No. is required"),
   invoice_value: Yup.number().required("Invoice Value is required"),
   advance_paid: Yup.number().required("Advance Paid is required"),
-  amount: Yup.number().required("Amount is required"),
-  balance_amount: Yup.number().required("Balance amount required"),
   due_date: Yup.date().required("Date is required"),
 });
 
 const InvoiceModal = ({ onClose }) => {
   const [showStoreList, setShowStoreList] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [showBalance, setShowBalance] = useState(false); // State variable to control balance div visibility
 
   const {
     register,
@@ -38,13 +41,22 @@ const InvoiceModal = ({ onClose }) => {
     dispatch(getAllStores());
   }, [dispatch]);
 
-  const storeData = useSelector((state) => state?.admin?.AllStoreData?.stores || []);
-  const stores = storeData.map(store => ({ id: store.id, name: store.store_name }));
+  const storeData = useSelector(
+    (state) => state?.admin?.AllStoreData?.stores || []
+  );
+  const stores = storeData.map((store) => ({
+    id: store.id,
+    name: store.store_name,
+  }));
+  const balance = useSelector((state) => state?.admin?.BalanceStore.balance);
 
   const handleStoreSelect = (store) => {
+    dispatch(getBalance(store.id));
+    console.log(store, "qqqqq");
     setValue("storeName", store.name);
     setValue("store_id", store.id); // Set the selected store ID in the form state
     setShowStoreList(false);
+    setShowBalance(true); // Show the balance div when a store is selected
   };
 
   const handleDateChange = (date) => {
@@ -68,21 +80,22 @@ const InvoiceModal = ({ onClose }) => {
 
   return (
     <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50 bg-black/70">
-      <div className="bg-white border flex-row py-8 rounded-xl px-20 b-slate-700 g-white relative">
+      <div className="bg-white border flex-row py-8 rounded-xl px-20 b-slate-700 g-white relative ">
         <h2 className="font-medium text-xl text-[#343C6A]">Add Invoice</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col mt-4">
-          <div className="flex gap-5">
-            <div className="relative flex-grow">
+          <div className="flex ">
+            <div className="relative gap-5 flex">
+              <div>
               <label>Store Name</label>
               <input
                 type="text"
                 id="storeName"
                 {...register("storeName")}
                 placeholder="Store Name"
-                className="peer block min-h-[auto] h-12 w-full rounded-lg text-[#718EBF] border-slate-200 border-[1px] bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none focus:placeholder:opacity-100 motion-reduce:transition-none dark:autofill:shadow-autofill dark:peer-focus:text-primary"
+                className="peer block min-h-[auto] h-12  rounded-lg text-[#718EBF] border-slate-200 border-[1px] bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none focus:placeholder:opacity-100 motion-reduce:transition-none dark:autofill:shadow-autofill dark:peer-focus:text-primary"
               />
               <IoChevronDown
-                className="absolute right-3 top-12 transform -translate-y-1/2 cursor-pointer text-gray-400"
+                className="absolute left-60 top-12 transform -translate-y-1/2 cursor-pointer text-gray-400"
                 onClick={() => setShowStoreList(!showStoreList)}
               />
               {showStoreList && (
@@ -98,7 +111,17 @@ const InvoiceModal = ({ onClose }) => {
                   ))}
                 </div>
               )}
+              </div>
+              {/* balance div */}
+              {showBalance && (
+                <div className="mt-8">
+                  <p className="font-semibold">Balance: {balance}</p>
+                </div>
+              )}
             </div>
+          </div>
+
+          <div className="flex gap-5">
             <Input
               type="text"
               id="invoice_number"
@@ -107,9 +130,6 @@ const InvoiceModal = ({ onClose }) => {
               errors={errors}
               placeholder="Invoice No"
             />
-          </div>
-
-          <div className="flex gap-5">
             <Input
               type="text"
               id="invoice_value"
@@ -118,6 +138,9 @@ const InvoiceModal = ({ onClose }) => {
               errors={errors}
               placeholder="Invoice Value"
             />
+          </div>
+
+          <div className="flex gap-5">
             <Input
               type="text"
               id="advance_paid"
@@ -126,41 +149,21 @@ const InvoiceModal = ({ onClose }) => {
               errors={errors}
               placeholder="Advance Paid"
             />
-          </div>
 
-          <div className="flex gap-5">
-            <Input
-              type="text"
-              id="amount"
-              label="Amount"
-              register={register}
-              errors={errors}
-              placeholder="Amount"
-            />
-
-            <Input
-              type="text"
-              id="balance_amount"
-              label="Balance"
-              register={register}
-              errors={errors}
-              placeholder="Balance"
-            />
-          </div>
-          <div className="flex gap-5">
             <div className="mt- ">
               <label className="block mb-2">Due Date</label>
               <DatePicker
                 selected={selectedDate}
                 onChange={handleDateChange}
                 dateFormat="dd/MM/yyyy"
-                className="w-full px-3 py-[0.32rem] h-[40px] rounded-lg border-slate-200 border-[1px] bg-transparent text-[#718EBF] outline-none focus:placeholder:opacity-100 motion-reduce:transition-none"
+                className="w-full px-3 py-[0.40rem] mt-1 h-[45px] rounded-lg border-slate-200 border-[1px] bg-transparent text-[#718EBF] outline-none focus:placeholder:opacity-100 motion-reduce:transition-none"
               />
               {errors.due_date && (
                 <p className="text-red-500 mt-1">{errors.due_date.message}</p>
               )}
             </div>
-
+          </div>
+          <div className="flex gap-5">
             <div className="mt-7">
               <button
                 type="submit"

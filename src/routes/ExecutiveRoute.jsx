@@ -6,12 +6,15 @@ import ExecutiveDashboard from '../pages/executive/ExecutiveDashboard'
 import Store from '../pages/executive/Store'
 import ExecutiveStoreProfile from '../pages/executive/StoreProfile'
 import ExecutiveTransactions from '../pages/executive/Transactions'
+import ExecutiveLogin from '../pages/executive/ExecutiveLogin'
 
 
 const ExecutivePortalRoute = () => {
     return (
       <div>  
          <Routes> 
+         <Route path="executive/login" element={<ExecutiveLogin/>}></Route>
+
   
       <Route path='/executive' element={<ExecutiveLayout />}>
     
