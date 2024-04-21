@@ -13,7 +13,7 @@ const ExecutivePortalRoute = () => {
     return (
       <div>  
          <Routes> 
-         <Route path="executive/login" element={<ExecutiveLogin/>}></Route>
+         {/* <Route path="executive/login" element={<ExecutiveLogin/>}></Route> */}
 
   
       <Route path='/executive' element={<ExecutiveLayout />}>

@@ -44,6 +44,7 @@ const adminauthSlice = createSlice({
         state.admin = action.payload.user;
         state.token = action.payload.token;
         localStorage.setItem("token", action.payload.token); // Store token in local storage
+        localStorage.setItem("role", action.payload.user.role); // Store token in local storage
       });
   }
 });

@@ -10,6 +10,7 @@ import ExecutivePerformCard from '../../components/executiveComponents/Executive
 import AmountAddModal from './AmountAddModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { getExecutiveDashboard } from '../../redux/featuer/executive/ExecutiveSlice';
+import { useNavigate } from 'react-router-dom';
 // import InvoiceModal from './InvoiceModal';
 
 const ExecutiveDashboard = () => {
@@ -26,6 +27,16 @@ const ExecutiveDashboard = () => {
   };
 
   const dispatch=useDispatch()
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if token is not available (you would replace this with your actual logic)
+    const token = localStorage.getItem('token'); // Assuming token is stored in localStorage
+    if (!token) {
+      // Navigate to the login page if token is not available
+      navigate('/login');
+    }
+  }, [navigate]);
 
   useEffect(() => {
     dispatch(getExecutiveDashboard(executive_id));

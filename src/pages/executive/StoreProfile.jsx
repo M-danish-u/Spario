@@ -10,15 +10,15 @@ import { getSingleExecutiveStore,} from '../../redux/featuer/executive/Executive
 
 const ExecutiveStoreProfile = () => {
 
-    const InvoiceData=[{no:'1',invoiceNo:'00 1', total:'200000' ,paid:'500000',due:'30000',date:'05/23/2024' },
-    {no:'2',invoiceNo:'00 2', total:'200000' ,paid:'500000',due:'30000',date:'05/23/2024' },
-    {no:'3',invoiceNo:'00 3', total:'200000' ,paid:'500000',due:'30000',date:'05/23/2024' },
-    {no:'4',invoiceNo:'00 4', total:'200000' ,paid:'500000',due:'40000',date:'05/23/2024' },
-    {no:'5',invoiceNo:'00 5', total:'200000' ,paid:'500000',due:'30000',date:'05/23/2024' },
-    {no:'6',invoiceNo:'00 6', total:'200000' ,paid:'600000',due:'30000',date:'05/23/2024' },
-    {no:'7',invoiceNo:'00 7', total:'200000' ,paid:'700000',due:'30000',date:'05/23/2024' },
-    {no:'8',invoiceNo:'00 8', total:'200000' ,paid:'800000',due:'30000',date:'05/23/2024' },
-    {no:'9',invoiceNo:'00 9', total:'200000' ,paid:'900000',due:'30000',date:'05/23/2024' },]
+    // const InvoiceData=[{no:'1',invoiceNo:'00 1', total:'200000' ,paid:'500000',due:'30000',date:'05/23/2024' },
+    // {no:'2',invoiceNo:'00 2', total:'200000' ,paid:'500000',due:'30000',date:'05/23/2024' },
+    // {no:'3',invoiceNo:'00 3', total:'200000' ,paid:'500000',due:'30000',date:'05/23/2024' },
+    // {no:'4',invoiceNo:'00 4', total:'200000' ,paid:'500000',due:'40000',date:'05/23/2024' },
+    // {no:'5',invoiceNo:'00 5', total:'200000' ,paid:'500000',due:'30000',date:'05/23/2024' },
+    // {no:'6',invoiceNo:'00 6', total:'200000' ,paid:'600000',due:'30000',date:'05/23/2024' },
+    // {no:'7',invoiceNo:'00 7', total:'200000' ,paid:'700000',due:'30000',date:'05/23/2024' },
+    // {no:'8',invoiceNo:'00 8', total:'200000' ,paid:'800000',due:'30000',date:'05/23/2024' },
+    // {no:'9',invoiceNo:'00 9', total:'200000' ,paid:'900000',due:'30000',date:'05/23/2024' },]
 
     const dispatch=useDispatch()
 

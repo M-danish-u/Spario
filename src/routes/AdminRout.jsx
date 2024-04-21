@@ -17,7 +17,7 @@ const AdminPortalRoute = () => {
     return (
       <div>  
          <Routes> 
-         <Route path="admin/login" element={<AdminLogin/>}></Route>
+         {/* <Route path="admin/login" element={<AdminLogin/>}></Route> */}
 
   
       <Route path='/admin' element={<AdminLayout />}>

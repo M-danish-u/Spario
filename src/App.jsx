@@ -1,13 +1,13 @@
-import './App.css'
-import MainRoute from './routes/MainRoute'
+import './App.css';
+import MainRoute from './routes/MainRoute';
 
 function App() {
 
   return (
     <>
-     <MainRoute/>
+      <MainRoute />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

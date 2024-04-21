@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAdminDashboard } from '../../redux/featuer/admin/AdminSlice';
 import PerformingStore from '../../components/adminComponents/TopPerformingStore';
 import TopDue from '../../components/adminComponents/TopDue';
+import { useNavigate } from 'react-router-dom';
 
 const AdminDashboard = () => {
   const [showModal, setShowModal] = useState(false);
@@ -18,6 +19,17 @@ const AdminDashboard = () => {
  
 
   const dispatch=useDispatch()
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    // Check if token is not available (you would replace this with your actual logic)
+    const token = localStorage.getItem('token'); // Assuming token is stored in localStorage
+    if (!token) {
+      // Navigate to the login page if token is not available
+      navigate('/login');
+    }
+  }, [navigate]);
 
   useEffect(() => {
     dispatch(getAdminDashboard());
