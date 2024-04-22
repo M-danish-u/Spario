@@ -48,7 +48,7 @@ const InvoiceModal = ({ onClose }) => {
     id: store.id,
     name: store.store_name,
   }));
-  const balance = useSelector((state) => state?.admin?.BalanceStore.balance);
+  const balance = useSelector((state) => state?.admin?.BalanceStore?.balance);
 
   const handleStoreSelect = (store) => {
     dispatch(getBalance(store.id));

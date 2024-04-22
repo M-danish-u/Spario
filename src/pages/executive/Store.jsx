@@ -16,7 +16,7 @@ const Store = () => {
     const [AmountshowModal, setAmountShowModal] = useState(false);
     const [selectedStore , setSelectedStore]=useState({})
 
-    const executive_id=useSelector((state)=>state?.executiveAuth?.executive.id)
+    const executive_id=useSelector((state)=>state?.executiveAuth?.executive?.id)
   // console.log(executive_id,'iiiiiiiiii');
 
   

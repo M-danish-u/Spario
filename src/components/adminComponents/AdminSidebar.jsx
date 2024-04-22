@@ -4,6 +4,7 @@ import { FaFileInvoiceDollar } from "react-icons/fa";
 import { IoPersonSharp } from "react-icons/io5";
 import { GrTransaction } from "react-icons/gr";
 import { useLocation, useNavigate } from "react-router-dom";
+import { FaPowerOff } from "react-icons/fa";
 
 const AdminSidebar = () => {
   const SidebarData = [
@@ -37,18 +38,21 @@ const AdminSidebar = () => {
   return (
     <div className='h-[100vh] bg-red-4' style={{ boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }}>
       <div className='h-[85px] w-full bg-slate-5 flex items-center justify-center text-[2.5rem] font-semibold text-[#C91818]' >SPARIO</div>
-      <div className='mt-4' style={{ height: 'calc(100vh - 85px)', }}>
-        {SidebarData.map((data, i) => {
+      <div className='mt-4 flex flex-col mb-6 justify-between b-slate-400' style={{ height: 'calc(100vh - 85px)', }}>
+        <div>
+        {SidebarData?.map((data, i) => {
           const Icon = data.icon;
           const itemColor = location.pathname.includes(data.path) ? "text-[#C91818]" : "text-[#B1B1B1]";
           return (
-            <div className={`flex items-center w-full px-8 gap-8 py-4 ${itemColor}`} onClick={() => navigate(data.path)} key={i}>
+            <div className={`flex items-center w-full b-red-400 px-8 gap-8 py-4 ${itemColor}`} onClick={() => navigate(data.path)} key={i}>
               <Icon className={`text-3xl ${itemColor}`} />
               <p className={`text-2xl`}>{data.name} </p>
             </div>
           );
         })}
-        <p className='absolute bottom-4 cursor-pointer' onClick={() => setShowLogoutPopup(true)}>Logout</p>
+        </div>
+        <div className=' flex items-center   py-3 px-8  bottom-4 cursor-pointer gap-8   bg-yellow-' onClick={() => setShowLogoutPopup(true)}><FaPowerOff className='text-[#C91818] text-3xl' />
+             <p className='text-[#B1B1B1] text-2xl'> Logout</p></div> 
       </div>
 
       {/* Logout Confirmation Popup */}
@@ -63,6 +67,8 @@ const AdminSidebar = () => {
           </div>
         </div>
       )}
+
+ 
     </div>
   );
 };

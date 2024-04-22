@@ -19,8 +19,14 @@ const ExecutiveDashboard = () => {
 
  
 
-  const executive_id=useSelector((state)=>state?.executiveAuth?.executive.id)
-  // console.log(executive_id,'iiiiiiiiii');
+  const executive_id = useSelector((state) => state?.adminAuth?.executive?.id);
+
+  useEffect(() => {
+    // Your code that depends on executive_id
+    // For example:
+    console.log("Executive ID:", executive_id);
+  }, [executive_id]); // Add executive_id to the dependency array
+  console.log(executive_id,'iiiiiiiiii');
 
   const handleEdit = () => {
     setShowModal(true); // Show the modal
@@ -48,6 +54,7 @@ const ExecutiveDashboard = () => {
   const dashBoardData = useSelector((state) => state?.executive?.DashboardData || []);
 
   // const dashBoardData = useSelector((state) => state?.executive?.DashboardData || []);
+const topStore=dashBoardData?.topPerformingStores
 
 
   console.log(dashBoardData);
@@ -61,10 +68,10 @@ const ExecutiveDashboard = () => {
         </div>
       </div>
       <div className='w-full p-5 bg-re-400 mt- grid grid-cols-4  gap-10'>
-        <Card title="Total Amount" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount={dashBoardData.totalAmount}/>
-        <Card title="Due Amount" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount={dashBoardData.dueAmount}/>
-        <Card title="Paid Amount" Icon={GrTransaction} iconColor="text-[#396AFF]" color="bg-[#E7EDFF]" amount={dashBoardData.paidAmount}/>
-        <Card title="Stores" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount={dashBoardData.totalStores}/>
+        <Card title="Total Amount" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount={dashBoardData?.totalAmount}/>
+        <Card title="Due Amount" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount={dashBoardData?.dueAmount}/>
+        <Card title="Paid Amount" Icon={GrTransaction} iconColor="text-[#396AFF]" color="bg-[#E7EDFF]" amount={dashBoardData?.paidAmount}/>
+        <Card title="Stores" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount={dashBoardData?.totalStores}/>
         {/* <Card title="No.of Store" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount="100"/> */}
       </div>
 
@@ -74,8 +81,8 @@ const ExecutiveDashboard = () => {
       </div>
 
       <div className='w-full p-5 b-red-500 flex gap-10'>
-<ExecutivePerformCard title="Top Store" perfomanceColor='text-[#16DBCC]' />
-<ExecutivePerformCard  title="Top Due" perfomanceColor='text-red-500'/>
+<ExecutivePerformCard title="Top Store" perfomanceColor='text-[#16DBCC]'top={topStore} />
+{/* <ExecutivePerformCard  title="Top Due" perfomanceColor='text-red-500'/> */}
 {/* <PerfomanceCard title="Top Due" perfomanceColor='text-red-500'/> */}
 
       </div>

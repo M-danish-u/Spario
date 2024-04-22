@@ -1,6 +1,6 @@
 import React from "react";
 
-const ExecutivePerformCard = ({ perfomanceColor, title }) => {
+const ExecutivePerformCard = ({ perfomanceColor, title, top }) => {
   const data = [
     { slno: "01", name: "name 1", performance: "80%" },
     { slno: "02", name: "name 2", performance: "60%" },
@@ -18,20 +18,19 @@ const ExecutivePerformCard = ({ perfomanceColor, title }) => {
             <tr className=" ">
               <th className="px-4 text-[#718EBF] font-normal t  py-2">SL.No</th>
 
-              <th className="px-4 text-[#718EBF] font-normal  py-2">Name</th>
+              <th className="px-4 text-[#718EBF] font-normal  py-2">Store Name</th>
               <th className="px-4 text-[#718EBF] font-normal   py-2">
                 Performance
               </th>
             </tr>
           </thead>
           <tbody>
-            {data.map((item, index) => (
+            {top?.map((item, index) => (
               <tr className="  " key={index}>
-                <td className="px-4 py-2 text-center">{item.slno}</td>
-
-                <td className="px-4 py-2 text-center">{item.name}</td>
+                <td className="px-4 py-2 text-center">{index + 1}</td> {/* Use index + 1 for serial number */}
+                <td className="px-4 py-2 text-center">{item.store_name}</td>
                 <td className={`${perfomanceColor} px-4 py-2 text-center`}>
-                  {item.performance}
+                  {item.performancePercentage}%
                 </td>
               </tr>
             ))}

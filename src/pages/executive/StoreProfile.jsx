@@ -40,9 +40,9 @@ const ExecutiveStoreProfile = () => {
   return (
     <div>
          <div className='w-full p- bg-re-400 mt- grid grid-cols-3  gap-10'>
-        <Card title="Total Amount" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount={storeProfile.total_amount}/>
-        <Card title="Due Amount" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount={storeProfile.balance_amount}/>
-        <Card title="Paid Amount" Icon={GrTransaction} iconColor="text-[#396AFF]" color="bg-[#E7EDFF]" amount={storeProfile.paid_amount}/>
+        <Card title="Total Amount" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount={storeProfile?.total_amount}/>
+        <Card title="Due Amount" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount={storeProfile?.balance_amount}/>
+        <Card title="Paid Amount" Icon={GrTransaction} iconColor="text-[#396AFF]" color="bg-[#E7EDFF]" amount={storeProfile?.paid_amount}/>
         {/* <Card title="No. of Exicutive" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount="200"/>
         <Card title="No.of Store" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount="100"/> */}
       </div>
@@ -55,36 +55,36 @@ const ExecutiveStoreProfile = () => {
 <div className=' flex flex-col gap-12'>
     <span className=' flex flex-col gap-4'>
     <h3 className='text-md text-[#718EBF]'>Store Name</h3>
-    <p>{storeProfile.store_name}</p>
+    <p>{storeProfile?.store_name}</p>
     </span>
 
     <span className=' flex flex-col gap-4'>
     <h3 className='text-md text-[#718EBF]'>Address</h3>
-    <p>{storeProfile.address}</p>
+    <p>{storeProfile?.address}</p>
     </span>
 </div>
 
 <div className=' flex flex-col gap-12'>
     <span className=' flex flex-col gap-4'>
     <h3 className='text-md text-[#718EBF]'>Customer Name</h3>
-    <p>{storeProfile.customer_name}</p>
+    <p>{storeProfile?.customer_name}</p>
     </span>
 
     <span className=' flex flex-col gap-4'>
     <h3 className='text-md text-[#718EBF]'>Mobile 1</h3>
-    <p>{storeProfile.contact_one}</p>
+    <p>{storeProfile?.contact_one}</p>
     </span>
 </div>
 
 <div className=' flex flex-col gap-12'>
     <span className=' flex flex-col gap-4'>
     <h3 className='text-md text-[#718EBF]'>Route</h3>
-    <p>{storeProfile.route.route_name}</p>
+    <p>{storeProfile?.route.route_name}</p>
     </span>
 
     <span className=' flex flex-col gap-4'>
     <h3 className='text-md text-[#718EBF]'>Mobile 2</h3>
-    <p>{storeProfile.contact_two}</p>
+    <p>{storeProfile?.contact_two}</p>
     </span>
 </div>
 </div>
@@ -96,7 +96,7 @@ const ExecutiveStoreProfile = () => {
         {/* <div className='w-full bg-slate-300 py-10'></div> */}
         <div className='mt-'>
 
-<Table2 heading={""} DATA={storeProfile.invoices} COLUMNS={columns} />
+<Table2 heading={""} DATA={storeProfile?.invoices} COLUMNS={columns} />
 </div>
 {/* </div> */}
 

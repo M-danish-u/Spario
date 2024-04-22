@@ -23,7 +23,7 @@ const TopDue = ({perfomanceColor,title,name,top}) => {
             </tr>
           </thead>
           <tbody>
-            {top.map((item, index) => (
+            {top?.map((item, index) => (
               <tr key={index}>
                 <td className="px-4 py-2 text-cente">{item.executive_name}</td>
                 <td className={`${perfomanceColor} px-4 py-2 text-center`}>{item.totalDueAmount} </td>

@@ -16,7 +16,7 @@ const Transactions = () => {
     }, [dispatch]); // Dependency array ensures the effect runs only when dispatch changes
   
 
-    const transactions = useSelector((state) => state?.admin?.AllTransactions.transactions || []);
+    const transactions = useSelector((state) => state?.admin?.AllTransactions?.transactions || []);
 
     console.log(transactions,'iiiiiiiiiii');
 

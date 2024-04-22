@@ -38,13 +38,13 @@ const AdminDashboard = () => {
   }, [dispatch]); // Dependency array ensures the effect runs only when dispatch changes
 
 
-  const dashBoardData = useSelector((state) => state?.admin?.DashboardData || []);
+  const dashBoardData = useSelector((state)=>state?.admin?.DashboardData || []);
 
   console.log(dashBoardData,'llllllllllll');
 
-  const topExecutive=dashBoardData.topPerformingExecutive
-  const topStore=dashBoardData.topPerformingStores
-  const topDue=dashBoardData.topDueExecutives
+  const topExecutive=dashBoardData?.topPerformingExecutive
+  const topStore=dashBoardData?.topPerformingStores
+  const topDue=dashBoardData?.topDueExecutives
 
 
 
@@ -61,11 +61,11 @@ const AdminDashboard = () => {
         </div>
       </div>
       <div className='w-full p-5 bg-re-400 mt- grid grid-cols-3  gap-10'>
-        <Card title="Total Amount" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount={dashBoardData.totalAmount}/>
-        <Card title="Due Amount" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount={dashBoardData.dueAmount}/>
-        <Card title="Paid Amount" Icon={GrTransaction} iconColor="text-[#396AFF]" color="bg-[#E7EDFF]" amount={dashBoardData.paidAmount}/>
-        <Card title="No. of Exicutive" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount={dashBoardData.totalExecutives}/>
-        <Card title="No.of Store" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount={dashBoardData.totalStores}/>
+        <Card title="Total Amount" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount={dashBoardData?.totalAmount}/>
+        <Card title="Due Amount" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount={dashBoardData?.dueAmount}/>
+        <Card title="Paid Amount" Icon={GrTransaction} iconColor="text-[#396AFF]" color="bg-[#E7EDFF]" amount={dashBoardData?.paidAmount}/>
+        <Card title="No. of Exicutive" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount={dashBoardData?.totalExecutives}/>
+        <Card title="No.of Store" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount={dashBoardData?.totalStores}/>
       </div>
 
       <div className='w-full p-5 bg-re-500  grid grid-cols-2 ' >

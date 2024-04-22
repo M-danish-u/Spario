@@ -10,7 +10,7 @@ import { getExecutivTransactions } from '../../redux/featuer/executive/Executive
 
 const ExecutiveTransactions = () => {
 
-    const executive_id=useSelector((state)=>state?.executiveAuth?.executive.id)
+    const executive_id=useSelector((state)=>state?.executiveAuth?.executive?.id)
   
     const transactionData=useSelector((state)=>state?.executive?.TransactionData?.transactions)
 
