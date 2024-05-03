@@ -9,6 +9,7 @@ import { RouteProfileCollumn } from '../../components/table/RouteProfileCollumn'
 import { useDispatch, useSelector } from 'react-redux';
 import { getSingleRouteStore, getSingleStore } from '../../redux/featuer/admin/AdminSlice';
 import { useNavigate } from 'react-router-dom';
+import Table3 from '../../components/table/executive/Table3';
 
 const RouteProfile = () => {
     const [showModal, setShowModal] = useState(false);
@@ -71,8 +72,8 @@ const RouteProfile = () => {
       </div>
       <h2 className="font-medium text-xl text-[#343C6A] ">Stores</h2>
 
-      <div className='mt-3 '>
-      <Table heading={""} DATA={routeStores.stores} COLUMNS={columns} />
+      <div className='mt- '>
+      <Table3 heading={""} DATA={routeStores.stores} COLUMNS={columns} />
       </div>
 
 

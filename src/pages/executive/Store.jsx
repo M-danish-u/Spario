@@ -15,9 +15,18 @@ const Store = () => {
     const navigate=useNavigate()
     const [AmountshowModal, setAmountShowModal] = useState(false);
     const [selectedStore , setSelectedStore]=useState({})
+    const executive_id = useSelector((state) => state?.adminAuth?.admin?.id);
+    const loading = useSelector((state) => state?.executive?.loading);
 
-    const executive_id=useSelector((state)=>state?.executiveAuth?.executive?.id)
-  // console.log(executive_id,'iiiiiiiiii');
+
+    // const executive_id = useSelector((state) => state?.adminAuth?.admin?.id);
+
+
+    useEffect(() => {
+      // Your logic here that depends on executive_id
+      console.log("Executive ID:", executive_id);
+    }, [executive_id]); // Add executive_id to the dependency array
+   
 
   
 
@@ -26,14 +35,14 @@ const Store = () => {
   useEffect(() => {
     dispatch(getExecutiveStore(executive_id));
 
-    
-  }, [dispatch]); // Dependency array ensures the effect runs only when dispatch changes
+   
+  }, [dispatch,]); // Dependency array ensures the effect runs only when dispatch changes
 
   
   const storeData = useSelector((state) => state?.executive?.StoreData || []);
 
   // const dashBoardData = useSelector((state) => state?.executive?.DashboardData || []);
-
+  // window.location.reload()
 
   console.log(storeData);
 
@@ -70,7 +79,7 @@ const Store = () => {
         setAmountShowModal(true); // Show the modal
        
       };
-    // const storeData=[{no:'1',storeName:'Store 1',customerName:'Customer 1', total:'500000',due:'30000',paid:'3000',exicutive:'Exivutive 1' },
+    // const storeDatas=[{no:'1',storeName:'Store 1',customerName:'Customer 1', total:'500000',due:'30000',paid:'3000',exicutive:'Exivutive 1' },
     // {no:'2',storeName:'Store 2',customerName:'Customer 2', total:'500000',due:'30000',paid:'3000',exicutive:'Exivutive 2',route:'calicut',mobile1:'1234567890',mobile2:'0987654321',address:'address 1', },
     // {no:'3',storeName:'Store 3',customerName:'Customer 3', total:'500000',due:'30000',paid:'3000',exicutive:'Exivutive 3' ,route:'calicut',mobile1:'1234567890',mobile2:'0987654321',address:'address 1',},
     // {no:'4',storeName:'Store 4',customerName:'Customer 4', total:'500000',due:'40000',paid:'3000',exicutive:'Exivutive 4' ,route:'calicut',mobile1:'1234567890',mobile2:'0987654321',address:'address 1',},
@@ -85,9 +94,14 @@ const Store = () => {
         () => ExecutiveStoreCollumn(handleViewStore,handleAddAmount),
         []
       );
+
+      if (loading) {
+        return <div>Loading...</div>; // Render loading indicator
+      }
+
   return (
     <div>
- <Table3 heading={"Store Details"} DATA={storeData.stores} COLUMNS={columns}   />
+<Table3 heading={"Store Details"} DATA={ storeData?.stores || []} COLUMNS={columns} />
 
  {AmountshowModal && (
         <StoreAmoundAddModal

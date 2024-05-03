@@ -8,6 +8,9 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { adminLogin } from "../redux/featuer/admin/AdminAuthSlice";
 
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Login = () => {
   const validationSchema = Yup.object().shape({
     email: Yup.string().required("User Name is required"),
@@ -18,13 +21,12 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset, // Destructure reset function
   } = useForm({
     resolver: yupResolver(validationSchema),
   });
 
-  const dispatch=useDispatch()
-const navigate=useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -32,59 +34,47 @@ const navigate=useNavigate()
     setShowPassword(!showPassword);
   };
 
+  const onSubmit = async (values) => {
+    try {
+      const actionResult = await dispatch(adminLogin(values));
 
-  const onSubmit = async(values, { setSubmitting }) => {
+      if (actionResult?.payload?.user.role === "admin") {
+        navigate("/admin/dashboard");
+      } else if (actionResult?.payload?.user.role === "executive") {
+        navigate("/executive/dashboard");
+      }
 
-    console.log(values,'vvvvvvvvvvvv');
-    const actionResult = await dispatch(adminLogin(values));
-    console.log(actionResult,"resulte in the suignup")
-
-    if (actionResult?.payload?.user.role === 'admin') {
-      navigate("/admin/dashboard");
-    } else if (actionResult?.payload?.user.role === 'executive') {
-      navigate("/executive/dashboard");
+      // Show success toast
+    } catch (error) {
+      // Handle error
+      console.log(error.error,'eeerrrr');
+      if (error && error.payload && error.payload.error === "Incorrect password") {
+        toast.error("Incorrect password");
+      } else {
+        toast.error(error.error);
+      }
     }
-    
-    // if (adminLogin.fulfilled.match(actionResult)) {
-    //   // Handle success
-    //   setTimeout(() => {
-        
-    //     navigate("/admin/dashboard");
-    //   }, 3000);
-    // } else if (adminLogin.rejected.match(actionResult)) {
-    //   // Handle error
-    //   console.log(actionResult,"fffffffffffffffff");
-    //   const message = actionResult.payload ? actionResult.payload.error : 'Signup failed';
-    //   console.error(message);
-    //   toast.error(message)
-    //   // Here you can set an error state to display the error message if you want
-    // }
-    
-  
   };
-
-  // const onSubmit = async(values, { setSubmitting }) => {
-  //   await dispatch(adminLogin(values))
-  //   navigate("/admin/dashboard");
-  //    setTimeout(() => {
-  //      setSubmitting(false);
-  //    }, 400);
-  //    reset();
-  //  };
- 
-
-  // const onSubmit = (data) => {
-  //   console.log(data);
-  //   reset(); // Reset the form
-  // };
-
+  
   return (
     <div className="flex items-center flex-col justify-center h-screen bg-[#f0f4fa]">
+
+       <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+
       <div className="bg-white px-16 py-10 rounded-2xl ">
         <p className="w-full border-b-[1px] text-center border-[#f0f4fa] text-2xl pb-4">
           Login
         </p>
-
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col mt-10">
           <div className=" gap-6">
             <Input

@@ -5,6 +5,7 @@ import {
   createInvoiceAPI,
   createRouteAPI,
   createStoreAPI,
+  executiveStatusChangeAPI,
   getAdminDashboardAPI,
   getAdminTransactionsAPI,
   getAllExecutiveAPI,
@@ -18,6 +19,7 @@ import {
   updateExecutiveAPI,
   updateStoreAPI,
 } from "../../../api/url";
+import { array } from "yup";
 
 const initialState = {
   ExecutiveData: null,
@@ -36,6 +38,8 @@ const initialState = {
   DashboardData:null,
   AllTransactions: null,
   BalanceStore:null,
+  ExecutiveStatus:null,
+  currentStore:[]
 
 };
 
@@ -234,16 +238,17 @@ export const getSingleRouteStore = createAsyncThunk(
 
 // *******************STORE*********************
 
-// create route
+// create 
 
 export const createStore = createAsyncThunk(
   "admin/createStore",
   async (body) => {
+    console.log(body,'store body');
     try {
       // Validate body parameter here if necessary
 
       const response = await axios.post(createStoreAPI, body);
-      //   console.log(response.data,'rrrrrrrr');
+        console.log(response,'store response');
 
       return response.data;
     } catch (error) {
@@ -265,6 +270,22 @@ export const getAllStores = createAsyncThunk(
       return response.data;
     } catch (error) {
       console.log(error.response.data, "its rejecerdf");
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+// status change
+
+export const executiveStatusChange = createAsyncThunk(
+  "admin/executiveStatusChange",
+  async (id, thunkAPI) => {
+    try {
+      const response = await axios.put(`${executiveStatusChangeAPI}/${id}`);
+      console.log(response.data, "rrrrrrr");
+      return response.data;
+    } catch (error) {
+      console.log(error.response.data, "its rejecerd");
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
@@ -340,14 +361,34 @@ const adminSlice = createSlice({
 
       .addCase(createExecutive.fulfilled, (state, action) => {
         state.ExecutiveData = action.payload;
+        state.AllExecutiveData.executives.unshift(action.payload.executive)
       })
 
       .addCase(getSingleExecutive.fulfilled, (state, action) => {
         state.ExecutiveProfile = action.payload;
       })
       .addCase(editExicutive.fulfilled, (state, action) => {
-        state.UpdateExicutive = action.payload;
+        const updatedExicutive = action.payload.executive;
+        const index = state.AllExecutiveData.executives.findIndex(exicutive => exicutive.id === updatedExicutive.id);
+        if (index !== -1) {
+          state.AllExecutiveData.executives[index] = updatedExicutive;
+          if (state.ExecutiveProfile && state.ExecutiveProfile.id === updatedExicutive.id) {
+            state.ExecutiveProfile = updatedExicutive;
+          }
+        }
       })
+
+      .addCase(executiveStatusChange.fulfilled, (state, action) => {
+        const updateExicutive = action.payload.executive; // Assuming the payload contains the updated executive
+        const index = state.AllExecutiveData.executives.findIndex(exicutive => exicutive.id === updateExicutive.id);
+        if (index !== -1) {
+          state.AllExecutiveData.executives[index] = updateExicutive;
+          if (state.ExecutiveProfile && state.ExecutiveProfile.id === updateExicutive.id) {
+            state.ExecutiveProfile = updateExicutive;
+          }
+        }
+      })
+      
       // .addCase(deleteUniversity.fulfilled, (state, action) => {
       //   state.UniversityDetails = action.payload;
       // })
@@ -360,6 +401,7 @@ const adminSlice = createSlice({
 
       .addCase(createRoute.fulfilled, (state, action) => {
         state.Route = action.payload;
+        state.AllRouteData.routes.unshift(action.payload.route)
       })
 
       .addCase(getSingleRouteStore.fulfilled, (state, action) => {
@@ -370,14 +412,28 @@ const adminSlice = createSlice({
 
       .addCase(createStore.fulfilled, (state, action) => {
         state.Store = action.payload;
+        state.AllStoreData.stores.unshift(action.payload.store)
       })
 
       .addCase(getAllStores.fulfilled, (state, action) => {
         state.AllStoreData = action.payload;
+        // if(Array.isArray(state.UpdateStore)){
+        //   state.AllStoreData.stores.unshift(action.payload.store)
+        // }else{console.error('state.stores is not an array;',typeof(state.stores))}
+        
       })
+
+      
       .addCase(editStore.fulfilled, (state, action) => {
-        state.UpdateStore = action.payload;
-      })
+  const updatedStore = action.payload.store; // Access the store from payload
+  const index = state.AllStoreData.stores.findIndex(store => store.id === updatedStore.id);
+  if (index !== -1) {
+    state.AllStoreData.stores[index] = updatedStore;
+    if (state.StoreProfile && state.StoreProfile.id === updatedStore.id) {
+      state.StoreProfile = updatedStore;
+    }
+  }
+})
 
       .addCase(getSingleStore.fulfilled, (state, action) => {
         state.StoreProfile = action.payload;

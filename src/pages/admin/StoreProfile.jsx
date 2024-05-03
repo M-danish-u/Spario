@@ -40,7 +40,7 @@ const StoreProfile = () => {
       );
   return (
     <div>
-         <div className='w-full p- bg-re-400 mt- grid grid-cols-3  gap-10'>
+         <div className='w-full p- bg-re-400 mt- grid md:grid-cols-3  gap-4 md:gap-8'>
         <Card title="Total Amount" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount={storeProfile.total_amount}/>
         <Card title="Due Amount" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount={storeProfile.balance_amount}/>
         <Card title="Paid Amount" Icon={GrTransaction} iconColor="text-[#396AFF]" color="bg-[#E7EDFF]" amount={storeProfile.paid_amount}/>
@@ -48,42 +48,42 @@ const StoreProfile = () => {
         <Card title="No.of Store" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount="100"/> */}
       </div>
 
-      <div className='w-full bg-white py-5 px-10 mt-8 rounded-xl shadow-md'>
+      <div className='w-full bg-white py-4 md:px-10 px-4 mt-8  rounded-xl shadow-m'>
 <div className='border-b pb-5'>
-<h2 className="font-medium text-xl text-[#343C6A] ">Store Details</h2>
+<h2 className="font-medium text-xl  text-[#343C6A] pl-10 md:pl-0 ">Store Details</h2>
 </div>
-<div className='w-full grid grid-cols-3 mt-10'>
-<div className=' flex flex-col gap-12'>
-    <span className=' flex flex-col gap-4'>
+<div className='w-full gap-4 grid pl-10 md:pl-0 sm:grid-cols-2  md:grid-cols-3 mt-10'>
+<div className=' flex flex-col bg-red- gap-2  md:gap-12'>
+    <span className=' flex flex-col md:gap-4'>
     <h3 className='text-md text-[#718EBF]'>Store Name</h3>
     <p>{storeProfile.store_name}</p>
     </span>
 
-    <span className=' flex flex-col gap-4'>
+    <span className=' flex flex-col md:gap-4'>
     <h3 className='text-md text-[#718EBF]'>Address</h3>
     <p>{storeProfile.address}</p>
     </span>
 </div>
 
-<div className=' flex flex-col gap-12'>
-    <span className=' flex flex-col gap-4'>
+<div className=' flex  bg-red-40 flex-col md:gap-12'>
+    <span className=' flex flex-col md:gap-4'>
     <h3 className='text-md text-[#718EBF]'>Exicutive Name</h3>
     <p>{storeProfile.executive.name}</p>
     </span>
 
-    <span className=' flex flex-col gap-4'>
+    <span className=' flex flex-col md:gap-4'>
     <h3 className='text-md text-[#718EBF]'>Mobile 1</h3>
     <p>{storeProfile.contact_one}</p>
     </span>
 </div>
 
-<div className=' flex flex-col gap-12'>
-    <span className=' flex flex-col gap-4'>
+<div className=' flex bg-red-40 flex-col md:gap-12'>
+    <span className=' flex flex-col md:gap-4'>
     <h3 className='text-md text-[#718EBF]'>Route</h3>
     <p>{storeProfile.route.route_name}</p>
     </span>
 
-    <span className=' flex flex-col gap-4'>
+    <span className=' flex flex-col md:gap-4'>
     <h3 className='text-md text-[#718EBF]'>Mobile 2</h3>
     <p>{storeProfile.contact_two}</p>
     </span>
@@ -91,7 +91,7 @@ const StoreProfile = () => {
 </div>
 
       </div>
-      <h2 className="font-medium text-xl text-[#343C6A] mt-8 ">Invoices</h2>
+      <h2 className="font-medium text-xl text-[#343C6A] mt-4 md:mt-8 ">Invoices</h2>
 
       {/* <div className='w-full bg-white py-5 px-10 mt-8 rounded-xl shadow-md'> */}
         {/* <div className='w-full bg-slate-300 py-10'></div> */}

@@ -1,5 +1,5 @@
 import { FaUser } from "react-icons/fa6";
-import { FaUserClock } from "react-icons/fa";
+import { FaUserClock, FaEye } from "react-icons/fa"; // Added FaEye icon
 import { FaRegEdit } from "react-icons/fa";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 
@@ -7,87 +7,59 @@ export const StoreCollumn = (handleViewStore, handleEdit) => [
   {
     Header: "No",
     accessor: "id",
+    Cell: ({ row }) => <span>{row.index + 1}</span>,
   },
   {
     Header: "Store Name",
     accessor: "store_name",
   },
   {
-    Header: " Customer Name  ",
+    Header: "Customer Name",
     accessor: "customer_name",
   },
-
   {
-    Header: " Executive",
+    Header: "Executive",
     accessor: "executive.name",
   },
-
   {
-    Header: " Total  ",
-    accessor: " total_amount",
+    Header: "Total",
+    accessor: "total_amount",
     Cell: ({ row }) => (
-      <div className="flex flex-row items-center justify-cente ">
-        <LiaRupeeSignSolid /> {row.original.total_amount} {/* Add the Rupee icon */}
+      <div className="flex flex-row items-center justify-cente">
+        <LiaRupeeSignSolid /> {row.original.total_amount}
       </div>
     ),
   },
   {
-    Header: " Due  ",
+    Header: "Due",
     accessor: "balance_amount",
     Cell: ({ row }) => (
-      <div className="flex flex-row items-center ">
+      <div className="flex flex-row items-center">
         <LiaRupeeSignSolid className="text-red-600" />{" "}
-        <span style={{ color: row.original.balance_amount >-1? "red" : "inherit" }}>
+        <span style={{ color: row.original.balance_amount > -1 ? "red" : "inherit" }}>
           {row.original.balance_amount}
         </span>
       </div>
     ),
   },
-  
   {
-      Header: 'View Store',
-    accessor: "viewprofile",
+    Header: "Actions",
+    accessor: "actions",
     Cell: ({ row }) => (
-      <button
-        onClick={() => handleViewStore(row.original)}
-        className="text-[#2723F4]"
-      >
-        View Store
-      </button>
+      <div className="flex flex-row space-x-2">
+        <button
+          onClick={() => handleEdit(row.original)}
+          className="text-[#B1B1B1] cursor-pointer text-xl mr-4" // Added mr-2 for right margin
+        >
+          <FaRegEdit />
+        </button>
+        <button
+          onClick={() => handleViewStore(row.original)}
+          className="text-[#B1B1B1] text-xl  cursor-pointer"
+        >
+          <FaEye />
+        </button>
+      </div>
     ),
   },
-
-  {
-    //   Header: 'EDIT',
-    accessor: "edit",
-    Cell: ({ row }) => (
-      <button
-        onClick={() => handleEdit(row.original)}
-        className="text-[#B1B1B1] text-xl"
-      >
-        <FaRegEdit />
-      </button>
-    ),
-  },
-
-  // {
-  //   Header: 'Delete',
-  //   accessor: 'delete',
-  //   Cell: ({ row }) => (
-  //     <button
-  //     //   onClick={() =>handleDelete (row.original)}
-  //       className=""
-  //     >
-  //       Delete
-  //     </button>
-  //   ),
-  // },
 ];
-
-// function handleViewProfile(counselor) {
-//   console.log('Viewing profile for:', counselor.name);
-// }
-
-// function handleCheckAvailability(counselor) {
-//   console.log('Checking availability for:', counselor.name);
-// }

@@ -5,7 +5,15 @@ import * as Yup from "yup";
 import Input from "../../components/commonComponents/Input";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
-import { createStore, getAllExecutive, getAllRoute } from "../../redux/featuer/admin/AdminSlice";
+import {
+  createStore,
+  getAllExecutive,
+  getAllRoute,
+} from "../../redux/featuer/admin/AdminSlice";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const validationSchema = Yup.object().shape({
   store_name: Yup.string().required("Store Name is required"),
@@ -20,7 +28,12 @@ const validationSchema = Yup.object().shape({
 const CreateStoreModal = ({ onClose }) => {
   const [showRouteList, setShowRouteList] = useState(false);
   const [showExecutiveList, setShowExecutiveList] = useState(false);
-  const { register, handleSubmit, formState: { errors }, setValue } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm({
     resolver: yupResolver(validationSchema),
   });
   const dispatch = useDispatch();
@@ -30,19 +43,31 @@ const CreateStoreModal = ({ onClose }) => {
     dispatch(getAllExecutive());
   }, [dispatch]);
 
-  const routeData = useSelector((state) => state?.admin?.AllRouteData?.routes || []);
-  const executiveData = useSelector((state) => state?.admin?.AllExecutiveData?.executives || []);
+  const routeData = useSelector(
+    (state) => state?.admin?.AllRouteData?.routes || []
+  );
+  const executiveData = useSelector(
+    (state) => state?.admin?.AllExecutiveData?.executives || []
+  );
 
-  const routes = routeData.map(route => ({ id: route.id, name: route.route_name }));
-  const executives = executiveData.map(executive => ({ id: executive.id, name: executive.name }));
+  const routes = routeData.map((route) => ({
+    id: route.id,
+    name: route.route_name,
+  }));
+  const executives = executiveData.map((executive) => ({
+    id: executive.id,
+    name: executive.name,
+  }));
 
   const handleRouteSelect = (route) => {
     setValue("route", route.name);
     setValue("route_id", route.id); // Set the selected route ID in the form state
     setShowRouteList(false);
   };
+  const navigate = useNavigate();
 
   const handleExecutiveSelect = (executive) => {
+    console.log(executive);
     setValue("executive", executive.name);
     setValue("executive_id", executive.id); // Set the selected executive ID in the form state
     setShowExecutiveList(false);
@@ -50,25 +75,49 @@ const CreateStoreModal = ({ onClose }) => {
 
   const onSubmit = (data) => {
     // Dispatch action to create store, including selected route and executive IDs
-    dispatch(createStore({
-      ...data,
-      route_id: data.route_id,
-      executive_id: data.executive_id
-    }))
+    dispatch(
+      createStore({
+        ...data,
+        route_id: data.route_id,
+        executive_id: data.executive_id,
+      })
+    )
       .then(() => {
         // Handle success
+        console.log("store created successfully:", data);
+        toast.success("Store created successfully");
+
+        //  navigate('/admin/store')
+
+        //  setTimeout(() => {
+        //   // onClose();
+        window.location.reload();
+        // }, 2000);
       })
       .catch((error) => {
         // Handle error
+        console.error("Error creating store:", error);
+        toast.error(error);
       });
   };
 
   return (
     <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50 bg-black/70">
-      <div className="bg-white border flex-row py-8 rounded-xl px-20 b-slate-700 g-white relative">
+      <ToastContainer
+        position="top-right"
+        autoClose={3000} // Automatically close after 3 seconds
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      <div className="bg-white border flex-row py-8 rounded-xl px-8 md:px-20 b-slate-700 g-white relative">
         <h2 className="font-medium text-xl text-[#343C6A]">Create Store</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col mt-4">
-          <div className="flex gap-5">
+          <div className="flex flex-col sm:flex-row gap:2 md:gap-4">
             <Input
               type="text"
               id="store_name"
@@ -87,7 +136,7 @@ const CreateStoreModal = ({ onClose }) => {
             />
           </div>
 
-          <div className="flex gap-5">
+          <div className="flex flex-col sm:flex-row gap:2 md:gap-4">
             <Input
               type="text"
               id="address"
@@ -96,9 +145,35 @@ const CreateStoreModal = ({ onClose }) => {
               errors={errors}
               placeholder="Address"
             />
-            <div className="relative flex-grow">
+
+            <div className="flex  flex-col">
+              <label htmlFor="car">Route</label>
+              <div className="">
+                <select
+                  className="peer block min-h-[auto] h-12 w-[280px] mt-3 rounded-lg text-[#718EBF] border-slate-200 border-[1px] bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none focus:placeholder:opacity-100 motion-reduce:transition-none dark:peer-focus:text-primary"
+                  id="route"
+                  {...register("route")}
+                  placeholder="Route"
+                  onChange={(e) => {
+                    handleRouteSelect(
+                      routes.find((route) => route.name === e.target.value)
+                    );
+                  }}
+                >
+                  <option>Select Route</option>
+
+                  {/* Map over stores array to generate options */}
+                  {routes.map((route) => (
+                    <option key={route.id} value={route.name}>
+                      {route.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            {/* <div className="relative mb-2 flex-grow">
               <label>Route</label>
-              <div className="relative">
+              <div className="relative mt-2">
                 <input
                   type="text"
                   id="route"
@@ -112,7 +187,7 @@ const CreateStoreModal = ({ onClose }) => {
                   onClick={() => setShowRouteList(!showRouteList)}
                 />
                 {showRouteList && (
-                  <div className="absolute top-full left-0 w-full z-10 bg-white border border-gray-200 shadow-lg rounded-b-lg">
+                  <div className="absolute top-full left-0 w-full h-48 overflow-y-auto z-10 bg-white border border-gray-200 shadow-lg rounded-b-lg">
                     {routes.map((route) => (
                       <div
                         key={route.id}
@@ -125,10 +200,10 @@ const CreateStoreModal = ({ onClose }) => {
                   </div>
                 )}
               </div>
-            </div>
+            </div> */}
           </div>
 
-          <div className="flex gap-5">
+          <div className="flex flex-col sm:flex-row gap:2 md:gap-4">
             <Input
               type="text"
               id="contact_one"
@@ -147,10 +222,36 @@ const CreateStoreModal = ({ onClose }) => {
             />
           </div>
 
-          <div className="flex gap-5">
-            <div className="relative flex-grow">
+          <div className="flex flex-col sm:flex-row gap:2 md:gap-4">
+            <div className="flex  flex-col">
+              <label htmlFor="car">Executive</label>
+              <div className="">
+                <select
+                  className="peer block min-h-[auto] h-12 w-[280px] mt-3 rounded-lg text-[#718EBF] border-slate-200 border-[1px] bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none focus:placeholder:opacity-100 motion-reduce:transition-none dark:peer-focus:text-primary"
+                  id="executive"
+                  {...register("executive")}
+                  placeholder="Executive"
+                  onChange={(e) => {
+                    handleExecutiveSelect(
+                      executives.find(
+                        (executive) => executive.name === e.target.value
+                      )
+                    );
+                  }}
+                >
+                  {/* Map over stores array to generate options */}
+                  <option>Select Executive</option>
+                  {executives.map((executive) => (
+                    <option key={executive.id} value={executive.name}>
+                      {executive.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            {/* <div className="relative flex-grow">
               <label>Executive</label>
-              <div className="relative">
+              <div className="relative mt-2">
                 <input
                   type="text"
                   id="executive"
@@ -164,7 +265,7 @@ const CreateStoreModal = ({ onClose }) => {
                   onClick={() => setShowExecutiveList(!showExecutiveList)}
                 />
                 {showExecutiveList && (
-                  <div className="absolute top-full left-0 w-full z-10 bg-white border border-gray-200 shadow-lg rounded-b-lg">
+                  <div className="absolute top-full left-0 w-full z-10 h-48 overflow-y-auto bg-white border border-gray-200 shadow-lg rounded-b-lg">
                     {executives.map((executive) => (
                       <div
                         key={executive.id}
@@ -177,8 +278,8 @@ const CreateStoreModal = ({ onClose }) => {
                   </div>
                 )}
               </div>
-            </div>
-            <div className="mt-7">
+            </div> */}
+            <div className="mt-10">
               <button
                 type="submit"
                 className="px-2 py-2 w-[270px]  justify-center h-max bg-[#2723F4] text-white flex items-center rounded-md"

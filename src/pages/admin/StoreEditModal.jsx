@@ -7,6 +7,9 @@ import { IoClose, IoChevronDown } from "react-icons/io5";
 import { editStore } from "../../redux/featuer/admin/AdminSlice";
 import { useDispatch, useSelector } from "react-redux";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const StoreEditModal = ({ onEditClose, store }) => {
   console.log(store,'ddddddddd');
   const validationSchema = Yup.object().shape({
@@ -77,21 +80,44 @@ console.log(data,'sssssss');
       }
     }))
       .then(() => {
-        // Handle success
-        onEditClose(); // Close the modal
+        console.log("Store Edited successfully:", data);
+        toast.success('Store Edited successfully');
+        window.location.reload()
+        // setTimeout(() => {
+        //   onEditClose();
+        // }, 2000);
       })
       .catch((error) => {
         // Handle error
         console.error('Error editing store:', error);
+        toast.error(error);
+
       });
   };
 
   return (
     <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50 bg-black/70">
-      <div className="bg-white border flex-row py-8 rounded-xl px-20 b-slate-700 g-white relative">
+      <ToastContainer
+      position="top-right"
+      autoClose={3000} // Automatically close after 3 seconds
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+    />
+      <div className="bg-white border flex-row py-8 rounded-xl px-8 md:px-20 b-slate-700 g-white relative">
+      <div className="flex items-center border-b-[1px] justify-between w-full">
         <h2 className="font-medium text-xl text-[#343C6A]">Edit Store</h2>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col mt-4">
-          <div className="flex gap-5">
+        <div className=" " onClick={onEditClose}>
+          <button>
+            <IoClose className="mt-5" size={24} />
+          </button>
+        </div>
+        </div>          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col mt-4">
+          <div className="flex flex-col sm:flex-row gap:2 md:gap-4">
             <Input
               type="text"
               id="store_name"
@@ -110,7 +136,7 @@ console.log(data,'sssssss');
             />
           </div>
 
-          <div className="flex gap-5">
+          <div className="flex flex-col sm:flex-row gap:2 md:gap-4">
             <Input
               type="text"
               id="address"
@@ -119,9 +145,36 @@ console.log(data,'sssssss');
               errors={errors}
               placeholder="Address"
             />
-            <div className="relative flex-grow">
+
+<div className="flex  flex-col">
+                <label htmlFor="car">Route</label>
+                <div className="">
+                  <select
+                    className="peer block min-h-[auto] h-12 w-[280px] mt-3 rounded-lg text-[#718EBF] border-slate-200 border-[1px] bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none focus:placeholder:opacity-100 motion-reduce:transition-none dark:peer-focus:text-primary"
+                   
+                    id="route"
+                    {...register("route")}
+                    placeholder="Route"
+                    onChange={(e) => {
+                      handleRouteSelect(
+                        routes.find((route) => route.name === e.target.value)
+                      );
+                    }}
+                  >
+                    {/* Map over stores array to generate options */}
+                    <option value=''>Select Route</option>
+
+                    {routes.map((route) => (
+                      <option key={route.id} value={route.name}>
+                        {route.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                </div>
+            {/* <div className="relative flex-grow">
               <label>Route</label>
-              <div className="relative">
+              <div className="relative mt-2 mb-2">
                 <input
                   type="text"
                   id="route"
@@ -148,10 +201,11 @@ console.log(data,'sssssss');
                   </div>
                 )}
               </div>
-            </div>
+            </div> */}
+
           </div>
 
-          <div className="flex gap-5">
+          <div className="flex flex-col sm:flex-row gap:2 md:gap-4">
             <Input
               type="text"
               id="contact_one"
@@ -170,10 +224,10 @@ console.log(data,'sssssss');
             />
           </div>
 
-          <div className="flex gap-5">
-            <div className="relative flex-grow">
+          <div className="flex flex-col sm:flex-row gap:2 md:gap-4">
+            {/* <div className="relative flex-grow">
               <label>Executive</label>
-              <div className="relative">
+              <div className="relative mt-2 mb-2">
                 <input
                   type="text"
                   id="executive"
@@ -200,8 +254,33 @@ console.log(data,'sssssss');
                   </div>
                 )}
               </div>
-            </div>
-            <div className="mt-7">
+            </div> */}
+             <div className="flex  flex-col">
+                <label htmlFor="car">Executive</label>
+                <div className="">
+                  <select
+                    className="peer block min-h-[auto] h-12 w-[280px] mt-3 rounded-lg text-[#718EBF] border-slate-200 border-[1px] bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none focus:placeholder:opacity-100 motion-reduce:transition-none dark:peer-focus:text-primary"
+                   
+                    id="executive"
+                    {...register("executive")}
+                    placeholder="Executive"
+                    onChange={(e) => {
+                      handleRouteSelect(
+                        routes.find((route) => route.name === e.target.value)
+                      );
+                    }}
+                  >
+                    <option value=''>Select  Executive</option>
+
+                    {executives.map((executive) => (
+                      <option key={executive.id} value={executive.name}>
+                        {executive.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                </div>
+            <div className="mt-8">
               <button
                 type="submit"
                 className="px-2 py-2 w-[270px]  justify-center h-max bg-[#2723F4] text-white flex items-center rounded-md"
@@ -211,11 +290,7 @@ console.log(data,'sssssss');
             </div>
           </div>
         </form>
-        <div className="absolute top-2 right-2" onClick={onEditClose}>
-          <button>
-            <IoClose className="mt-5" size={24} />
-          </button>
-        </div>
+        
       </div>
     </div>
   );

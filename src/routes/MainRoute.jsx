@@ -7,7 +7,7 @@ import Login from '../Auth/Login'
 
 const MainRoute = () => {
   return (
-    <div>
+    <div className=''>
         <BrowserRouter>
         <Routes>
         <Route path="/"  element={<HomePage/>} />

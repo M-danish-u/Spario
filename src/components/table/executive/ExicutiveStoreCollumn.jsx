@@ -1,12 +1,10 @@
-import { FaUser } from "react-icons/fa6";
-import { FaUserClock } from "react-icons/fa";
-import { FaRegEdit } from "react-icons/fa";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 
 export const ExecutiveStoreCollumn = (handleViewStore, handleAddAmount) => [
   {
     Header: "No",
     accessor: "id",
+    Cell: ({ row }) => <span>{row.index + 1}</span>,
   },
   {
     Header: "Store Name",
@@ -16,12 +14,11 @@ export const ExecutiveStoreCollumn = (handleViewStore, handleAddAmount) => [
     Header: " Customer Name  ",
     accessor: "customer_name",
   },
-
   {
     Header: " Total  ",
     accessor: "total_amount",
     Cell: ({ row }) => (
-      <div className="flex flex-row items-center justify-cente ">
+      <div className="flex flex-row items-center justify-center">
         <LiaRupeeSignSolid /> {row.original.total_amount} {/* Add the Rupee icon */}
       </div>
     ),
@@ -30,7 +27,7 @@ export const ExecutiveStoreCollumn = (handleViewStore, handleAddAmount) => [
     Header: " Due  ",
     accessor: "balance_amount",
     Cell: ({ row }) => (
-      <div className="flex flex-row items-center ">
+      <div className="flex flex-row items-center">
         <LiaRupeeSignSolid className="text-red-600" />{" "}
         <span style={{ color: row.original.balance_amount > -1 ? "red" : "inherit" }}>
           {row.original.balance_amount}
@@ -42,7 +39,7 @@ export const ExecutiveStoreCollumn = (handleViewStore, handleAddAmount) => [
     Header: " Paid  ",
     accessor: "paidAmount",
     Cell: ({ row }) => (
-      <div className="flex flex-row items-center ">
+      <div className="flex flex-row items-center">
         <LiaRupeeSignSolid className="text-green-700" />{" "}
         <span style={{ color: row.original.paidAmount > -1 ? "green" : "inherit" }}>
           {row.original.paidAmount}
@@ -50,22 +47,23 @@ export const ExecutiveStoreCollumn = (handleViewStore, handleAddAmount) => [
       </div>
     ),
   },
-  
-   
   {
-      Header: 'Add Amount',
+    Header: 'Add Amount',
     accessor: "amount",
     Cell: ({ row }) => (
       <button
         onClick={() => handleAddAmount(row.original)}
-        className="text-white p-2 rounded-md bg-green-500"
+        className={`text-white p-2 rounded-md ${
+          row.original.balance_amount < 1 ? "bg-gray-400" : "bg-green-500"
+        }`}
+        disabled={row.original.balance_amount < 1}
       >
-        Add Amount
+      {row.original.balance_amount < 1 ? "No Amount " : "Add Amount"}
       </button>
     ),
   },
   {
-      Header: 'View Profile',
+    Header: 'View Profile',
     accessor: "viewprofile",
     Cell: ({ row }) => (
       <button
@@ -76,38 +74,5 @@ export const ExecutiveStoreCollumn = (handleViewStore, handleAddAmount) => [
       </button>
     ),
   },
-
-//   {
-//     //   Header: 'EDIT',
-//     accessor: "edit",
-//     Cell: ({ row }) => (
-//       <button
-//         onClick={() => handleEdit(row.original)}
-//         className="text-[#B1B1B1] text-xl"
-//       >
-//         <FaRegEdit />
-//       </button>
-//     ),
-//   },
-
-  // {
-  //   Header: 'Delete',
-  //   accessor: 'delete',
-  //   Cell: ({ row }) => (
-  //     <button
-  //     //   onClick={() =>handleDelete (row.original)}
-  //       className=""
-  //     >
-  //       Delete
-  //     </button>
-  //   ),
-  // },
+  // Other columns...
 ];
-
-// function handleViewProfile(counselor) {
-//   console.log('Viewing profile for:', counselor.name);
-// }
-
-// function handleCheckAvailability(counselor) {
-//   console.log('Checking availability for:', counselor.name);
-// }

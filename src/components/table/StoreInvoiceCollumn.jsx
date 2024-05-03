@@ -7,6 +7,7 @@ export const StoreInvoiceCollumn = () => [
   {
     Header: "SL No",
     accessor: "id",
+    Cell: ({ row }) => <span>{row.index + 1}</span>,
   },
   {
     Header: "Invoice No.",
@@ -55,7 +56,7 @@ export const StoreInvoiceCollumn = () => [
     ),
   },
   {
-    Header: " Date",
+    Header: "Due Date",
     accessor: "due_date",
   },
  

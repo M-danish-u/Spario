@@ -7,6 +7,7 @@ export const RoutesCollumn = (handleViewStore) => [
   {
     Header: "SL No",
     accessor: "id",
+    Cell: ({ row }) => <span>{row.index + 1}</span>,
   },
   {
     Header: "Rout Name",
@@ -14,12 +15,12 @@ export const RoutesCollumn = (handleViewStore) => [
   },
   
   {
-      Header: 'View Store',
+      Header: 'Action',
     accessor: "viewprofile",
     Cell: ({ row }) => (
       <button
         onClick={() => handleViewStore(row.original)}
-        className="text-[#2723F4]"
+        className="text-[#2723F4] cursor-pointer"
       >
         View Stores
       </button>

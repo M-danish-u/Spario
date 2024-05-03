@@ -7,6 +7,7 @@ export const TransactionsCollumn = (handleViewStore, handleEdit) => [
   {
     Header: "No",
     accessor: "id",
+    Cell: ({ row }) => <span>{row.index + 1}</span>,
   },
   {
     Header: "Executive",

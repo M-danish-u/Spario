@@ -45,8 +45,8 @@ const ExecutiveSidebar = () => {
   };
 
   return (
-    <div className='h-[100vh] bg-red-4' style={{ boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }}>
-      <div className='h-[85px] w-full bg-slate-5 flex items-center justify-center text-[2.5rem] font-semibold text-[#C91818]' >SPARIO</div>
+    <div className='h-[100vh] md:block hidden bg-red-4' >
+      <div className='h-[85px] w-full bg-slate-5 flex items-center justify-center text-[40px] font-extrabold text-[#C91818]' >SPARIO</div>
       <div className='mt-4 bg-slate- flex flex-col justify-between' style={{ height: 'calc(100vh - 85px)', }}>
 <div>
       {SidebarData.map((data, i) => {
@@ -59,8 +59,8 @@ const ExecutiveSidebar = () => {
           // </div>
           
           <div className={`flex items-center w-full px-8 bg-red- gap-8  py-4 ${itemColor}`} onClick={() => navigate(data.path)} key={i}>
-          <Icon className={`text-3xl ${itemColor}`} />
-          <p className={`text-2xl '}`}>{data.name} </p>
+          <Icon className={`text-[20px] ${itemColor}`} />
+          <p className={`text-[18px] cursor-pointer`}>{data.name}</p>
         </div>
           );
         })}

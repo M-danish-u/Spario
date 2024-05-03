@@ -7,6 +7,7 @@ export const ExecutiveStoreCollumn = () => [
   {
     Header: "SL No",
     accessor: "id",
+    Cell: ({ row }) => <span>{row.index + 1}</span>,
   },
   {
     Header: "Store Name",

@@ -4,9 +4,9 @@ import MainRoute from './routes/MainRoute';
 function App() {
 
   return (
-    <>
+    < div className='inter_font '>
       <MainRoute />
-    </>
+    </div>
   );
 }
 

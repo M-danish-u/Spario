@@ -1,41 +1,37 @@
-import React, { useEffect } from 'react'
-import { TransactionsCollumn } from '../../components/table/TransactionsCollumn';
+import React, { useEffect } from 'react';
 import { useMemo } from 'react';
-import Table2 from '../../components/table/Table2';
-import Table3 from '../../components/table/executive/Table3';
 import { useDispatch, useSelector } from 'react-redux';
-// import { getExecutivTransactions } from '../../redux/featuer/executive/ExecutiveSlice';
-import { ExecutiveTransCollumn } from '../../components/table/executive/ExecutiveTransCollumn';
 import { getExecutivTransactions } from '../../redux/featuer/executive/ExecutiveSlice';
+import { ExecutiveTransCollumn } from '../../components/table/executive/ExecutiveTransCollumn';
+import Table2 from '../../components/table/Table2';
 
 const ExecutiveTransactions = () => {
+  const executive_id = useSelector((state) => state?.adminAuth?.admin?.id);
+  const transactionData = useSelector((state) => state?.executive?.TransactionData?.transactions);
+  const loading = useSelector((state) => state?.executive?.loading);
+  const dispatch = useDispatch();
 
-    const executive_id=useSelector((state)=>state?.executiveAuth?.executive?.id)
-  
-    const transactionData=useSelector((state)=>state?.executive?.TransactionData?.transactions)
+  useEffect(() => {
+    // Fetch executive transactions when component mounts
+    dispatch(getExecutivTransactions(executive_id));
+  }, [dispatch, executive_id]);
 
-    console.log(transactionData,'iiiiiiiiii');
+  const columns = useMemo(
+    () => ExecutiveTransCollumn(),
+    []
+  );
 
-  
-    const dispatch=useDispatch()
-  
-    useEffect(() => {
-      dispatch(getExecutivTransactions(executive_id));
-  
-      
-    }, [dispatch]);
+  // Display loading message while fetching data
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
-    
-    const columns = useMemo(
-        () => ExecutiveTransCollumn(),
-        []
-      );
+  // Render the component only if transactionData is available
   return (
     <div>
-        <Table2 heading={""} DATA={transactionData} COLUMNS={columns} />
-
+      <Table2 heading={""} DATA={transactionData || []} COLUMNS={columns} />
     </div>
-  )
-}
+  );
+};
 
-export default ExecutiveTransactions
+export default ExecutiveTransactions;

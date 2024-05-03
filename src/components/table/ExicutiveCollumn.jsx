@@ -1,9 +1,9 @@
 import { useState } from "react";
 import Switch from "@mui/material/Switch";
 import { LiaRupeeSignSolid } from "react-icons/lia";
-import { FaRegEdit } from "react-icons/fa";
+import { FaRegEdit, FaRegEye } from "react-icons/fa";
 
-export const ExecutiveCollumn = (handleViewExecutive, handleEdit) => {
+export const ExecutiveCollumn = (handleViewExecutive, handleEdit, handleStatus) => {
   const handleStatusChange = (row) => {
     // Implement your logic to update the status here
     console.log("Status changed for executive:", row.executiveName);
@@ -13,6 +13,7 @@ export const ExecutiveCollumn = (handleViewExecutive, handleEdit) => {
     {
       Header: "No",
       accessor: "id",
+      Cell: ({ row }) => <span>{row.index + 1}</span>,
     },
     {
       Header: "Executive Name",
@@ -20,7 +21,7 @@ export const ExecutiveCollumn = (handleViewExecutive, handleEdit) => {
     },
     {
       Header: "No. of Stores",
-      accessor: "numOfStore",
+      accessor: "stores_count",
     },
     {
       Header: "Total Amount",
@@ -43,36 +44,35 @@ export const ExecutiveCollumn = (handleViewExecutive, handleEdit) => {
         </div>
       ),
     },
+
     {
       Header: "Status",
       accessor: "status",
       Cell: ({ row }) => (
-        <Switch className=""
+        <Switch
           checked={row.original.active_status === "1"}
-          onChange={() => handleStatusChange(row.original)}
+          onClick={() => handleStatus(row.original)}
         />
       ),
     },
     {
-      accessor: "viewprofile",
+      Header: "Actions",
+      accessor: "actions",
       Cell: ({ row }) => (
-        <button
-          onClick={() => handleViewExecutive(row.original)}
-          className="text-[#2723F4]"
-        >
-          View Executive
-        </button>
-      ),
-    },
-    {
-      accessor: "edit",
-      Cell: ({ row }) => (
-        <button
-          onClick={() => handleEdit(row.original)}
-          className="text-[#B1B1B1] text-xl"
-        >
-          <FaRegEdit />
-        </button>
+        <div className="flex  space-x-4">
+          <button
+            onClick={() => handleViewExecutive(row.original)}
+            className="text-[#B1B1B1] text-xl mr-4"
+          >
+            <FaRegEye />
+          </button>
+          <button
+            onClick={() => handleEdit(row.original)}
+            className="text-[#B1B1B1]  text-xl"
+          >
+            <FaRegEdit />
+          </button>
+        </div>
       ),
     },
   ];

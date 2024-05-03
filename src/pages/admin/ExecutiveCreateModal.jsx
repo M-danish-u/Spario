@@ -7,15 +7,33 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from "react-redux";
 import { createExecutive } from "../../redux/featuer/admin/AdminSlice";
 
-const validationSchema = Yup.object().shape({
-  name: Yup.string().required("Executive Name is required"),
-    address: Yup.string().required("Address is required"),
-    contact_one: Yup.string().required("Mobile 1 is required"),
-    contact_two: Yup.string().required("Mobile 2 is required"),
-    email: Yup.string().required("UserName is required"),
-    password: Yup.string().required("Password is required"),
 
-});
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
+const validationSchema = Yup.object().shape({
+    name: Yup.string()
+      .required("Executive Name is required")
+      .min(2, "Executive Name must be at least 2 characters")
+      .max(50, "Executive Name must be at most 50 characters"),
+    address: Yup.string()
+      .required("Address is required")
+      .max(255, "Address must be at most 255 characters"),
+    contact_one: Yup.string()
+      .required("Mobile 1 is required")
+      .matches(/^[0-9]{10}$/, "Mobile 1 must be a valid 10-digit number"),
+    contact_two: Yup.string()
+      .required("Mobile 2 is required")
+      .matches(/^[0-9]{10}$/, "Mobile 2 must be a valid 10-digit number"),
+    email: Yup.string()
+      .required("Username is required")
+      .max(50, "Username must be at most 50 characters"),
+    password: Yup.string()
+      .required("Password is required")
+      .min(8, "Password must be at least 8 characters"),
+  });
+  
 
 const ExecutiveCreateModal = ({ onClose }) => {
     
@@ -30,25 +48,51 @@ const ExecutiveCreateModal = ({ onClose }) => {
         dispatch(createExecutive(data))
         .then(() => {
         //   toast.success('Executive created successfully!'); // Display success message
-        
+        console.log("Executive created successfully:", data);
+        toast.success('Executive created successfully');
+
+    //     setTimeout(() => {
+        window.location.reload()
+    // //      onClose();
+    //    }, 2000);
+   
         })
         .catch((error) => {
           console.error('Error adding college:', error);
           // Handle error if college addition fails
+          toast.error(error);
         });
+       
       };
 
     // const onSubmit = (data) => {
     //     console.log(data);
-    //     onClose(); // Close the modal
+    //     // Close the modal
     // };
 
     return (
         <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50 bg-black/70">
-            <div className="bg-white border flex-row py-8 rounded-xl px-20 b-slate-700 g-white relative">
-                <h2 className="font-medium text-xl text-[#343C6A]">Add Executive</h2>
-                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col mt-4">
-                    <div className="flex gap-5">
+             <ToastContainer
+      position="top-right"
+      autoClose={3000} // Automatically close after 3 seconds
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+    />
+            <div className="bg-white border flex-row py-8 rounded-xl px-8 md:px-20 b-slate-700 g-white relative">
+            <div className="flex items-center border-b-[1px] justify-between w-full">
+        <h2 className="font-medium text-xl  text-[#343C6A]">Add Executive</h2>
+        <div className=" " onClick={onClose}>
+          <button>
+            <IoClose className="mt-5" size={24} />
+          </button>
+        </div>
+        </div>                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col mt-4">
+                    <div className="flex flex-col sm:flex-row gap:2 md:gap-4">
                         <Input
                             type="text"
                             id="name"
@@ -57,28 +101,28 @@ const ExecutiveCreateModal = ({ onClose }) => {
                             errors={errors}
                             placeholder="Executive Name"
                         />
-                    
-                   
-                   <Input
-                            type="text"
-                            id="contact_one"
-                            label="Mobile 1"
-                            register={register}
-                            errors={errors}
-                            placeholder="Mobile"
-                        />
-                    
-                    </div>
-
-                    <div className="flex gap-5">
-                       
-                    <Input
+                        
+                        <Input
                             type="text"
                             id="address"
                             label="Address"
                             register={register}
                             errors={errors}
                             placeholder="Address"
+                        />
+                   
+                    
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row gap:2 md:gap-4">
+                   
+                    <Input
+                            type="text"
+                            id="contact_one"
+                            label="Mobile 1"
+                            register={register}
+                            errors={errors}
+                            placeholder="Mobile"
                         />
                         <Input
                             type="text"
@@ -90,7 +134,7 @@ const ExecutiveCreateModal = ({ onClose }) => {
                         />
                     </div>
 
-                    <div className="flex gap-5">
+                    <div className="flex flex-col sm:flex-row gap:2 md:gap-4">
                     <Input
                             type="text"
                             id="email"
@@ -111,7 +155,7 @@ const ExecutiveCreateModal = ({ onClose }) => {
                             
                         
                     </div>
-                    <div className="mt-7">
+                    <div className=" mt-4">
                             <button
                                 type="submit"
                                 className="px-2 py-2 w-[270px]  justify-center h-max bg-[#2723F4] text-white flex items-center rounded-md"
@@ -121,11 +165,7 @@ const ExecutiveCreateModal = ({ onClose }) => {
                         </div>
                 </form>
 
-                <div className="absolute top-2 right-2" onClick={onClose}>
-                    <button>
-                        <IoClose className="mt-5" size={24} />
-                    </button>
-                </div>
+                
             </div>
         </div>
     );

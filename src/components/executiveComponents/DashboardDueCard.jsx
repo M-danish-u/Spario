@@ -1,6 +1,6 @@
 import React from "react";
 
-const ExecutivePerformCard = ({ perfomanceColor, title, top }) => {
+const DashboardDueCard = ({ perfomanceColor, title, top }) => {
   const data = [
     { slno: "01", name: "name 1", performance: "80%" },
     { slno: "02", name: "name 2", performance: "60%" },
@@ -18,7 +18,7 @@ const ExecutivePerformCard = ({ perfomanceColor, title, top }) => {
             <tr className=" ">
               <th className="px-4 text-[#718EBF] font-normal t  py-2">SL.No</th>
 
-              <th className="px-4 text-[#718EBF] font-normal  py-2">Store Name</th>
+              <th className="px-4 text-[#718EBF] font-normal  py-2">Executive Name</th>
               <th className="px-4 text-[#718EBF] font-normal   py-2">
                 Performance
               </th>
@@ -30,7 +30,7 @@ const ExecutivePerformCard = ({ perfomanceColor, title, top }) => {
                 <td className="px-4 py-2 text-center">{index + 1}</td> {/* Use index + 1 for serial number */}
                 <td className="px-4 py-2 text-center">{item.store_name}</td>
                 <td className={`${perfomanceColor} px-4 py-2 text-center`}>
-                  {item.performancePercentage}%
+                  {item.totalDueAmount}
                 </td>
               </tr>
             ))}
@@ -41,4 +41,4 @@ const ExecutivePerformCard = ({ perfomanceColor, title, top }) => {
   );
 };
 
-export default ExecutivePerformCard;
+export default DashboardDueCard;

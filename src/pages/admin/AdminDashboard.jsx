@@ -55,30 +55,32 @@ const AdminDashboard = () => {
 
   return (
     <div className=''>
-      <div className='w-full h-8 bg-re justify-end flex'>
+      <div className='w-full h-8 bg-re-400  justify-end md:pr-5 flex'>
         <div onClick={handleEdit}>
         <Button title="+ Add Invoice" />
         </div>
       </div>
-      <div className='w-full p-5 bg-re-400 mt- grid grid-cols-3  gap-10'>
+      <div className='w-full md:p-4 md:mt-2 mt-6 g-red-400 mt- grid sm:grid-cols-2 lg:grid-cols-5 md:grid-cols-3 gap-4 md:gap-8'>
         <Card title="Total Amount" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount={dashBoardData?.totalAmount}/>
         <Card title="Due Amount" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount={dashBoardData?.dueAmount}/>
         <Card title="Paid Amount" Icon={GrTransaction} iconColor="text-[#396AFF]" color="bg-[#E7EDFF]" amount={dashBoardData?.paidAmount}/>
-        <Card title="No. of Exicutive" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount={dashBoardData?.totalExecutives}/>
-        <Card title="No.of Store" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount={dashBoardData?.totalStores}/>
+        <Card title="No.of Executive" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount={dashBoardData?.totalExecutives}/>
+        <Card title="No.of Stores" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount={dashBoardData?.totalStores}/>
       </div>
 
-      <div className='w-full p-5 bg-re-500  grid grid-cols-2 ' >
+      <div className="w-full md:p-4 b-red-500 grid grid-cols-1 mt-4 md:mt-0 md:grid-cols-2 gap-4 md:gap-8" >
 <Chart/>
 <ChartStore/>
       </div>
 
-      <div className='w-full p-5 b-red-500  grid grid-cols-3'>
+      <div className='w-full md:p-4 g-red-500 md:gap-8 gap-4 sm:grid-cols-2 mt-4 md:mt-0 grid lg:grid-cols-3'>
 <PerfomanceCard title="Top Performing Executive" perfomanceColor='text-[#16DBCC]' name="Executive" top={topExecutive}/>
 <PerformingStore title="Top Performing Store" perfomanceColor='text-[#16DBCC]' name="Store" top={topStore}/>
-<TopDue title="Top Due" perfomanceColor='text-red-500' name="Store" top={topDue}/>
+<TopDue title="Top Due" perfomanceColor='text-red-500' name="Executive" top={topDue}/>
 
       </div>
+
+      
       {showModal && (
         <InvoiceModal
           // college={selectedCollege}

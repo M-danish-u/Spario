@@ -14,7 +14,7 @@ const TopDue = ({perfomanceColor,title,name,top}) => {
   return (
     <div >
       <h2 className="font-medium text-xl text-[#343C6A]">{title}</h2>
-      <div className='bg-white shadow-md w-[300px] flex items-center justify-center py-2 mt-4 rounded-xl'>
+      <div className='bg-white shadow-md  flex items-center justify-center py-4 mt-4 rounded-xl'>
         <table className="border-collapse">
           <thead>
             <tr className=' '>

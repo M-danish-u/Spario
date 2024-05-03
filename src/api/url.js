@@ -36,6 +36,8 @@ export const deleteExecutiveAPI='api/admin/executives'
 // (id)
 export const getExecutiveProfileAPI="api/admin/executives" 
 
+export const executiveStatusChangeAPI='api/executives/status'
+
 
 // admin route
 

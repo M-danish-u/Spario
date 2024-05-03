@@ -7,6 +7,7 @@ export const RouteProfileCollumn = (handleViewInvoices) => [
   {
     Header: "SL No",
     accessor: "id",
+    Cell: ({ row }) => <span>{row.index + 1}</span>,
   },
   {
     Header: "Store Name",
@@ -14,7 +15,7 @@ export const RouteProfileCollumn = (handleViewInvoices) => [
   },
   
   {
-    //   Header: 'View Profile',
+      Header: 'View Profile',
     accessor: "viewprofile",
     Cell: ({ row }) => (
       <button

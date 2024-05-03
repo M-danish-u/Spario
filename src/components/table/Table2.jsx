@@ -31,15 +31,16 @@ const Table2 = ({heading ,DATA,COLUMNS}) => {
       
 
 return (
-    <div>
-        <div className='bg-yellow-30 '>
+    <div >
+        <div className=' '>
         <div className="relative flex items-center gap-6  rounded-lg">
 
-<Filter filter={globalFilter} setFilter={setGlobalFilter} />
 
 </div>
         </div>
-  <div className="shadow-lg rounded-3xl px-4 bg-white mt-6 h-full">
+  <div className="shadow-lg rounded-3xl pt-4 px-4 overflow-x-auto scrollbar-hidden bg-white mt-4 md:mt-8 h-full">
+  <Filter filter={globalFilter} setFilter={setGlobalFilter} />
+
     
     <div className="flex justify-between  p-1 h-full">
 
