@@ -40,6 +40,7 @@ const initialState = {
   BalanceStore:null,
   ExecutiveStatus:null,
   currentStore:[]
+  
 
 };
 
@@ -135,36 +136,34 @@ export const getAllExecutive = createAsyncThunk(
 
 export const createExecutive = createAsyncThunk(
   "admin/createExecutive",
-  async (body) => {
+  async (body, { rejectWithValue }) => {
     try {
-      // Validate body parameter here if necessary
-
       const response = await axios.post(createExecutiveAPI, body);
-      //   console.log(response.data,'rrrrrrrr');
+      console.log(response.data, "ssssssssssssssssssssssss");
       return response.data;
     } catch (error) {
-      // Handle error based on your application's needs
-      throw error;
+      console.log(error.response.data.errors, 'checking the response from the backend');
+      return rejectWithValue(error.response.data.errors);
     }
   }
 );
-
 //   edit exicutive
 
 export const editExicutive = createAsyncThunk(
   "admin/editExicutive",
-  async ({ id, data }) => {
+  async ({ id, data }, { rejectWithValue }) => {
     try {
       // Validate parameters here if necessary
 
       const response = await axios.put(`${updateExecutiveAPI}/${id}`, data);
       return response.data;
     } catch (error) {
-      // Handle error based on your application's needs
-      throw error;
+      console.error(error.response.data.errors, 'checking the response from the backend');
+      return rejectWithValue(error.response.data.errors);
     }
   }
 );
+
 
 //    get  executive profile
 
@@ -242,18 +241,15 @@ export const getSingleRouteStore = createAsyncThunk(
 
 export const createStore = createAsyncThunk(
   "admin/createStore",
-  async (body) => {
-    console.log(body,'store body');
+  async (body, { rejectWithValue }) => {
     try {
-      // Validate body parameter here if necessary
-
+      // Assuming createStoreAPI is defined somewhere
       const response = await axios.post(createStoreAPI, body);
-        console.log(response,'store response');
-
+      console.log(response.data, "store response");
       return response.data;
     } catch (error) {
-      // Handle error based on your application's needs
-      throw error;
+      console.log(error.response.data.errors, 'checking the response from the backend');
+      return rejectWithValue(error.response.data.errors);
     }
   }
 );
@@ -291,7 +287,7 @@ export const executiveStatusChange = createAsyncThunk(
   }
 );
 
-//    get  executive profile
+//    get  store profile
 
 export const getSingleStore = createAsyncThunk(
   "admin/getSingleStore",
@@ -311,16 +307,16 @@ export const getSingleStore = createAsyncThunk(
 
 export const editStore = createAsyncThunk(
   "admin/editStore",
-  async ({ id, data }) => {
+  async ({ id, data }, { rejectWithValue }) => {
     try {
       // Validate parameters here if necessary
 
       const response = await axios.put(`${updateStoreAPI}/${id}`, data);
-      console.log(response.data,'resss');
+      console.log(response.data, 'resss');
       return response.data;
     } catch (error) {
-      // Handle error based on your application's needs
-      throw error;
+      console.error(error.response.data.errors, 'checking the response from the backend');
+      return rejectWithValue(error.response.data.errors);
     }
   }
 );
@@ -362,7 +358,14 @@ const adminSlice = createSlice({
       .addCase(createExecutive.fulfilled, (state, action) => {
         state.ExecutiveData = action.payload;
         state.AllExecutiveData.executives.unshift(action.payload.executive)
+        // console.log('success test');
       })
+
+      .addCase(createExecutive.rejected, (state, action) => {
+        state.ExecutiveData = action.payload;
+        // console.log('reject tet ',action.payload);
+      })
+
 
       .addCase(getSingleExecutive.fulfilled, (state, action) => {
         state.ExecutiveProfile = action.payload;
@@ -414,6 +417,11 @@ const adminSlice = createSlice({
         state.Store = action.payload;
         state.AllStoreData.stores.unshift(action.payload.store)
       })
+      .addCase(createStore.rejected, (state, action) => {
+        state.AllStoreData = action.payload;
+        // console.log('reject tet ',action.payload);
+      })
+
 
       .addCase(getAllStores.fulfilled, (state, action) => {
         state.AllStoreData = action.payload;

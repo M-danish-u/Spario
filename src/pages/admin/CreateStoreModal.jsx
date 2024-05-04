@@ -74,32 +74,27 @@ const CreateStoreModal = ({ onClose }) => {
   };
 
   const onSubmit = (data) => {
-    // Dispatch action to create store, including selected route and executive IDs
-    dispatch(
-      createStore({
-        ...data,
-        route_id: data.route_id,
-        executive_id: data.executive_id,
-      })
-    )
-      .then(() => {
-        // Handle success
-        console.log("store created successfully:", data);
-        toast.success("Store created successfully");
-
-        //  navigate('/admin/store')
-
-        //  setTimeout(() => {
-        //   // onClose();
-        window.location.reload();
-        // }, 2000);
+    dispatch(createStore({
+      ...data,
+      route_id: data.route_id,
+      executive_id: data.executive_id,
+    }))
+      .then((result) => {
+        if (createStore.fulfilled.match(result)) {
+          console.log("Store created successfully:", result.payload);
+          toast.success('Store created successfully');
+        } else if (createStore.rejected.match(result)) {
+          console.log('Error creating store:', result);
+          // Handle error if store creation fails
+          toast.error(result.payload[0]);
+        }
+        window.location.reload()
       })
       .catch((error) => {
-        // Handle error
-        console.error("Error creating store:", error);
-        toast.error(error);
+        console.error('Error:', error);
       });
   };
+  
 
   return (
     <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50 bg-black/70">

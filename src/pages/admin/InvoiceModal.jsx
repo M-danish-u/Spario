@@ -85,10 +85,10 @@ const InvoiceModal = ({ onClose }) => {
         // Handle success
         console.log("Invoice created successfully:", data);
         toast.success("Invoice created successfully");
-        window.location.reload();
-        // setTimeout(() => {
-        //   onClose();
-        // }, 2000);
+        // window.location.reload();
+        setTimeout(() => {
+          onClose();
+        }, 2000);
         // onClose(); // Close the modal after successful submission
       })
       .catch((error) => {

@@ -15,17 +15,20 @@ const initialState = {
 
 
 
-export const adminLogin = createAsyncThunk("adminLogin", async (body, thunkAPI) => {
-  try {
-    const response = await axios.post(`${loginAdminAPI}`, body);
-    
-    console.log(response.data,'looog');
-    return response.data;
-  } catch (error) {
-    console.log(error.response.data,"its rejecerd")
-    return thunkAPI.rejectWithValue(error.response.data);
+export const adminLogin = createAsyncThunk(
+  "admin/adminLogin",
+  async (body, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${loginAdminAPI}`, body);
+      console.log(response.data, 'login response');
+      return response.data;
+    } catch (error) {
+      console.error(error.response.data, 'checking the response from the backend');
+      return rejectWithValue(error.response.data);
+    }
   }
-});
+);
+
 
 
 

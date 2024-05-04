@@ -45,25 +45,23 @@ const ExecutiveCreateModal = ({ onClose }) => {
     const dispatch = useDispatch();
 
     const onSubmit = (data) => {
-        dispatch(createExecutive(data))
-        .then(() => {
-        //   toast.success('Executive created successfully!'); // Display success message
-        console.log("Executive created successfully:", data);
-        toast.success('Executive created successfully');
-
-    //     setTimeout(() => {
-        window.location.reload()
-    // //      onClose();
-    //    }, 2000);
-   
+      dispatch(createExecutive(data))
+        .then((result) => {
+          if (createExecutive.fulfilled.match(result)) {
+            console.log("Executive created successfully:", result.payload);
+            toast.success('Executive created successfully');
+            window.location.reload();
+          } else if (createExecutive.rejected.match(result)) {
+            console.log('Error creating executive:', result.payload);
+            // Handle error if executive creation fails
+            toast.error(result.payload[0]);
+          }
         })
         .catch((error) => {
-          console.error('Error adding college:', error);
-          // Handle error if college addition fails
-          toast.error(error);
+          console.error('Error:', error);
         });
-       
-      };
+    };
+     
 
     // const onSubmit = (data) => {
     //     console.log(data);

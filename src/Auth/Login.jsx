@@ -37,24 +37,27 @@ const Login = () => {
   const onSubmit = async (values) => {
     try {
       const actionResult = await dispatch(adminLogin(values));
-
-      if (actionResult?.payload?.user.role === "admin") {
-        navigate("/admin/dashboard");
-      } else if (actionResult?.payload?.user.role === "executive") {
-        navigate("/executive/dashboard");
+  
+      if (adminLogin.fulfilled.match(actionResult)) {
+        const userRole = actionResult.payload.user.role;
+        if (userRole === "admin") {
+          navigate("/admin/dashboard");
+        } else if (userRole === "executive") {
+          navigate("/executive/dashboard");
+        }
+        toast.success("Logged in successfully");
+      } else if (adminLogin.rejected.match(actionResult)) {
+        console.log("Login failed:", actionResult.error);
+        toast.error(actionResult.payload.error );
+        console.log(actionResult.error,'llllllllllll');
       }
-
-      // Show success toast
     } catch (error) {
-      // Handle error
-      console.log(error.error,'eeerrrr');
-      if (error && error.payload && error.payload.error === "Incorrect password") {
-        toast.error("Incorrect password");
-      } else {
-        toast.error(error.error);
-      }
+      console.error("Error:", error);
+      toast.error("An error occurred while logging in");
     }
   };
+  
+  
   
   return (
     <div className="flex items-center flex-col justify-center h-screen bg-[#f0f4fa]">

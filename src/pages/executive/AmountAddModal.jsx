@@ -108,7 +108,7 @@ console.log(storeData);
                     placeholder="Store Name"
                     onChange={(e) => {
                       handleStoreSelect(
-                        stores.find((store) => store.name === e.target.value)
+                        storesWithPositiveBalance.find((store) => store.name === e.target.value)
                       );
                     }}
                   >
@@ -166,11 +166,7 @@ console.log(storeData);
           {/* </div> */}
         </form>
 
-        <div className="absolute top-2 right-2" onClick={onClose}>
-          <button>
-            <IoClose className="mt-5" size={24} />
-          </button>
-        </div>
+        
       </div>
     </div>
   );

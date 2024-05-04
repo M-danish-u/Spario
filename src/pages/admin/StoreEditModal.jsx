@@ -69,31 +69,37 @@ const StoreEditModal = ({ onEditClose, store }) => {
     // Check if the route and executive fields have been modified
     const routeId = watchRoute === store.route.route_name ? undefined : data.route_id;
     const executiveId = watchExecutive === store.executive.name ? undefined : data.executive_id;
-console.log(data,'sssssss');
+    console.log(data, 'sssssss');
+    
     // Dispatch action to edit store, including selected route and executive IDs
     dispatch(editStore({
       id: store.id,
       data: {
         ...data,
-        route_id: routeId | store.route.id,
-        executive_id: executiveId | store.executive.id
+        route_id: routeId || store.route.id, // Fixed typo: || instead of |
+        executive_id: executiveId || store.executive.id // Fixed typo: || instead of |
       }
     }))
-      .then(() => {
-        console.log("Store Edited successfully:", data);
+    .then((result) => {
+      if (editStore.fulfilled.match(result)) {
+        console.log("Store Edited successfully:", result.payload);
         toast.success('Store Edited successfully');
-        window.location.reload()
-        // setTimeout(() => {
-        //   onEditClose();
-        // }, 2000);
-      })
-      .catch((error) => {
-        // Handle error
-        console.error('Error editing store:', error);
-        toast.error(error);
-
-      });
+        // You can reload the page or perform any other action upon successful edit
+        window.location.reload();
+      } else if (editStore.rejected.match(result)) {
+        console.error('Error editing store:', result.error);
+        // Handle error if store editing fails
+        toast.error(result.payload.store_name[0] );
+        // console.log(result.payload.store_name,'loooood');
+      }
+    })
+    .catch((error) => {
+      // Handle other errors
+      console.error('Error:', error);
+      toast.error('An error occurred while editing store');
+    });
   };
+  
 
   return (
     <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50 bg-black/70">
@@ -147,7 +153,7 @@ console.log(data,'sssssss');
             />
 
 <div className="flex  flex-col">
-                <label htmlFor="car">Route</label>
+                <label htmlFor="route">Route</label>
                 <div className="">
                   <select
                     className="peer block min-h-[auto] h-12 w-[280px] mt-3 rounded-lg text-[#718EBF] border-slate-200 border-[1px] bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none focus:placeholder:opacity-100 motion-reduce:transition-none dark:peer-focus:text-primary"
@@ -265,8 +271,8 @@ console.log(data,'sssssss');
                     {...register("executive")}
                     placeholder="Executive"
                     onChange={(e) => {
-                      handleRouteSelect(
-                        routes.find((route) => route.name === e.target.value)
+                      handleExecutiveSelect(
+                        executives.find((executive) => executive.name === e.target.value)
                       );
                     }}
                   >
@@ -280,7 +286,7 @@ console.log(data,'sssssss');
                   </select>
                 </div>
                 </div>
-            <div className="mt-8">
+            <div className="mt-10">
               <button
                 type="submit"
                 className="px-2 py-2 w-[270px]  justify-center h-max bg-[#2723F4] text-white flex items-center rounded-md"

@@ -44,26 +44,33 @@ const ExecutiveEditModal = ({ onEditClose, executive }) => {
         // Validate form data
         await validationSchema.validate(formData, { abortEarly: false });
         console.log("Data validation successful!");
-
+  
         // Dispatch action to edit executive
-        dispatch(editExicutive({ id: executive.id, data: formData }));
-
-        // Close the modal
-        console.log("Executive Edited successfully:", data);
-        toast.success("Executive Edited successfully");
-
-        setTimeout(() => {
-        //   onEditClose();
-                window.location.reload()
-
-        }, 2000);
+        dispatch(editExicutive({ id: executive.id, data: formData }))
+        .then((result) => {
+          if (editExicutive.fulfilled.match(result)) {
+            console.log("Executive edited successfully:", result.payload);
+            toast.success("Executive Edited successfully");
+            // You can reload the page or perform any other action upon successful edit
+            window.location.reload();
+          } else if (editExicutive.rejected.match(result)) {
+            console.error('Error editing executive:', result.error);
+            // Handle error if executive editing fails
+            toast.error(result.payload.name[0] || "Failed to edit executive");
+            console.log(result.payload,'loooog');
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+          toast.error("An error occurred while editing executive");
+        });
       } catch (error) {
         console.error("Validation error:", error.errors);
-        toast.error(error);
-
+        toast.error("Validation error: " + error.errors.join(", "));
       }
     })();
   };
+  
   return (
     <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50 bg-black/70">
          <ToastContainer
