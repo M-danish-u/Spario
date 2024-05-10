@@ -7,6 +7,9 @@ import Store from '../pages/executive/Store'
 import ExecutiveStoreProfile from '../pages/executive/StoreProfile'
 import ExecutiveTransactions from '../pages/executive/Transactions'
 import ExecutiveLogin from '../pages/executive/ExecutiveLogin'
+import Invoices from '../pages/executive/Invoices'
+import Return from '../pages/executive/Return'
+import ExpensesExecutive from '../pages/executive/ExpensesExecutive'
 
 
 const ExecutivePortalRoute = () => {
@@ -27,6 +30,10 @@ const ExecutivePortalRoute = () => {
        {/* <Route path="/admin/route" element={<Rooute/>} /> */}
        {/* <Route path='/admin/routeprofile' element={<RouteProfile/>}/> */}
        <Route path="/executive/transactions" element={<ExecutiveTransactions/>} /> 
+       <Route path="/executive/invoices" element={<Invoices/>} /> 
+       <Route path="/executive/return" element={<Return/>} /> 
+       <Route path="/executive/expenses" element={<ExpensesExecutive/>} /> 
+
 
 
 

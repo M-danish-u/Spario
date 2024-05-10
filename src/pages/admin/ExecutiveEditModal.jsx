@@ -15,7 +15,7 @@ const ExecutiveEditModal = ({ onEditClose, executive }) => {
     name: Yup.string().required("Executive Name is required"),
     address: Yup.string().required("Address is required"),
     contact_one: Yup.string().required("Mobile 1 is required"),
-    contact_two: Yup.string().required("Mobile 2 is required"),
+    contact_two: Yup.string(),
     email: Yup.string().required("User Name is required"),
   });
   console.log(executive, "exxx");

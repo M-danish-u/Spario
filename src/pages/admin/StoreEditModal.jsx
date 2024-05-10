@@ -17,7 +17,7 @@ const StoreEditModal = ({ onEditClose, store }) => {
     customer_name: Yup.string().required("Customer Name is required"),
     address: Yup.string().required("Address is required"),
     contact_one: Yup.string().required("Mobile 1 is required"),
-    contact_two: Yup.string().required("Mobile 2 is required"),
+    contact_two: Yup.string(),
     executive: Yup.string().required("Executive is required"),
     route: Yup.string().required("Route is required"),
   });
@@ -30,7 +30,7 @@ const StoreEditModal = ({ onEditClose, store }) => {
       address: store?.address || "",
       contact_one: store?.contact_one || "",
       contact_two: store?.contact_two || "",
-      executive: store?.executive.name || "", // Default value for executive input
+      executive: store?.executive?.name || "", // Default value for executive input
       route: store?.route.route_name || "", // Default value for route input
     }
   });
@@ -68,7 +68,7 @@ const StoreEditModal = ({ onEditClose, store }) => {
   const onSubmit = (data) => {
     // Check if the route and executive fields have been modified
     const routeId = watchRoute === store.route.route_name ? undefined : data.route_id;
-    const executiveId = watchExecutive === store.executive.name ? undefined : data.executive_id;
+    const executiveId = watchExecutive === store.executive?.name ? undefined : data.executive_id;
     console.log(data, 'sssssss');
     
     // Dispatch action to edit store, including selected route and executive IDs
@@ -83,7 +83,7 @@ const StoreEditModal = ({ onEditClose, store }) => {
     .then((result) => {
       if (editStore.fulfilled.match(result)) {
         console.log("Store Edited successfully:", result.payload);
-        toast.success('Store Edited successfully');
+        toast.success('Store Updated successfully');
         // You can reload the page or perform any other action upon successful edit
         window.location.reload();
       } else if (editStore.rejected.match(result)) {

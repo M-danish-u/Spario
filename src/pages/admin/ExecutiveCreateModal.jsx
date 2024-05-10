@@ -23,9 +23,8 @@ const validationSchema = Yup.object().shape({
     contact_one: Yup.string()
       .required("Mobile 1 is required")
       .matches(/^[0-9]{10}$/, "Mobile 1 must be a valid 10-digit number"),
-    contact_two: Yup.string()
-      .required("Mobile 2 is required")
-      .matches(/^[0-9]{10}$/, "Mobile 2 must be a valid 10-digit number"),
+    contact_two: Yup.string(),
+    
     email: Yup.string()
       .required("Username is required")
       .max(50, "Username must be at most 50 characters"),

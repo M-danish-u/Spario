@@ -25,7 +25,7 @@ const data = [
 export default function BasicComposition() {
   return (
     <Box sx={{ width: '100%' }}>
-   <p className="font-medium text-xl mb-4 text-[#343C6A]">Store Chart</p>
+   <p className="font-medium text-xl mb-4 text-[#343C6A]">Monthly Chart</p>
 
       <Paper sx={{ width: '100%', height: 300 }} elevation={3}>
         <ResponsiveChartContainer

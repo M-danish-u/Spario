@@ -5,16 +5,16 @@ import * as Yup from "yup";
 import Input from "../../components/commonComponents/Input";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
-import { AddAmount, getBalance, getExecutiveStore } from "../../redux/featuer/executive/ExecutiveSlice";
+import { AddAmount, createReturn, getBalance, getExecutiveStore } from "../../redux/featuer/executive/ExecutiveSlice";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const validationSchema = Yup.object().shape({
-  amount: Yup.number().required("Amount is required"),
+    return_amount: Yup.number().required("Amount is required"),
   store_id: Yup.string().required("Store is required"), // Change validation to store_id
 });
 
-const AmountAddModal = ({ onClose }) => {
+const AddReturnModal = ({ onClose }) => {
   const [showStoreList, setShowStoreList] = useState(false);
   const [selectedStore, setSelectedStore] = useState(null); // State to hold the selected store
   const [showBalance, setShowBalance] = useState(false); // State variable to control balance div visibility
@@ -30,6 +30,7 @@ const AmountAddModal = ({ onClose }) => {
   });
 
   const executive_id = useSelector((state) => state?.adminAuth?.admin?.id);
+  console.log(executive_id,'ooooooooo');
   const dispatch = useDispatch();
 
   const balance = useSelector((state) => state?.executive?.BalanceStore?.balance);
@@ -49,7 +50,7 @@ const AmountAddModal = ({ onClose }) => {
 
   const handleStoreSelect = (store) => {
     console.log(store);
-    dispatch(getBalance(store.id));
+    // dispatch(getBalance(store.id));
 
     setValue("store_id", store.id); // Set store_id instead of storeName
 
@@ -59,12 +60,15 @@ const AmountAddModal = ({ onClose }) => {
   };
 
   const onSubmit = (data) => {
+
+    console.log(data,'dataa');
     if (enteredAmount > balance) {
       toast.error('Amount exceeds balance');
       return; // Block submission and show toast
     }
 
-    dispatch(AddAmount({ id: executive_id, body: data }))
+    dispatch(createReturn({ id: selectedStore?.id, body: data }))
+   
       .then(() => {
         console.log("Amount Added successfully:", data);
         toast.success('Amount Added successfully');
@@ -93,7 +97,7 @@ const AmountAddModal = ({ onClose }) => {
       />
       <div className="bg-white border flex-row py-8 rounded-xl px-8 md:px-20 b-slate-700 g-white relative">
         <div className="flex items-center border-b-[1px] justify-between w-full">
-          <h2 className="font-medium text-xl text-[#343C6A]">Add Amount</h2>
+          <h2 className="font-medium text-xl text-[#343C6A]">Add Return</h2>
           <div className="" onClick={onClose}>
             <button>
               <IoClose className="mt-5" size={24} />
@@ -125,7 +129,7 @@ const AmountAddModal = ({ onClose }) => {
                 </select>
               </div>
             </div>
-            <div className="md:mt- flex flex-col gap-3">
+            {/* <div className="md:mt- flex flex-col gap-3">
               Balance
               <p className="peer  min-h-[auto] w-[278px]  flex h-12 mb-2  items-center  rounded-lg text-[#718EBF] border-slate-200 border-[1px] bg-transparent px-3 py-[0.32rem] leading-[1.6]    ">
                 Balance:
@@ -135,26 +139,27 @@ const AmountAddModal = ({ onClose }) => {
                   </div>
                 )}
               </p>
-            </div>
-          </div>
-
-          <div className="flex flex-col md:flex-row   md:gap-4">
+            </div> */}
             <Input
               type="text"
-              id="amount"
+              id="return_amount"
               label="Amount"
               register={register}
               errors={errors}
               placeholder="Amount"
               onChange={(e) => setEnteredAmount(parseFloat(e.target.value) || 0)}
             />
-            <div className="md:mt-10">
+          </div>
+
+          <div className="flex flex-col md:flex-row   md:gap-4">
+            
+            <div className="md:mt-4">
               <button
                 type="submit"
                 className={`px-2 py-2 w-[270px]   justify-center h-max bg-[#2723F4] text-white flex items-center rounded-md ${isButtonDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
                 disabled={isButtonDisabled}
               >
-                + Add Amount
+                + Add Retur
               </button>
             </div>
           </div>
@@ -164,4 +169,4 @@ const AmountAddModal = ({ onClose }) => {
   );
 };
 
-export default AmountAddModal;
+export default AddReturnModal;

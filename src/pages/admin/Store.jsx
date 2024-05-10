@@ -7,6 +7,8 @@ import CreateStoreModal from './CreateStoreModal';
 import Button from '../../components/commonComponents/Button';
 import StoreEditModal from './StoreEditModal';
 import Table3 from '../../components/table/executive/Table3';
+import Table4 from '../../components/table/Table4';
+
 
 const Store = () => {
     const dispatch = useDispatch();
@@ -72,7 +74,7 @@ const Store = () => {
                 {isLoading ? (
                     <p>Loading...</p> // Display loading message or spinner while data is being fetched
                 ) : (
-                    <Table3 heading={""} DATA={storeData} COLUMNS={columns} />
+                    <Table4 heading={""} DATA={storeData} COLUMNS={columns} />
                 )}
             </div>
             {showModal && (

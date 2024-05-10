@@ -11,6 +11,8 @@ import RouteProfile from '../pages/admin/RouteProfile'
 import Transactions from '../pages/admin/Transactions'
 import AdminLogin from '../pages/admin/AdminLogin'
 import RouteStoreINvoices from '../pages/admin/RouteStoreINvoices'
+import Return from '../pages/admin/Return'
+import ExpenseListing from '../pages/admin/ExpenseListing'
 
 
 const AdminPortalRoute = () => {
@@ -33,6 +35,8 @@ const AdminPortalRoute = () => {
        <Route path='/admin/routestoreprofile' element={<RouteStoreINvoices/>}/>
 
        <Route path="/admin/transactions" element={<Transactions/>} />
+       <Route path="/admin/returns" element={<Return/>} />
+       <Route path="/admin/expense" element={<ExpenseListing/>} />
 
 
 

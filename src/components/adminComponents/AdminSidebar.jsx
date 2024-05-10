@@ -5,6 +5,8 @@ import { IoPersonSharp } from "react-icons/io5";
 import { GrTransaction } from "react-icons/gr";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaPowerOff } from "react-icons/fa";
+import { GiReturnArrow } from "react-icons/gi";
+import { FaRegMoneyBillAlt } from "react-icons/fa";
 
 const AdminSidebar = () => {
   const SidebarData = [
@@ -13,6 +15,8 @@ const AdminSidebar = () => {
     { name: "Executive", icon: IoPersonSharp, path: "/admin/executive" },
     { name: "Transactions", icon: GrTransaction, path: "/admin/transactions" },
     { name: "Route", icon: IoIosSettings, path: "/admin/route" },
+    { name: "Return", icon: GiReturnArrow, path: "/admin/returns" },
+    { name: "Expenses", icon: FaRegMoneyBillAlt, path: "/admin/expense" },
   ];
 
   const navigate = useNavigate();

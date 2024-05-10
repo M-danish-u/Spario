@@ -19,7 +19,7 @@ const TopDue = ({perfomanceColor,title,name,top}) => {
           <thead>
             <tr className=' '>
               <th className="px-4 text-[#718EBF] font-normal text-start py-2">{name}</th>
-              <th className="px-4 text-[#718EBF] font-normal py-2">Performance</th>
+              <th className="px-4 text-[#718EBF] font-normal py-2"> Due Amount</th>
             </tr>
           </thead>
           <tbody>

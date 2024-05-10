@@ -3,23 +3,23 @@ import { FaUserClock } from "react-icons/fa";
 import { FaRegEdit } from "react-icons/fa";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 
-export const TransactionsCollumn = (handleViewStore, handleEdit) => [
+export const ExpenseExecutiveCollumn = () => [
   {
     Header: "No",
     accessor: "id",
     Cell: ({ row }) => <span>{row.index + 1}</span>,
   },
   {
-    Header: "Executive",
-    accessor: "executive.name",
+    Header: "Store Name",
+    accessor: "store.store_name",
   },
   {
-    Header: " Store  ",
-    accessor: "store.store_name",
+    Header: "Expenses",
+    accessor: "description",
   },
 
   {
-    Header: " Received  ",
+    Header: "Amount",
     accessor: "amount",
     Cell: ({ row }) => (
       <div className="flex flex-row items-center justify-cente ">
@@ -27,9 +27,38 @@ export const TransactionsCollumn = (handleViewStore, handleEdit) => [
       </div>
     ),
   },
-  
-  
 
+  {
+    Header: "Status",
+    accessor: "status",
+    Cell: ({ row }) => {
+      const { status } = row.original;
+    
+      if (status === "pending") {
+
+        return (
+          <span className="text-blue-600 bg-blue-300 px-4 py-1 rounded-md">
+            {status.toUpperCase()}
+          </span>
+        );
+        
+      } else if (status === "approved") {
+        return (
+          <span className="text-green-600 bg-green-300 px-4 py-1 rounded-md">
+            {status.toUpperCase()}
+          </span>
+        );
+      } else if (status === "rejected") {
+        return (
+          <span className="text-red-600 bg-red-300 px-4 py-1 rounded-md">
+            {status.toUpperCase()}
+          </span>
+        );
+      } else {
+        return null; // Handle other status values if needed
+      }
+    },
+  },
   {
     Header: "Date",
     accessor: "created_at",
@@ -48,9 +77,4 @@ export const TransactionsCollumn = (handleViewStore, handleEdit) => [
       return <span>{formattedDate}</span>;
     },
   },
-
-
-
- 
 ];
-

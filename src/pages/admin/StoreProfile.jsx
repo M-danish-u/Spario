@@ -67,8 +67,8 @@ const StoreProfile = () => {
 
 <div className=' flex  bg-red-40 flex-col md:gap-12'>
     <span className=' flex flex-col md:gap-4'>
-    <h3 className='text-md text-[#718EBF]'>Exicutive Name</h3>
-    <p>{storeProfile.executive.name}</p>
+    <h3 className='text-md text-[#718EBF]'>Executive Name</h3>
+    <p>{storeProfile.executive?.name}</p>
     </span>
 
     <span className=' flex flex-col md:gap-4'>

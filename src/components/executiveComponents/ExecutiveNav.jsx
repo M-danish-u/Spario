@@ -50,7 +50,17 @@ const ExecutiveNav = () => {
       return "Route";
     } else if (pathname === "/executive/storeprofile") {
       return "Store";
-    } else {
+    }
+    else if (pathname === "/executive/invoices") {
+      return "Invoices";
+    }
+    else if (pathname === "/executive/expenses") {
+      return "Expenses";
+    }
+    else if (pathname === "/executive/return") {
+      return "Return";
+    }
+    else {
       return ""; // Default value if none of the conditions match
     }
   };
@@ -97,6 +107,16 @@ const ExecutiveNav = () => {
             
             <li className="text-[#343C6A] cursor-pointer border-b-2 my-4 border-transparent hover:border-[#343C6A] focus:border-[#343C6A] transition-all duration-300" onClick={handleMenuToggle}>
               <Link to="/executive/transactions">Transactions</Link>
+            </li>
+            <li className="text-[#343C6A] cursor-pointer border-b-2 my-4 border-transparent hover:border-[#343C6A] focus:border-[#343C6A] transition-all duration-300" onClick={handleMenuToggle}>
+              <Link to="/executive/invoices">Invoices</Link>
+            </li>
+
+            <li className="text-[#343C6A] cursor-pointer border-b-2 my-4 border-transparent hover:border-[#343C6A] focus:border-[#343C6A] transition-all duration-300" onClick={handleMenuToggle}>
+              <Link to="/executive/return">Return</Link>
+            </li>
+            <li className="text-[#343C6A] cursor-pointer border-b-2 my-4 border-transparent hover:border-[#343C6A] focus:border-[#343C6A] transition-all duration-300" onClick={handleMenuToggle}>
+              <Link to="/executive/expenses">Expenses</Link>
             </li>
             
 

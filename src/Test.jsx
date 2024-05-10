@@ -173,3 +173,307 @@ const Chart = () => {
 };
 
 export default Chart;
+
+
+import React, { useEffect, useMemo, useState, useRef } from "react";
+import { useTable, useGlobalFilter, usePagination } from "react-table";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import Filter from "../table/Filter";
+import DateFilter from "../table/ReportFilter"; // Import the DateFilter component
+import DatepickerFilter from "./DatepickerFilter";
+
+const Table4 = ({ heading, DATA, COLUMNS }) => {
+  const columns = useMemo(() => COLUMNS, []);
+  const data = useMemo(() => DATA, []);
+  const [filteredData, setFilteredData] = useState(data);
+  const pdfViewerRef = useRef(null);
+
+  const tableInstance = useTable(
+    {
+      columns,
+      data: filteredData,
+      initialState: { pageIndex: 0, pageSize: 8 },
+    },
+    useGlobalFilter,
+    usePagination
+  );
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    page,
+    nextPage,
+    previousPage,
+    canNextPage,
+    canPreviousPage,
+    pageOptions,
+    gotoPage,
+    pageCount,
+    setPageSize,
+    prepareRow,
+    state: { pageIndex, pageSize, globalFilter },
+    setGlobalFilter,
+  } = tableInstance;
+
+  useEffect(() => {
+    setPageSize(8);
+  }, []);
+
+  const handleDateFilterChange = (filteredData) => {
+    setFilteredData(filteredData);
+  };
+
+  // Function to convert data to CSV format
+  const convertToCSV = () => {
+    const csvData = [
+      columns.map(column => column.Header), // Header row
+      ...filteredData.map(row => columns.map(column => row[column.accessor])) // Data rows
+    ];
+
+    // Create CSV content
+    const csvContent = csvData.map(row => row.join(",")).join("\n");
+
+    // Create a Blob object to download CSV
+    const blob = new Blob([csvContent], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
+
+    // Create a link element to trigger download
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "data.csv");
+    document.body.appendChild(link);
+    link.click();
+
+    // Clean up
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  };
+
+  return (
+    <div>
+      <div className="font-medium text-xl text-[#343C6A]">{heading}</div>
+      <div className="shadow-lg rounded-lg px-4 pt-4 overflow-x-auto bg-white mt-4 h-full">
+        <div className="flex flex-col md:flex-row gap-4 md:justify-between space-x-4 b-slate-500 mt-4">
+          <Filter filter={globalFilter} setFilter={setGlobalFilter} />
+          <DateFilter data={DATA} onDateFilterChange={handleDateFilterChange} />
+        </div>
+        <table {...getTableProps()} className="min-w-full bg-white table-auto">
+          <thead className="border-b">
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
+                {headerGroup.headers.map((column) => (
+                  <th
+                    {...column.getHeaderProps()}
+                    scope="col"
+                    className="bg-white font-normal text-[#718EBF] border-b-1 px-6 py-3 text-left"
+                    key={column.id}
+                  >
+                    {column.render("Header")}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {page.map((row, rowIndex) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()} key={rowIndex}>
+                  {row.cells.map((cell, cellIndex) => {
+                    return (
+                      <td
+                        {...cell.getCellProps()}
+                        className="px-6 py-3 border-b text-left"
+                        key={cellIndex}
+                      >
+                        {cell.render("Cell")}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+        <div className="flex justify-end p-5 gap-3">
+          <button
+            className="bg-[#F6F8FB] rounded-md py-1 border text-gray-700 font-bold p-1"
+            disabled={!canPreviousPage}
+            onClick={() => previousPage()}
+          >
+            <FaChevronLeft className="h-4" />
+          </button>
+          <div>{pageIndex + 1}</div>
+          <button
+            className="bg-[#F6F8FB] rounded-md py-1 border text-gray-700 font-bold p-1"
+            disabled={!canNextPage}
+            onClick={() => nextPage()}
+          >
+            <FaChevronRight className="h-4" />
+          </button>
+          {/* Add CSV download button */}
+          <button onClick={convertToCSV}>Download CSV</button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Table4;
+
+
+
+
+import React, { useEffect, useMemo, useState, useRef } from "react";
+import { useTable, useGlobalFilter, usePagination } from "react-table";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { PDFDownloadLink, PDFViewer, Document, Page } from "@react-pdf/renderer";
+import Filter from "../table/Filter";
+import DateFilter from "../table/ReportFilter"; // Import the DateFilter component
+import DatepickerFilter from "./DatepickerFilter";
+
+const Table4 = ({ heading, DATA, COLUMNS }) => {
+  const columns = useMemo(() => COLUMNS, []);
+  const data = useMemo(() => DATA, []);
+  const [filteredData, setFilteredData] = useState(data);
+  const pdfViewerRef = useRef(null);
+
+  const tableInstance = useTable(
+    {
+      columns,
+      data: filteredData,
+      initialState: { pageIndex: 0, pageSize: 8 },
+    },
+    useGlobalFilter,
+    usePagination
+  );
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    page,
+    nextPage,
+    previousPage,
+    canNextPage,
+    canPreviousPage,
+    pageOptions,
+    gotoPage,
+    pageCount,
+    setPageSize,
+    prepareRow,
+    state: { pageIndex, pageSize, globalFilter },
+    setGlobalFilter,
+  } = tableInstance;
+
+  useEffect(() => {
+    setPageSize(8);
+  }, []);
+
+  const handleDateFilterChange = (filteredData) => {
+    setFilteredData(filteredData);
+  };
+
+  return (
+    <div>
+      <div className="font-medium text-xl text-[#343C6A]">{heading}</div>
+      <div className="shadow-lg rounded-lg px-4 pt-4 overflow-x-auto bg-white mt-4 h-full">
+        <div className="flex flex-col md:flex-row gap-4 md:justify-between space-x-4 b-slate-500 mt-4">
+          <Filter filter={globalFilter} setFilter={setGlobalFilter} />
+          <DateFilter data={DATA} onDateFilterChange={handleDateFilterChange} />
+        </div>
+        <table {...getTableProps()} className="min-w-full bg-white table-auto">
+          <thead className="border-b">
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
+                {headerGroup.headers.map((column) => (
+                  <th
+                    {...column.getHeaderProps()}
+                    scope="col"
+                    className="bg-white font-normal text-[#718EBF] border-b-1 px-6 py-3 text-left"
+                    key={column.id}
+                  >
+                    {column.render("Header")}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {page.map((row, rowIndex) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()} key={rowIndex}>
+                  {row.cells.map((cell, cellIndex) => {
+                    return (
+                      <td
+                        {...cell.getCellProps()}
+                        className="px-6 py-3 border-b text-left"
+                        key={cellIndex}
+                      >
+                        {cell.render("Cell")}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+        <div className="flex justify-end p-5 gap-3">
+          <button
+            className="bg-[#F6F8FB] rounded-md py-1 border text-gray-700 font-bold p-1"
+            disabled={!canPreviousPage}
+            onClick={() => previousPage()}
+          >
+            <FaChevronLeft className="h-4" />
+          </button>
+          <div>{pageIndex + 1}</div>
+          <button
+            className="bg-[#F6F8FB] rounded-md py-1 border text-gray-700 font-bold p-1"
+            disabled={!canNextPage}
+            onClick={() => nextPage()}
+          >
+            <FaChevronRight className="h-4" />
+          </button>
+          <PDFDownloadLink document={<PDFDocument data={filteredData} columns={columns} />} fileName="data.pdf">
+            {({ blob, url, loading, error }) =>
+              loading ? "Generating PDF..." : <button>Download PDF</button>
+            }
+          </PDFDownloadLink>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const PDFDocument = ({ data, columns }) => {
+  return (
+    <Document>
+      <Page>
+        <table>
+          <thead>
+            <tr>
+              {columns.map((column, columnIndex) => (
+                <th key={columnIndex}>{column.Header}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((row, rowIndex) => (
+              <tr key={rowIndex}>
+                {columns.map((column, columnIndex) => (
+                  <td key={columnIndex}>{row[column.accessor]}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </Page>
+    </Document>
+  );
+};
+
+
+export default Table4;

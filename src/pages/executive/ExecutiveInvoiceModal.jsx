@@ -10,24 +10,26 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   createInvoices,
   getAllStores,
-  getBalance,
+  
 } from "../../redux/featuer/admin/AdminSlice";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getBalance, getExecutiveStore } from "../../redux/featuer/executive/ExecutiveSlice";
 
 const validationSchema = Yup.object().shape({
   storeName: Yup.string().required("Store Name is required"),
   invoice_value: Yup.string().required("Invoice Value is required"),
   advance_paid: Yup.string().required("Advance Paid is required"),
   due_date: Yup.date().required("Date is required"),
-  opening_balance: Yup.string(),
+  opening_balance: Yup.string() || "",
 });
 
-const InvoiceModal = ({ onClose }) => {
+const ExecutiveInvoiceModal = ({ onClose }) => {
   const [showStoreList, setShowStoreList] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [showBalance, setShowBalance] = useState(false); // State variable to control balance div visibility
+  const executive_id = useSelector((state) => state?.adminAuth?.admin?.id);
 
   const {
     register,
@@ -41,17 +43,21 @@ const InvoiceModal = ({ onClose }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllStores());
-  }, [dispatch]);
+    dispatch(getExecutiveStore(executive_id));
+
+   
+  }, [dispatch,])
 
   const storeData = useSelector(
-    (state) => state?.admin?.AllStoreData?.stores || []
+    (state) => state?.executive?.StoreData.stores || []
   );
+  console.log(storeData,'ssssssssssssssss');
   const stores = storeData.map((store) => ({
     id: store.id,
     name: store.store_name,
   }));
-  const balance = useSelector((state) => state?.admin?.BalanceStore?.balance);
+  const balance = useSelector((state) => state?.executive?.BalanceStore?.balance);
+  
 
   const handleStoreSelect = (store) => {
     dispatch(getBalance(store.id));
@@ -78,30 +84,27 @@ const InvoiceModal = ({ onClose }) => {
     return `${prefix}-${year}${month}${day}-${sequentialNumber}`;
   };
 
-  const onSubmit = async (data) => {
-    try {
-      console.log(data);
-      data.invoice_number = generateInvoiceNumber(); // Generate invoice number before submission
-      const result = await dispatch(createInvoices(data));
-      if (createInvoices.fulfilled.match(result)) {
-        console.log("Invoice created successfully:", result.payload);
+  const onSubmit = (data) => {
+    console.log(data);
+    data.invoice_number = generateInvoiceNumber(); // Generate invoice number before submission
+    dispatch(createInvoices(data))
+      .then(() => {
+        // Handle success
+        console.log("Invoice created successfully:", data);
         toast.success("Invoice created successfully");
-        // onClose(); // Close the modal after successful submission
-      } else if (createInvoices.rejected.match(result)) {
-        console.log("Error creating invoice:", result);
-        // Handle error if invoice creation fails
-        toast.error(result.payload.message);
-      }
-      setTimeout(() => {
         window.location.reload();
-      }, 2000);
-    } catch (error) {
-      // Handle error
-      console.error("Error creating invoice:", error);
-      toast.error("Error creating invoice: " + error.message);
-    }
+        setTimeout(() => {
+          onClose();
+        }, 2000);
+        // onClose(); // Close the modal after successful submission
+      })
+      .catch((error) => {
+        // Handle error
+        console.error("Error creating invoice:", error);
+        toast.error(error);
+      });
   };
-  
+
   return (
     <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center p-4 z-50 bg-black/70">
       <ToastContainer
@@ -145,11 +148,11 @@ const InvoiceModal = ({ onClose }) => {
                     {/* Map over stores array to generate options */}
                     <option value=''>Select a Store</option>
 
-                    {stores.map((store) => (
+                     {stores.map((store) => (
                       <option key={store.id} value={store.name}>
                         {store.name}
                       </option>
-                    ))}
+                    ))} 
                   </select>
                 </div>
          
@@ -232,4 +235,4 @@ const InvoiceModal = ({ onClose }) => {
   );
 };
 
-export default InvoiceModal;
+export default ExecutiveInvoiceModal;

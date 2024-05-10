@@ -108,11 +108,7 @@ const StoreAmountAddModal = ({ onClose, store,}) => {
           <div className="flex gap-5"></div>
         </form>
 
-        <div className="absolute top-2 right-2" onClick={onClose}>
-          <button>
-            <IoClose className="mt-5" size={24} />
-          </button>
-        </div>
+        
       </div>
     </div>
   );

@@ -56,6 +56,12 @@ const Nav = () => {
     }else if (pathname === "/admin/executiveprofile") {
       return "Executive";
     }
+    else if (pathname === "/admin/returns") {
+      return "Return";
+    }
+    else if (pathname === "/admin/expense") {
+      return "Expenses";
+    }
      else {
       return ""; // Default value if none of the conditions match
     }
@@ -85,7 +91,7 @@ const Nav = () => {
         </div>
         <div
           className={`fixed right-0 top-[40px]  bg-[#ffffff] transition-transform md:hidden z-50 ease-in-out duration-300 transform ${
-            menuToggle ? "translate-y-[0px]" : "translate-y-[-450px]"
+            menuToggle ? "translate-y-[0px]" : "translate-y-[-550px]"
           } lg:translate-y-full`}
         >
           <TiTimes
@@ -110,6 +116,13 @@ const Nav = () => {
             </li>
             <li className="text-[#343C6A] cursor-pointer border-b-2 my-4 border-transparent hover:border-[#343C6A] focus:border-[#343C6A] transition-all duration-300" onClick={handleMenuToggle}>
               <Link to="/admin/route">Routes</Link>
+            </li>
+
+            <li className="text-[#343C6A] cursor-pointer border-b-2 my-4 border-transparent hover:border-[#343C6A] focus:border-[#343C6A] transition-all duration-300" onClick={handleMenuToggle}>
+              <Link to="/admin/returns">Return</Link>
+            </li>
+            <li className="text-[#343C6A] cursor-pointer border-b-2 my-4 border-transparent hover:border-[#343C6A] focus:border-[#343C6A] transition-all duration-300" onClick={handleMenuToggle}>
+              <Link to="/admin/expense">Expenses</Link>
             </li>
 
             <div

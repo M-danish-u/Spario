@@ -18,9 +18,9 @@ const DashboardDueCard = ({ perfomanceColor, title, top }) => {
             <tr className=" ">
               <th className="px-4 text-[#718EBF] font-normal t  py-2">SL.No</th>
 
-              <th className="px-4 text-[#718EBF] font-normal  py-2">Executive Name</th>
+              <th className="px-4 text-[#718EBF] font-normal  py-2">Store Name</th>
               <th className="px-4 text-[#718EBF] font-normal   py-2">
-                Performance
+                Due Amount
               </th>
             </tr>
           </thead>

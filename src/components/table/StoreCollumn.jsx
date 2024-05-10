@@ -47,18 +47,19 @@ export const StoreCollumn = (handleViewStore, handleEdit) => [
     accessor: "actions",
     Cell: ({ row }) => (
       <div className="flex flex-row space-x-2">
-        <button
-          onClick={() => handleEdit(row.original)}
-          className="text-[#B1B1B1] cursor-pointer text-xl mr-4" // Added mr-2 for right margin
-        >
-          <FaRegEdit />
-        </button>
-        <button
+         <button
           onClick={() => handleViewStore(row.original)}
-          className="text-[#B1B1B1] text-xl  cursor-pointer"
+          className="text-[#B1B1B1] text-xl  cursor-pointer mr-4"
         >
           <FaEye />
         </button>
+        <button
+          onClick={() => handleEdit(row.original)}
+          className="text-[#B1B1B1] cursor-pointer text-xl " // Added mr-2 for right margin
+        >
+          <FaRegEdit />
+        </button>
+       
       </div>
     ),
   },

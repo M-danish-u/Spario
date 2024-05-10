@@ -1,12 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../../../api/axios";
 import {
+  ExpensesStatusApproveAPI,
+  ExpensesStatusRejectAPI,
   createExecutiveAPI,
   createInvoiceAPI,
   createRouteAPI,
   createStoreAPI,
   executiveStatusChangeAPI,
   getAdminDashboardAPI,
+  getAdminRExpensesAPI,
+  getAdminReturnAPI,
   getAdminTransactionsAPI,
   getAllExecutiveAPI,
   getAllInvoiceAPI,
@@ -39,8 +43,12 @@ const initialState = {
   AllTransactions: null,
   BalanceStore:null,
   ExecutiveStatus:null,
-  currentStore:[]
-  
+  currentStore:[],
+  AllReturns:null,
+  AllExpenses:null,
+  ExpenseStatusApprove:null,
+  ExpenseStatusReject:null
+
 
 };
 
@@ -85,7 +93,7 @@ export const getAllInvoices = createAsyncThunk(
 
 export const createInvoices = createAsyncThunk(
   "admin/createInvoices",
-  async (body) => {
+  async (body, { rejectWithValue }) => {
     try {
       // Validate body parameter here if necessary
 
@@ -93,8 +101,8 @@ export const createInvoices = createAsyncThunk(
       //   console.log(response.data,'rrrrrrrr');
       return response.data;
     } catch (error) {
-      // Handle error based on your application's needs
-      throw error;
+      console.error(error.response.data, 'checking the response from the backend');
+      return rejectWithValue(error.response.data);
     }
   }
 );
@@ -323,7 +331,7 @@ export const editStore = createAsyncThunk(
 
 // ***********************TRANSACTIONS********************
 
-//   get executive
+//   get transactino
 
 export const getAllTransactions = createAsyncThunk(
   'admin/getAllTransactions"',
@@ -335,6 +343,76 @@ export const getAllTransactions = createAsyncThunk(
       return response.data;
     } catch (error) {
       console.log(error.response.data, "its rejecerdf");
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+// ********************RETURN**********************
+
+// get return
+
+
+export const getAllReturn = createAsyncThunk(
+  'admin/getAllReturn"',
+  async (thunkAPI) => {
+    try {
+      const response = await axios.get(`${getAdminReturnAPI}`);
+      // console.log(response.data,'rrrrr');
+
+      return response.data;
+    } catch (error) {
+      console.log(error.response.data, "its rejecerdf");
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+// ********EXPENSES**********
+
+// get expenses
+
+export const getAllExpenses = createAsyncThunk(
+  'admin/getAllExpenses"',
+  async (thunkAPI) => {
+    try {
+      const response = await axios.get(`${getAdminRExpensesAPI}`);
+      // console.log(response.data,'rrrrr');
+
+      return response.data;
+    } catch (error) {
+      console.log(error.response.data, "its rejecerdf");
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+
+);
+
+// status change
+
+export const expenseStatusApprove = createAsyncThunk(
+  "admin/expenseStatusApprove",
+  async (id, thunkAPI) => {
+    try {
+      const response = await axios.put(`${ExpensesStatusApproveAPI}/${id}`);
+      console.log(response.data, "rrrrrrr");
+      return response.data;
+    } catch (error) {
+      console.log(error.response.data, "its rejecerd");
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const expenseStatusReject = createAsyncThunk(
+  "admin/expenseStatusReject",
+  async (id, thunkAPI) => {
+    try {
+      const response = await axios.put(`${ExpensesStatusRejectAPI}/${id}`);
+      console.log(response.data, "rrrrrrr");
+      return response.data;
+    } catch (error) {
+      console.log(error.response.data, "its rejecerd");
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
@@ -467,6 +545,42 @@ const adminSlice = createSlice({
 .addCase(getAllTransactions.fulfilled, (state, action) => {
       state.AllTransactions = action.payload;
     })
+
+    // **************RETURN****************
+
+    .addCase(getAllReturn.fulfilled, (state, action) => {
+     
+      state.AllReturns = action.payload;
+    })
+
+    // ***********EXPENSES************
+
+    .addCase(getAllExpenses.fulfilled, (state, action) => {
+     
+      state.AllExpenses = action.payload;
+    })
+
+    // .addCase(expenseStatusChange.fulfilled, (state, action) => {
+    //   const updateExicutive = action.payload.expense; // Assuming the payload contains the updated executive
+    //   const index = state.AllExpenses.expenses.findIndex(expense => expense.id === updateExicutive.id);
+    //   if (index !== -1) {
+    //     state.AllExpenses.expenses[index] = updateExicutive;
+    //     if (state.ExecutiveProfile && state.ExecutiveProfile.id === updateExicutive.id) {
+    //       state.ExecutiveProfile = updateExicutive;
+    //     }
+    //   }
+    // })
+
+    .addCase(expenseStatusApprove.fulfilled, (state, action) => {
+     
+      state.ExpenseStatusApprove = action.payload;
+    })
+
+    .addCase(expenseStatusReject.fulfilled, (state, action) => {
+     
+      state.ExpenseStatusReject = action.payload;
+    })
+
   },
 });
 

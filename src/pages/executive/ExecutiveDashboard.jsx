@@ -15,10 +15,13 @@ import DashboardDueCard from '../../components/executiveComponents/DashboardDueC
 // import InvoiceModal from './InvoiceModal';
 import { LiaRupeeSignSolid } from "react-icons/lia";
 import { AiOutlineFieldNumber } from "react-icons/ai";
+import InvoiceModal from '../admin/InvoiceModal';
+import ExecutiveInvoiceModal from './ExecutiveInvoiceModal';
 
 const ExecutiveDashboard = () => {
   const [showModal, setShowModal] = useState(false);
 
+  const [showInvoiceModal, setShowInvoiceModal] = useState(false);
 
  
 
@@ -34,6 +37,12 @@ const ExecutiveDashboard = () => {
   const handleEdit = () => {
     setShowModal(true); // Show the modal
   };
+
+
+  const handleInvoiceModal = () => {
+    setShowInvoiceModal(true); // Show the modal
+  };
+
 
   const dispatch=useDispatch()
   const navigate = useNavigate();
@@ -67,9 +76,13 @@ const DueStore=dashBoardData?.topDueStores
 
   return (
     <div className=''>
-      <div className='w-full h-8 bg-re pr-5 justify-end flex'>
+      <div className='w-full h-8 gap-4 bg-re md:pr-5 justify-end flex md:mb-2'>
         <div onClick={handleEdit}>
         <Button title="+ Add Amount" />
+        </div>
+
+        <div onClick={handleInvoiceModal}>
+        <Button title="+ Add Invoice" />
         </div>
       </div>
       <div className='w-full md:p-4 b-red-400 mt-6 md:mt-0 grid lg:grid-cols-4 sm:grid-cols-2  md:grid-cols-3 gap-4 md:gap-8'>
@@ -95,6 +108,15 @@ const DueStore=dashBoardData?.topDueStores
         <AmountAddModal
           // college={selectedCollege}
           onClose={() => setShowModal(false)} // Pass a function to close the modal
+        />
+      )}
+
+
+       
+{showInvoiceModal && (
+        <ExecutiveInvoiceModal
+          // college={selectedCollege}
+          onClose={() => setShowInvoiceModal(false)} // Pass a function to close the modal
         />
       )}
     </div>

@@ -5,7 +5,9 @@ import { IoPersonSharp } from "react-icons/io5";
 import { GrTransaction } from "react-icons/gr";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaPowerOff } from "react-icons/fa";
-
+import { LiaFileInvoiceSolid } from "react-icons/lia";
+import { GiReturnArrow } from "react-icons/gi";
+import { FaRegMoneyBillAlt } from "react-icons/fa";
 
 const ExecutiveSidebar = () => {
 
@@ -13,7 +15,9 @@ const ExecutiveSidebar = () => {
     {name: "Dashboard", icon: IoMdHome, path: "/executive/dashboard"},
     {name: "Store", icon: FaFileInvoiceDollar, path: "/executive/store"},
     {name: "Transactions", icon: GrTransaction, path: "/executive/transactions"},
-   
+    {name: "Invoices", icon: LiaFileInvoiceSolid, path: "/executive/invoices"},
+    {name: "Return", icon: GiReturnArrow, path: "/executive/return"},
+    {name: "Expenses", icon: FaRegMoneyBillAlt, path: "/executive/expenses"},
      ]
   
      const navigate = useNavigate()

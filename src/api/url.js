@@ -14,7 +14,7 @@ export const getStoreBalanceAPI='api/admin/balance'
 
 export const getAllInvoiceAPI='api/admin/invoices'
 
-export const createInvoiceAPI='api/admin/invoices'
+export const createInvoiceAPI='api/invoices'
 // (id)
 export const updateInvoiceAPI='api/admin/invoices'
 // (id)
@@ -63,6 +63,18 @@ export const getStoreProfileAPI="/api/stores"
 
 export const getAdminTransactionsAPI='api/admin/transactions'
 
+// admin return
+export const getAdminReturnAPI='api/admin/returns'
+
+// admin expenses
+
+export const getAdminRExpensesAPI='api/admin/expenses'
+
+
+// admin expenses status change
+
+export const ExpensesStatusApproveAPI='api/expense/approve'
+export const ExpensesStatusRejectAPI='api/expense/reject'
 
 
 // ****************************EXECUTIVE****************************
@@ -73,6 +85,12 @@ export const getExecutiveStoreAPI='api/executive/stores'
 export const getExecutiveStoreStoreAPI='api/stores'
 
 export const addAmountAPI='api/executive/transactions'
+export const getBalanceAPI='api/executive/balance'
 export const getTransactionsAPI='api/executive/transactions'
+export const getExecutiveInvoiceAPI='api/executive/invoices'
+export const createReturnAPI='api/executive/returns'
+export const getExecutiveReturnAPI='api/executive/returns'
+export const createExpenseAPI='api/executive/expense'
+export const getExecutiveExpenseAPI='api/executive/expense'
 
 

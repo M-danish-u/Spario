@@ -3,27 +3,24 @@ import { FaUserClock } from "react-icons/fa";
 import { FaRegEdit } from "react-icons/fa";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 
-export const TransactionsCollumn = (handleViewStore, handleEdit) => [
+export const ReturnCollumn = () => [
   {
     Header: "No",
     accessor: "id",
     Cell: ({ row }) => <span>{row.index + 1}</span>,
   },
-  {
-    Header: "Executive",
-    accessor: "executive.name",
-  },
+  
   {
     Header: " Store  ",
     accessor: "store.store_name",
   },
 
   {
-    Header: " Received  ",
-    accessor: "amount",
+    Header: " Return Amount  ",
+    accessor: "return_amount",
     Cell: ({ row }) => (
       <div className="flex flex-row items-center justify-cente ">
-        <LiaRupeeSignSolid /> {row.original.amount} {/* Add the Rupee icon */}
+        <LiaRupeeSignSolid /> {row.original.return_amount} 
       </div>
     ),
   },

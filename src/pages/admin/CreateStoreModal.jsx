@@ -20,10 +20,14 @@ const validationSchema = Yup.object().shape({
   customer_name: Yup.string().required("Customer Name is required"),
   address: Yup.string().required("Address is required"),
   route: Yup.string().required("Route is required"),
-  contact_one: Yup.string().required("Mobile 1 is required"),
-  contact_two: Yup.string().required("Mobile 2 is required"),
+  contact_one: Yup.string().required("Mobile 1 is required")
+  .matches(/^[0-9]{10}$/, "Mobile 1 must be a valid 10-digit number"),
+  contact_two: Yup.string(),
+  
+
   executive: Yup.string().required("Executive is required"),
 });
+
 
 const CreateStoreModal = ({ onClose }) => {
   const [showRouteList, setShowRouteList] = useState(false);
