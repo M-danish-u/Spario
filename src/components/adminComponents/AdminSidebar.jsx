@@ -7,14 +7,17 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { FaPowerOff } from "react-icons/fa";
 import { GiReturnArrow } from "react-icons/gi";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
+import { PiStorefrontBold } from "react-icons/pi";
+import { FaRoute } from "react-icons/fa";
+
 
 const AdminSidebar = () => {
   const SidebarData = [
     { name: "Dashboard", icon: IoMdHome, path: "/admin/dashboard" },
-    { name: "Store", icon: FaFileInvoiceDollar, path: "/admin/store" },
+    { name: "Store", icon: PiStorefrontBold, path: "/admin/store" },
     { name: "Executive", icon: IoPersonSharp, path: "/admin/executive" },
     { name: "Transactions", icon: GrTransaction, path: "/admin/transactions" },
-    { name: "Route", icon: IoIosSettings, path: "/admin/route" },
+    { name: "Route", icon: FaRoute, path: "/admin/route" },
     { name: "Return", icon: GiReturnArrow, path: "/admin/returns" },
     { name: "Expenses", icon: FaRegMoneyBillAlt, path: "/admin/expense" },
   ];
@@ -45,7 +48,7 @@ const AdminSidebar = () => {
         SPARIO
       </div>
       <div
-        className="mt-4 flex flex-col mb-6 justify-between b-slate-400"
+        className="mt-4 flex flex-col mb-6 justify-betwee b-slate-400"
         style={{ height: "calc(100vh - 85px)" }}
       >
         <div>
@@ -53,7 +56,7 @@ const AdminSidebar = () => {
             const Icon = data.icon;
             const itemColor = location.pathname.includes(data.path)
               ? "text-[#C91818]"
-              : "text-[#B1B1B1]";
+              : "text-[#414040]";
             return (
               <div
                 className={`flex items-center w-full b-red-400 px-8 gap-8 py-4 ${itemColor}`}
@@ -73,8 +76,8 @@ const AdminSidebar = () => {
           className=" flex items-center   py-3 px-8  bottom-4 cursor-pointer gap-8   bg-yellow-"
           onClick={() => setShowLogoutPopup(true)}
         >
-          <FaPowerOff className="text-[#C91818] text-3xl" />
-          <p className="text-[#B1B1B1] text-2xl"> Logout</p>
+          <FaPowerOff className="text-[#C91818] text-[20px]" />
+          <p className="text-[#414040] text-[18px]"> Logout</p>
         </div>
       </div>
 
@@ -83,7 +86,7 @@ const AdminSidebar = () => {
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-700 bg-opacity-50 z-50">
           <div className="bg-white p-8 rounded-lg">
             <p>Are you sure you want to logout?</p>
-            <div className="flex justify-end mt-4">
+            <div className="flex justify-center mt-4">
               <button
                 className="px-4 py-2 mr-4 bg-blue-500 text-white rounded"
                 onClick={handleLogout}

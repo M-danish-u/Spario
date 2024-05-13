@@ -17,7 +17,7 @@ import { LiaRupeeSignSolid } from "react-icons/lia";
 import { AiOutlineFieldNumber } from "react-icons/ai";
 import InvoiceModal from '../admin/InvoiceModal';
 import ExecutiveInvoiceModal from './ExecutiveInvoiceModal';
-
+import { PiStorefrontBold } from "react-icons/pi";
 const ExecutiveDashboard = () => {
   const [showModal, setShowModal] = useState(false);
 
@@ -89,11 +89,11 @@ const DueStore=dashBoardData?.topDueStores
         <Card title="Total Amount" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount={dashBoardData?.totalAmount} />
         <Card title="Due Amount" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount={dashBoardData?.dueAmount} />
         <Card title="Paid Amount" Icon={GrTransaction} iconColor="text-[#396AFF]" color="bg-[#E7EDFF]" amount={dashBoardData?.paidAmount} />
-        <Card title="Stores" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount={dashBoardData?.totalStores} />
+        <Card title="Stores" Icon={PiStorefrontBold} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount={dashBoardData?.totalStores} />
         {/* <Card title="No.of Store" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount="100"/> */}
       </div>
 
-       <div className='w-full md:p-4 b-red-500 grid grid-cols-1 mt-4 md:mt-0 md:grid-cols-2 gap-4 md:gap-8' >
+       <div className='w-full md:p-4 b-red-500 grid grid-cols-1 mt-4 md:grid-cols-2 gap-4 md:gap-8' >
 <Chart/>
 <ChartStore/>
       </div> 

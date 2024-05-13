@@ -48,7 +48,7 @@ const ExecutiveStoreProfile = () => {
         <Card title="No.of Store" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount="100"/> */}
       </div>
 
-      <div className='w-full bg-white py-4 md:px-10 px-4 mt-8  rounded-xl shadow-m'>
+      <div className='w-full bg-white py-4 md:p-8 px-4 mt-8  rounded-xl shadow-m'>
 <div className='border-b pb-5'>
 <h2 className="font-medium text-xl text-[#343C6A] ">Store Details</h2>
 </div>

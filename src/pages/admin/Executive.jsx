@@ -81,10 +81,11 @@ const Executive = () => {
                     <Button className='' title="+ Add Executive" />
                 </div>
             </div>
-            <div className="mt-4">
+            <div className="mt-4 md:mt-0 md:pt-4">
                 {isLoading ? (
-                    <p>Loading...</p> // Display loading message or spinner while data is being fetched
-                ) : (
+                    <div className="flex items-center justify-center h-32">
+                        <p className="text-gray-600">Loading...</p> {/* Display loading message or spinner while data is being fetched */}
+                    </div>                ) : (
                     <Table3 heading={""} DATA={executiveData} COLUMNS={columns} />
                 )}
             </div>

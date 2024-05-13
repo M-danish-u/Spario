@@ -38,7 +38,7 @@ return (
 
 </div>
         </div>
-  <div className="shadow-lg rounded-3xl pt-4 px-4 overflow-x-auto scrollbar-hidden bg-white mt-4 md:mt-8 h-full">
+  <div className="rounded-[12px] p-4 overflow-x-auto scrollbar-hidden bg-white mt-4 md:mt-8 h-full">
   <Filter filter={globalFilter} setFilter={setGlobalFilter} />
 
     
@@ -55,7 +55,7 @@ return (
     </div>
         
     <table {...getTableProps()} className='min-w-full   bg-white table-auto'>
-      <thead className='border-b '>
+      <thead className='border-b border-[#f1f1f1]'>
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
             {headerGroup.headers.map((column) => (
@@ -75,8 +75,8 @@ return (
             <tr className='mx-3 '  {...row.getRowProps()} key={row.id}>
               {row.cells.map((cell) => {
                 return (<>
-                {cell.column.id === "image" ?<td scope='' className='px-6 text-sm  py-1 border-b  text-left' {...cell.getCellProps()} key={cell.id}> <img src={cell.value} alt="Product" className='w-10 h-auto' /></td>
-:                 <td scope='' className='px-6 text-[.9rem]  py-3 border-b  text-left' {...cell.getCellProps()} key={cell.id}>{cell.render('Cell')}</td>
+                {cell.column.id === "image" ?<td scope='' className='px-6 text-sm  py-1 border-b  border-[#f1f1f1] text-left' {...cell.getCellProps()} key={cell.id}> <img src={cell.value} alt="Product" className='w-10 h-auto' /></td>
+:                 <td scope='' className='px-6 text-[.9rem]  py-3 border-b  border-[#f1f1f1] text-left' {...cell.getCellProps()} key={cell.id}>{cell.render('Cell')}</td>
 }                </>
                 )
               })}
@@ -97,7 +97,7 @@ return (
         {}
       </tbody>
     </table>
-    <div className="flex justify-end p-5 gap-3">
+    <div className="flex justify-end pt-4 gap-3">
         {/* <button className="bg-[#F6F8FB] rounded-md py-1 border text-gray-700 font-bold p-1" disabled={!canPreviousPage} onClick={()=>previousPage()}><FaLessThan className='h-2' /></button> */}
         {/* <div className="">{pageIndex+ 1}</div> */}
         {/* <button className={` rounded-md  border p-1 ${pageIndex == 0 ? "bg-black  text-white" : "bg-[#F6F8FB]"}`} onClick={()=>gotoPage(0)}>1</button> */}

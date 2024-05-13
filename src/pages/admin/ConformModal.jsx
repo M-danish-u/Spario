@@ -32,11 +32,11 @@ const handleStatus = async () => {
      
       <div className="bg-slate-100 border flex-row py-4 rounded-xl px-8  b-slate-700 g-white relative">
         
-          <div className=" b-red-500 flex justify-end " >
+          {/* <div className=" b-red-500 flex justify-end " >
             <button onClick={onClose}>
               <IoClose className="" size={24} />
             </button>
-          </div>
+          </div> */}
           <p className="mt-4 text-black"> Are you sure? Do you want to approve this this expense</p>
           <div className="b-red-500 flex items-center justify-center gap-4 mt-4">
             <button className=" bg-blue-500 text-xl text-white px-4 py-1 rounded-md" onClick={handleStatus}>Yes</button>

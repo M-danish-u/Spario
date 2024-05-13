@@ -43,7 +43,7 @@ const Table3 = ({ heading, DATA, COLUMNS }) => {
     <div>
       <div className="font-medium text-xl text-[#343C6A]">{heading}</div>
 
-      <div className="shadow-lg rounded-lg px-4 pt-4 overflow-x-auto bg-white mt-4 h-full">
+      <div className=" rounded-[12px] px-4 p-4 overflow-x-auto bg-white mt-4 h-full">
         <Filter filter={globalFilter} setFilter={setGlobalFilter} />
 
         <table {...getTableProps()} className="min-w-full bg-white table-auto">
@@ -54,7 +54,7 @@ const Table3 = ({ heading, DATA, COLUMNS }) => {
                   <th
                     {...column.getHeaderProps()}
                     scope="col"
-                    className="bg-white font-normal text-[#718EBF] border-b-1 px-6 py-3 text-left"
+                    className="bg-white font-normal text-[#718EBF] border-b border-[#f1f1f1] px-6 py-3 text-left"
                     key={column.id}
                   >
                     {column.render("Header")}
@@ -72,7 +72,7 @@ const Table3 = ({ heading, DATA, COLUMNS }) => {
                     return (
                       <td
                         {...cell.getCellProps()}
-                        className="px-6 py-3 border-b text-left"
+                        className="px-6 py-3 border-b border-[#f1f1f1] text-left"
                         key={cellIndex}
                       >
                         {cell.render("Cell")}
@@ -85,7 +85,7 @@ const Table3 = ({ heading, DATA, COLUMNS }) => {
           </tbody>
         </table>
 
-        <div className="flex justify-end p-5 gap-3">
+        <div className="flex justify-end pt-4 gap-3">
           <button
             className="bg-[#F6F8FB] rounded-md py-1 border text-gray-700 font-bold p-1"
             disabled={!canPreviousPage}

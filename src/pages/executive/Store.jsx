@@ -95,13 +95,18 @@ const Store = () => {
         []
       );
 
-      if (loading) {
-        return <div>Loading...</div>; // Render loading indicator
-      }
+      
 
   return (
     <div>
-<Table3 heading={"Store Details"} DATA={ storeData?.stores || []} COLUMNS={columns} />
+      {loading ? (
+          <div className="flex items-center justify-center h-32">
+                    <p className="text-gray-600">Loading...</p> 
+                </div>                ) : (
+                <Table3 heading={""} DATA={storeData?.stores || []} COLUMNS={columns} />
+            )}
+
+{/* <Table3 heading={"Store Details"} DATA={ storeData?.stores || []} COLUMNS={columns} /> */}
 
  {AmountshowModal && (
         <StoreAmoundAddModal

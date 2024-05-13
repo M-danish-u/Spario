@@ -95,17 +95,17 @@ const AddReturnModal = ({ onClose }) => {
         draggable
         pauseOnHover
       />
-      <div className="bg-white border flex-row py-8 rounded-xl px-8 md:px-20 b-slate-700 g-white relative">
-        <div className="flex items-center border-b-[1px] justify-between w-full">
+      <div className="bg-white border flex-row p-8 rounded-xl  b-slate-700 g-white relative">
+        <div className="flex pb-4 border-b-[1px] justify-between w-full">
           <h2 className="font-medium text-xl text-[#343C6A]">Add Return</h2>
           <div className="" onClick={onClose}>
             <button>
-              <IoClose className="mt-5" size={24} />
+              <IoClose className="" size={24} />
             </button>
           </div>
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col mt-4">
-          <div className="flex flex-col md:flex-row   md:gap-4">
+          <div className="grid  grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4">
             <div className="flex  flex-col">
               <label htmlFor="car">Select Store</label>
               <div className="">
@@ -114,6 +114,12 @@ const AddReturnModal = ({ onClose }) => {
                   id="storeName"
                   {...register("storeName")}
                   placeholder="Store Name"
+                  style={{
+                    WebkitAppearance: "none", 
+                    MozAppearance: "none", 
+                    appearance: "none", 
+                    paddingRight: "30px" 
+                  }}
                   onChange={(e) => {
                     handleStoreSelect(
                       storesWithPositiveBalance.find((store) => store.name === e.target.value)
@@ -151,7 +157,7 @@ const AddReturnModal = ({ onClose }) => {
             />
           </div>
 
-          <div className="flex flex-col md:flex-row   md:gap-4">
+          <div className="grid  grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4">
             
             <div className="md:mt-4">
               <button
@@ -159,7 +165,7 @@ const AddReturnModal = ({ onClose }) => {
                 className={`px-2 py-2 w-[270px]   justify-center h-max bg-[#2723F4] text-white flex items-center rounded-md ${isButtonDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
                 disabled={isButtonDisabled}
               >
-                + Add Retur
+                + Add Return
               </button>
             </div>
           </div>

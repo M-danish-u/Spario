@@ -8,12 +8,14 @@ import { FaPowerOff } from "react-icons/fa";
 import { LiaFileInvoiceSolid } from "react-icons/lia";
 import { GiReturnArrow } from "react-icons/gi";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
+import { PiStorefrontBold } from "react-icons/pi";
+
 
 const ExecutiveSidebar = () => {
 
   const SidebarData = [
     {name: "Dashboard", icon: IoMdHome, path: "/executive/dashboard"},
-    {name: "Store", icon: FaFileInvoiceDollar, path: "/executive/store"},
+    {name: "Store", icon: PiStorefrontBold, path: "/executive/store"},
     {name: "Transactions", icon: GrTransaction, path: "/executive/transactions"},
     {name: "Invoices", icon: LiaFileInvoiceSolid, path: "/executive/invoices"},
     {name: "Return", icon: GiReturnArrow, path: "/executive/return"},
@@ -24,7 +26,7 @@ const ExecutiveSidebar = () => {
   const location = useLocation();
 
   console.log(location.pathname.slice(1),"Debugging the location please be careful")
-  const defaultColor = "text-[#B1B1B1]"; // Default color
+  const defaultColor = "text-[#414040]"; // Default color
   const activeColor = "text-[#C91818]"; // Active color when pathname matches
   const isActive = (path) => location.pathname.includes(path)
 
@@ -51,7 +53,7 @@ const ExecutiveSidebar = () => {
   return (
     <div className='h-[100vh] md:block hidden bg-red-4' >
       <div className='h-[85px] w-full bg-slate-5 flex items-center justify-center text-[40px] font-extrabold text-[#C91818]' >SPARIO</div>
-      <div className='mt-4 bg-slate- flex flex-col justify-between' style={{ height: 'calc(100vh - 85px)', }}>
+      <div className='mt-4 bg-slate- flex flex-col justify-betwee' style={{ height: 'calc(100vh - 85px)', }}>
 <div>
       {SidebarData.map((data, i) => {
           const Icon = data.icon; 
@@ -73,15 +75,15 @@ const ExecutiveSidebar = () => {
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-700 bg-opacity-50 z-50">
           <div className="bg-white p-8 rounded-lg">
             <p>Are you sure you want to logout?</p>
-            <div className="flex justify-end mt-4">
+            <div className="flex justify-center mt-4">
               <button className="px-4 py-2 mr-4 bg-blue-500 text-white rounded" onClick={handleLogout}>Logout</button>
               <button className="px-4 py-2 bg-gray-300 text-gray-700 rounded" onClick={() => setShowLogoutPopup(false)}>Cancel</button>
             </div>
           </div>
         </div>
       )}
-              <div className=' flex items-center  py-3 px-8  bottom-4 cursor-pointer gap-8   bg-yellow-' onClick={() => setShowLogoutPopup(true)}><FaPowerOff className='text-[#C91818] text-3xl' />
-             <p className='text-[#B1B1B1] text-2xl'> Logout</p></div>
+              <div className=' flex items-center  py-3 px-8  bottom-4 cursor-pointer gap-8   bg-yellow-' onClick={() => setShowLogoutPopup(true)}><FaPowerOff className='text-[#C91818] text-[20px]' />
+             <p className='text-[#414040] text-[18px]'> Logout</p></div>
 
       </div>
     </div>

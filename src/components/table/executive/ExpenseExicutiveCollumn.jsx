@@ -37,21 +37,21 @@ export const ExpenseExecutiveCollumn = () => [
       if (status === "pending") {
 
         return (
-          <span className="text-blue-600 bg-blue-300 px-4 py-1 rounded-md">
-            {status.toUpperCase()}
+          <span className="text-yellow-600  px-4 py-1 rounded-md">
+            Pending
           </span>
         );
         
       } else if (status === "approved") {
         return (
-          <span className="text-green-600 bg-green-300 px-4 py-1 rounded-md">
-            {status.toUpperCase()}
+          <span className="text-green-600  px-4 py-1 rounded-md">
+            Approved
           </span>
         );
       } else if (status === "rejected") {
         return (
-          <span className="text-red-600 bg-red-300 px-4 py-1 rounded-md">
-            {status.toUpperCase()}
+          <span className="text-red-600  px-4 py-1 rounded-md">
+            Rejected
           </span>
         );
       } else {

@@ -22,14 +22,21 @@ const ExecutiveTransactions = () => {
   );
 
   // Display loading message while fetching data
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
   // Render the component only if transactionData is available
   return (
     <div>
-      <Table2 heading={""} DATA={transactionData || []} COLUMNS={columns} />
+
+{loading ? (
+          <div className="flex items-center justify-center h-32">
+                        <p className="text-gray-600">Loading...</p> {/* Display loading message or spinner while data is being fetched */}
+                    </div>            ) : (
+                <Table2 heading={""} DATA={transactionData || []} COLUMNS={columns}/>
+            )}
+
     </div>
   );
 };

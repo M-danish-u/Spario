@@ -20,7 +20,7 @@ const ExpensesExecutive = () => {
   console.log(ExpenseData,'return');
 
     useEffect(() => {
-      // Fetch executive transactions when component mounts
+      // Fetch executive transactions when component mounts 
       dispatch(getExecutiveExpense(executive_id));
     }, [dispatch, executive_id]);
   
@@ -34,7 +34,7 @@ const ExpensesExecutive = () => {
       );
   return (
     <div>
-         <div className='w-full h-8 gap-4 bg-re md:pr-5 justify-end flex md:mb-2'>
+         <div className='w-full  gap-4 bg-re md:pr-5 justify-end flex md:mb-2'>
         <div onClick={handleExpenseModal}>
         <Button title="+ Add Expenses" />
         </div>
@@ -42,9 +42,10 @@ const ExpensesExecutive = () => {
 
         {/* <Table3 heading={""} DATA={ExpenseData || []} COLUMNS={columns} /> */}
         {loading ? (
-                <p>Loading...</p> // Display loading message while data is being fetched
-            ) : (
-                <Table3 heading={""} DATA={ExpenseData || []} COLUMNS={columns} />
+          <div className="flex items-center justify-center h-32">
+                        <p className="text-gray-600">Loading...</p> {/* Display loading message or spinner while data is being fetched */}
+                    </div>            ) : (
+                <Table3 heading={""} DATA={ExpenseData || []} COLUMNS={columns}/>
             )}
 
         {showExpenseModal && (

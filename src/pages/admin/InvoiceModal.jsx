@@ -16,12 +16,15 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
 const validationSchema = Yup.object().shape({
   storeName: Yup.string().required("Store Name is required"),
   invoice_value: Yup.string().required("Invoice Value is required"),
   advance_paid: Yup.string().required("Advance Paid is required"),
   due_date: Yup.date().required("Date is required"),
-  opening_balance: Yup.string(),
+  payment_method: Yup.string().required("Payment Method is required"),
+  reference_no: Yup.string(),
+ 
 });
 
 const InvoiceModal = ({ onClose }) => {
@@ -29,12 +32,7 @@ const InvoiceModal = ({ onClose }) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [showBalance, setShowBalance] = useState(false); // State variable to control balance div visibility
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-  } = useForm({
+  const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm({
     resolver: yupResolver(validationSchema),
   });
 
@@ -66,16 +64,38 @@ const InvoiceModal = ({ onClose }) => {
     setValue("due_date", date); // Set the value in the form using setValue
   };
 
+  let invoiceCounter = 0; // Initialize the counter outside the function
+
   const generateInvoiceNumber = () => {
-    // Implement your logic to generate the invoice number here
-    // For example, you can use a combination of prefix, date, and a sequential number
-    const prefix = "INV";
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = `${today.getMonth() + 1}`.padStart(2, "0");
-    const day = `${today.getDate()}`.padStart(2, "0");
-    const sequentialNumber = Math.floor(Math.random() * 10000); // Generate a random sequential number
-    return `${prefix}-${year}${month}${day}-${sequentialNumber}`;
+      // Increment the counter for each invoice
+      invoiceCounter++;
+  
+      // Implement your logic to generate the invoice number here
+      // For example, you can use a combination of prefix, date, and the sequential number
+      const prefix = "INV";
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = `${today.getMonth() + 1}`.padStart(2, "0");
+      const day = `${today.getDate()}`.padStart(2, "0");
+      const sequentialNumber = invoiceCounter.toString().padStart(4, "0"); // Convert counter to string and pad with zeros
+      return `${prefix}-${year}${month}${day}-${sequentialNumber}`;
+  };
+
+  const [paymentMethods, setPaymentMethods] = useState({
+    cash: false,
+    check: false,
+  });
+  const [checkNumber, setCheckNumber] = useState('');
+
+  const handlePaymentMethodChange = (method) => {
+    setPaymentMethods(prevState => ({
+      ...prevState,
+      [method]: !prevState[method],
+    }));
+    // Reset check number when unchecking payment method
+    if (!paymentMethods[method]) {
+      setCheckNumber('');
+    }
   };
 
   const onSubmit = async (data) => {
@@ -93,7 +113,7 @@ const InvoiceModal = ({ onClose }) => {
         toast.error(result.payload.message);
       }
       setTimeout(() => {
-        window.location.reload();
+        onClose()
       }, 2000);
     } catch (error) {
       // Handle error
@@ -115,27 +135,34 @@ const InvoiceModal = ({ onClose }) => {
         draggable
         pauseOnHover
       />
-      <div className="bg-white border flex-row py-8 rounded-xl px-8 sm:px-20 b-slate-700 g-white relative ">
-        <div className="flex items-center border-b-[1px] justify-between w-full">
+      <div className="bg-white border flex-row p-8 rounded-xl  b-slate-700 g-white relative ">
+        <div className="flex  border-b-[1px] g-red-400 pb-4 justify-between w-full">
         <h2 className="font-medium text-xl text-[#343C6A]">Add Invoice</h2>
         <div className=" " onClick={onClose}>
           <button>
-            <IoClose className="mt-5" size={24} />
+            <IoClose className="mt-" size={24} />
           </button>
         </div>
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col mt-4">
           <div className="flex">
-            <div className=" flex flex-col sm:flex-row gap:2 md:gap-4">
+            <div className=" grid  grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4">
               <div className="flex  flex-col">
                 <label htmlFor="car">Select Store</label>
                 <div className="">
                   <select
-                    className="peer block min-h-[auto] h-12 w-[278px] mb-2 mt-3 rounded-lg text-[#718EBF] border-slate-200 border-[1px] bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none focus:placeholder:opacity-100 motion-reduce:transition-none dark:peer-focus:text-primary"
+                    className=" min-h-[auto] h-12 w-[278px] mb-2 mt-3 rounded-lg text-[#718EBF] border-slate-200 border-[1px] bg-transparent px-4 py-[0.32rem] leading-[1.6] outline-none "
                    
                     id="storeName"
                     {...register("storeName")}
                     placeholder="Store Name"
+                    style={{
+                      WebkitAppearance: "none", 
+                      MozAppearance: "none", 
+                      appearance: "none", 
+                      paddingRight: "30px" ,
+                      color: "#718EBF"
+                    }}
                     onChange={(e) => {
                       handleStoreSelect(
                         stores.find((store) => store.name === e.target.value)
@@ -170,7 +197,7 @@ const InvoiceModal = ({ onClose }) => {
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap:2 md:gap-4">
+          <div className="grid  grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4">
             <Input
               type="number"
               id="invoice_value"
@@ -190,17 +217,56 @@ const InvoiceModal = ({ onClose }) => {
             />
           </div>
 
-          <div className="flex flex-col sm:flex-row gap:2 md:gap-4">
+          <div className="grid  grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4">
 
-          <Input
-              type="number"
-              id="opening_balance"
-              label="Opening Balance"
-              register={register}
-              errors={errors}
-              placeholder="Opening Balance"
-            />
-            <div className="mt- ">
+          <div className="">
+              <label className="block mb-2">Payment Method</label>
+<div className="flex gap-4 mt-4 md:mt-0 ">
+              <div className="flex items-center">
+                <input
+                  type="radio"
+                  id="Cash"
+                  name="payment_method"
+                  value="Cash"
+                  {...register("payment_method")}
+                />
+                <label htmlFor="Cash" className="ml-2">Cash</label>
+              </div>
+
+              <div className="flex items-center">
+                <input
+                  type="radio"
+                  id="Cheque"
+                  name="payment_method"
+                  value="Cheque"
+                  {...register("payment_method")}
+                />
+                <label htmlFor="Cheque" className="ml-2">Cheque</label>
+              </div>
+              </div>
+            </div>
+            {errors.payment_method && (
+              <p className="text-red-500 mt-1">{errors.payment_method.message}</p>
+            )}
+            {/* Input for check reference number */}
+            {watch("payment_method") === 'Cheque' && (
+              <div className="mt-4 md:mt-0">
+              <Input
+                type="text"
+                id="reference_no"
+                label="Reference Number"
+                register={register}
+                errors={errors}
+                placeholder=" Reference Number"
+              />
+              </div>
+            )}
+
+          
+            
+          </div>
+          <div className="md:mt-4  grid  grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4">
+          <div className="mt- ">
               <label className="block mb-2">Due Date</label>
               <DatePicker
                 selected={selectedDate}
@@ -213,9 +279,8 @@ const InvoiceModal = ({ onClose }) => {
               )}
             </div>
             
-          </div>
-          <div className="flex gap-4">
-          <div className=" mt-4">
+    
+          <div className="  mt-10">
               <button
                 type="submit"
                 className="px-2 py-2 w-[270px]  justify-center h-max bg-[#2723F4] text-white flex items-center rounded-md"

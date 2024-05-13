@@ -12,6 +12,8 @@ import { getAdminDashboard } from '../../redux/featuer/admin/AdminSlice';
 import PerformingStore from '../../components/adminComponents/TopPerformingStore';
 import TopDue from '../../components/adminComponents/TopDue';
 import { useNavigate } from 'react-router-dom';
+import { PiStorefrontBold } from "react-icons/pi";
+import { FaUsers } from "react-icons/fa";
 
 const AdminDashboard = () => {
   const [showModal, setShowModal] = useState(false);
@@ -60,20 +62,20 @@ const AdminDashboard = () => {
         <Button title="+ Add Invoice" />
         </div>
       </div>
-      <div className='w-full md:p-4 md:mt-2 mt-6 g-red-400 mt- grid sm:grid-cols-2 lg:grid-cols-5 md:grid-cols-3 gap-4 md:gap-8'>
+      <div className='w-full md:p-4 md:mt-2  mt-6 g-red-400 mt- grid sm:grid-cols-2 lg:grid-cols-5 md:grid-cols-3 gap-4 md:gap-8'>
         <Card title="Total Amount" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount={dashBoardData?.totalAmount}/>
         <Card title="Due Amount" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount={dashBoardData?.dueAmount}/>
         <Card title="Paid Amount" Icon={GrTransaction} iconColor="text-[#396AFF]" color="bg-[#E7EDFF]" amount={dashBoardData?.paidAmount}/>
-        <Card title="No.of Executive" Icon={FaSackDollar} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount={dashBoardData?.totalExecutives}/>
-        <Card title="No.of Stores" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount={dashBoardData?.totalStores}/>
+        <Card title="No.of Executive" Icon={FaUsers} iconColor="text-[#16DBCC]" color="bg-[#DCFAF9]" amount={dashBoardData?.totalExecutives}/>
+        <Card title="No.of Stores" Icon={PiStorefrontBold} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount={dashBoardData?.totalStores}/>
       </div>
 
-      <div className="w-full md:p-4 b-red-500 grid grid-cols-1 mt-4 md:mt-0 md:grid-cols-2 gap-4 md:gap-8" >
+      <div className="w-full md:p-4 g-red-500 grid grid-cols-1 mt-4 md:mt-0 md:grid-cols-2 gap-4 md:gap-8" >
 <Chart/>
 <ChartStore/>
       </div>
 
-      <div className='w-full md:p-4 g-red-500 md:gap-8 gap-4 sm:grid-cols-2 mt-4 md:mt-0 grid lg:grid-cols-3'>
+      <div className='w-full md:p-4 g-red-500 md:gap-8 gap-4 sm:grid-cols-2  mt-4 md:mt-0 grid lg:grid-cols-4'>
 <PerfomanceCard title="Top Performing Executive" perfomanceColor='text-[#16DBCC]' name="Executive" top={topExecutive}/>
 <PerformingStore title="Top Performing Store" perfomanceColor='text-[#16DBCC]' name="Store" top={topStore}/>
 <TopDue title="Top Due" perfomanceColor='text-red-500' name="Executive" top={topDue}/>

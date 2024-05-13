@@ -60,16 +60,17 @@ const Route = () => {
 
     return (
         <div>
-            <div className='w-full h-8 bg-re justify-end flex'>
+            <div className='w-full md:mt-4 g-red-400 justify-end flex'>
                 <div className='' onClick={handleModal}>
                     <Button title="+ Add Route" />
                 </div>
             </div>
 
-            <div className='mt- '>
+            <div className='md:mt-8 '>
                 {isLoading ? (
-                    <p>Loading...</p> // Display loading message while data is being fetched
-                ) : (
+                    <div className="flex items-center justify-center h-32">
+                        <p className="text-gray-600">Loading...</p> {/* Display loading message or spinner while data is being fetched */}
+                    </div>                ) : (
                     <Table3 heading={""} DATA={routeData} COLUMNS={columns} />
                 )}
             </div>

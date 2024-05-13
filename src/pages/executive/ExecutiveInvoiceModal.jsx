@@ -22,7 +22,9 @@ const validationSchema = Yup.object().shape({
   invoice_value: Yup.string().required("Invoice Value is required"),
   advance_paid: Yup.string().required("Advance Paid is required"),
   due_date: Yup.date().required("Date is required"),
-  opening_balance: Yup.string() || "",
+  // opening_balance: Yup.string() || "",
+  payment_method: Yup.string().required("Payment Method is required"),
+  reference_no: Yup.string(),
 });
 
 const ExecutiveInvoiceModal = ({ onClose }) => {
@@ -35,7 +37,7 @@ const ExecutiveInvoiceModal = ({ onClose }) => {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
+    setValue,watch
   } = useForm({
     resolver: yupResolver(validationSchema),
   });
@@ -118,18 +120,19 @@ const ExecutiveInvoiceModal = ({ onClose }) => {
         draggable
         pauseOnHover
       />
-      <div className="bg-white border flex-row py-8 rounded-xl px-8 sm:px-20 b-slate-700 g-white relative ">
-        <div className="flex items-center border-b-[1px] justify-between w-full">
+      <div className="bg-white border flex-row p-8 rounded-xl  b-slate-700 g-white relative ">
+        <div className="flex pb-4 border-b-[1px] justify-between w-full">
         <h2 className="font-medium text-xl text-[#343C6A]">Add Invoice</h2>
         <div className=" " onClick={onClose}>
           <button>
-            <IoClose className="mt-5" size={24} />
+            <IoClose className="" size={24} />
           </button>
         </div>
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col mt-4">
           <div className="flex">
-            <div className=" flex flex-col sm:flex-row gap:2 md:gap-4">
+
+            <div className=" grid  grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4">
               <div className="flex  flex-col">
                 <label htmlFor="car">Select Store</label>
                 <div className="">
@@ -139,6 +142,12 @@ const ExecutiveInvoiceModal = ({ onClose }) => {
                     id="storeName"
                     {...register("storeName")}
                     placeholder="Store Name"
+                    style={{
+                      WebkitAppearance: "none", 
+                      MozAppearance: "none", 
+                      appearance: "none", 
+                      paddingRight: "30px" 
+                    }}
                     onChange={(e) => {
                       handleStoreSelect(
                         stores.find((store) => store.name === e.target.value)
@@ -173,7 +182,7 @@ const ExecutiveInvoiceModal = ({ onClose }) => {
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap:2 md:gap-4">
+          <div className="grid  grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4">
             <Input
               type="number"
               id="invoice_value"
@@ -193,16 +202,65 @@ const ExecutiveInvoiceModal = ({ onClose }) => {
             />
           </div>
 
-          <div className="flex flex-col sm:flex-row gap:2 md:gap-4">
+          <div className="grid  grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4">
 
-          <Input
+          <div className="">
+              <label className="block mb-2">Payment Method</label>
+<div className="flex gap-4 ">
+              <div className="flex items-center">
+                <input
+                  type="radio"
+                  id="cash"
+                  name="payment_method"
+                  value="cash"
+                  {...register("payment_method")}
+                />
+                <label htmlFor="cash" className="ml-2">Cash</label>
+              </div>
+
+              <div className="flex items-center">
+                <input
+                  type="radio"
+                  id="Cheque"
+                  name="payment_method"
+                  value="Cheque"
+                  {...register("payment_method")}
+                />
+                <label htmlFor="Cheque" className="ml-2">Cheque</label>
+              </div>
+              </div>
+            </div>
+            {errors.payment_method && (
+              <p className="text-red-500 mt-1">{errors.payment_method.message}</p>
+            )}
+            {/* Input for check reference number */}
+            {watch("payment_method") === 'Cheque' && (
+              <div className="mt-4 md:mt-0">
+              <Input
+                type="text"
+                id="reference_no"
+                label="Reference Number"
+                register={register}
+                errors={errors}
+                placeholder=" Reference Number"
+              />
+              </div>
+            )}
+
+          
+            
+          </div>
+
+          <div className="grid  grid-cols-1 sm:mt-4 sm:grid-cols-2 gap:2 md:gap-4">
+
+          {/* <Input
               type="number"
               id="opening_balance"
               label="Opening Balance"
               register={register}
               errors={errors}
               placeholder="Opening Balance"
-            />
+            /> */}
             <div className="mt- ">
               <label className="block mb-2">Due Date</label>
               <DatePicker
@@ -215,10 +273,7 @@ const ExecutiveInvoiceModal = ({ onClose }) => {
                 <p className="text-red-500 mt-1">{errors.due_date.message}</p>
               )}
             </div>
-            
-          </div>
-          <div className="flex gap-4">
-          <div className=" mt-4">
+            <div className=" mt-10">
               <button
                 type="submit"
                 className="px-2 py-2 w-[270px]  justify-center h-max bg-[#2723F4] text-white flex items-center rounded-md"
@@ -227,6 +282,7 @@ const ExecutiveInvoiceModal = ({ onClose }) => {
               </button>
             </div>
           </div>
+          
         </form>
 
         

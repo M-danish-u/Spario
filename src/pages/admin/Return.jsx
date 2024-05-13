@@ -34,8 +34,9 @@ const Transactions = () => {
     return (
         <div>
             {loading ? (
-                 <p>Loading...</p>  
-             ) : ( 
+                <div className="flex items-center justify-center h-32">
+                        <p className="text-gray-600">Loading...</p> {/* Display loading message or spinner while data is being fetched */}
+                    </div>             ) : ( 
                  <Table4 heading={""} DATA={returns}  COLUMNS={columns} /> 
              )} 
         </div>

@@ -65,14 +65,16 @@ const Store = () => {
 
     return (
         <div className='p-4 relative '>
-            <div className='w-full  z-10 flex justify-end  ' >
+            <div className='w-full  b-red-400 flex justify-end  ' >
                 <div onClick={handleModal}>
                     <Button className='' title="+ Add Store" />
                 </div>
             </div>
-            <div className='mt-4 bg-re-400'>
+            <div className='mt-4 md:mt-0 md:pt-4 b-red-400'>
                 {isLoading ? (
-                    <p>Loading...</p> // Display loading message or spinner while data is being fetched
+                    <div className="flex items-center justify-center h-32">
+                        <p className="text-gray-600">Loading...</p> {/* Display loading message or spinner while data is being fetched */}
+                    </div>
                 ) : (
                     <Table4 heading={""} DATA={storeData} COLUMNS={columns} />
                 )}

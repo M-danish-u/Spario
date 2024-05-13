@@ -7,6 +7,7 @@ import "jspdf-autotable"; // Import jsPDF autotable plugin
 import Filter from "../table/Filter";
 import DateFilter from "../table/ReportFilter";
 import DatepickerFilter from "./DatepickerFilter";
+import { loginAdminAPI } from "../../api/url";
 
 const Table4 = ({ heading, DATA, COLUMNS }) => {
   const columns = useMemo(() => COLUMNS, []);
@@ -54,7 +55,7 @@ const Table4 = ({ heading, DATA, COLUMNS }) => {
     doc.text(heading, 10, 10); // Add heading to the PDF
   
     // Filter out the column with header "Actions" and "No"
-    const filteredColumns = columns.filter((column) => column.Header !== "Actions" && column.Header !== "No");
+    const filteredColumns = columns.filter((column) => column.Header !== "Actions" && column.Header !== "No" && column.Header !== "SL No");
   
     // Add table headers
     const headers = filteredColumns.map((column) => column.Header);
@@ -78,17 +79,18 @@ const Table4 = ({ heading, DATA, COLUMNS }) => {
   
   
   
+  
 
   return (
     <div>
       <div className="font-medium text-xl text-[#343C6A]">{heading}</div>
-      <div className="shadow-lg rounded-lg px-4 pt-4 overflow-x-auto bg-white mt-4 h-full">
-        <div className="flex flex-col md:flex-row gap-4 md:justify-between space-x-4 b-slate-500 mt-4">
+      <div className=" rounded-[12px] p-4 overflow-x-auto bg-white mt-4 h-full">
+        <div className="flex flex-col md:flex-row gap-4 md:justify-between space-x-4 b-slate-500 ">
           <Filter filter={globalFilter} setFilter={setGlobalFilter} />
           <div className="flex flex-col md:flex-row gap-2 ">
           <DateFilter data={DATA} onDateFilterChange={handleDateFilterChange} />
           <button
-            className="bg-[#F6F8FB] ml-[-15px] md:ml-0 rounded-md h-10 w-max border text-gray-700 font-semibold   px-1 "
+            className="bg-[#F6F8FB] ml-[-15px] md:ml-0 rounded-md h-10 w-max border text-gray-700 font-semibold   px-4 "
             onClick={exportPDF}
           >
             Download PDF
@@ -96,14 +98,14 @@ const Table4 = ({ heading, DATA, COLUMNS }) => {
           </div>
         </div>
         <table {...getTableProps()} className="min-w-full bg-white table-auto">
-          <thead className="border-b">
+          <thead className="border-b border-[#f1f1f1]">
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
                 {headerGroup.headers.map((column) => (
                   <th
                     {...column.getHeaderProps()}
                     scope="col"
-                    className="bg-white font-normal text-[#718EBF] border-b-1 px-6 py-3 text-left"
+                    className="bg-white font-normal text-[#718EBF] border-b  px-6 py-3 text-left"
                     key={column.id}
                   >
                     {column.render("Header")}
@@ -121,7 +123,7 @@ const Table4 = ({ heading, DATA, COLUMNS }) => {
                     return (
                       <td
                         {...cell.getCellProps()}
-                        className="px-6 py-3 border-b text-left"
+                        className="px-6 py-3 border-b border-[#f1f1f1] text-left"
                         key={cellIndex}
                       >
                         {cell.render("Cell")}
@@ -133,7 +135,7 @@ const Table4 = ({ heading, DATA, COLUMNS }) => {
             })}
           </tbody>
         </table>
-        <div className="flex justify-end p-5 gap-3">
+        <div className="flex justify-end pt-4 gap-3">
           <button
             className="bg-[#F6F8FB] rounded-md py-1 border text-gray-700 font-bold p-1"
             disabled={!canPreviousPage}

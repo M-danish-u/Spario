@@ -67,6 +67,12 @@ const DateFilter = ({ data, onDateFilterChange }) => {
       {/* <h2>Date Filter</h2> */}
       <select
         value={selectedFilter}
+        style={{
+          WebkitAppearance: "none", 
+          MozAppearance: "none", 
+          appearance: "none", 
+          paddingRight: "30px" 
+        }}
         onChange={(e) => filterData(e.target.value)}
         className='  gap-2 block min-h-[auto] h-10 w-[305px] mb-2 rounded-lg text-[#718EBF] border-slate-200 border-[1px] bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none focus:placeholder:opacity-100 motion-reduce:transition-none dark:peer-focus:text-primary ml-[-16px]'
       >

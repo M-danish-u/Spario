@@ -7,6 +7,7 @@ import Table from '../../components/table/Table'
 import Table2 from '../../components/table/Table2'
 import { useDispatch, useSelector } from 'react-redux'
 import { getSingleStore } from '../../redux/featuer/admin/AdminSlice'
+import Table4 from '../../components/table/Table4'
 
 const StoreProfile = () => {
 
@@ -48,7 +49,7 @@ const StoreProfile = () => {
         <Card title="No.of Store" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount="100"/> */}
       </div>
 
-      <div className='w-full bg-white py-4 md:px-10 px-4 mt-8  rounded-xl shadow-m'>
+      <div className='w-full bg-white py-4 md:p-8 px-4 mt-8  rounded-xl shadow-m'>
 <div className='border-b pb-5'>
 <h2 className="font-medium text-xl  text-[#343C6A] pl-10 md:pl-0 ">Store Details</h2>
 </div>
@@ -97,7 +98,7 @@ const StoreProfile = () => {
         {/* <div className='w-full bg-slate-300 py-10'></div> */}
         <div className='mt-'>
 
-<Table2 heading={""} DATA={storeProfile.invoices} COLUMNS={columns} />
+<Table4 heading={""} DATA={storeProfile.invoices} COLUMNS={columns} />
 </div>
 {/* </div> */}
 

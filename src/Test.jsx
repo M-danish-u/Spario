@@ -477,3 +477,30 @@ const PDFDocument = ({ data, columns }) => {
 
 
 export default Table4;
+
+
+const exportPDF = () => {
+  const doc = new jsPDF(); // Initialize jsPDF
+  doc.text(heading, 10, 10); // Add heading to the PDF
+
+  // Filter out the column with header "Actions" and "No"
+  const filteredColumns = columns.filter((column) => column.Header !== "Actions" && column.Header !== "No" && column.Header !== "SL No");
+
+  // Add table headers
+  const headers = filteredColumns.map((column) => column.Header);
+
+  // Extract values from each row object
+  const rows = data.map((row) =>
+    filteredColumns.map((column) => {
+      const cellValue = row[column.accessor];
+      return typeof cellValue === "object" ? JSON.stringify(cellValue) : cellValue;
+    })
+  );
+
+  doc.autoTable({
+    head: [headers],
+    body: rows,
+  });
+
+  doc.save("data.pdf"); // Save the PDF
+};

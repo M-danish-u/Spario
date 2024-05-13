@@ -17,7 +17,10 @@ const StoreEditModal = ({ onEditClose, store }) => {
     customer_name: Yup.string().required("Customer Name is required"),
     address: Yup.string().required("Address is required"),
     contact_one: Yup.string().required("Mobile 1 is required"),
-    contact_two: Yup.string(),
+    contact_two: Yup.string().matches(/^[0-9]{10}$/, {
+      message: 'Mobile 2 must be a valid 10-digit number',
+      excludeEmptyString: true, // Allow empty string
+    }),
     executive: Yup.string().required("Executive is required"),
     route: Yup.string().required("Route is required"),
   });
@@ -114,16 +117,16 @@ const StoreEditModal = ({ onEditClose, store }) => {
       draggable
       pauseOnHover
     />
-      <div className="bg-white border flex-row py-8 rounded-xl px-8 md:px-20 b-slate-700 g-white relative">
-      <div className="flex items-center border-b-[1px] justify-between w-full">
+      <div className="bg-white border flex-row p-8 rounded-xl  b-slate-700 g-white relative">
+      <div className="flex pb-4 border-b-[1px] justify-between w-full">
         <h2 className="font-medium text-xl text-[#343C6A]">Edit Store</h2>
         <div className=" " onClick={onEditClose}>
           <button>
-            <IoClose className="mt-5" size={24} />
+            <IoClose className="mt-" size={24} />
           </button>
         </div>
         </div>          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col mt-4">
-          <div className="flex flex-col sm:flex-row gap:2 md:gap-4">
+          <div className="grid  grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4">
             <Input
               type="text"
               id="store_name"
@@ -142,7 +145,7 @@ const StoreEditModal = ({ onEditClose, store }) => {
             />
           </div>
 
-          <div className="flex flex-col sm:flex-row gap:2 md:gap-4">
+          <div className="grid  grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4">
             <Input
               type="text"
               id="address"
@@ -161,6 +164,12 @@ const StoreEditModal = ({ onEditClose, store }) => {
                     id="route"
                     {...register("route")}
                     placeholder="Route"
+                    style={{
+                      WebkitAppearance: "none", 
+                      MozAppearance: "none", 
+                      appearance: "none", 
+                      paddingRight: "30px" 
+                    }}
                     onChange={(e) => {
                       handleRouteSelect(
                         routes.find((route) => route.name === e.target.value)
@@ -211,7 +220,7 @@ const StoreEditModal = ({ onEditClose, store }) => {
 
           </div>
 
-          <div className="flex flex-col sm:flex-row gap:2 md:gap-4">
+          <div className="grid  grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4">
             <Input
               type="text"
               id="contact_one"
@@ -230,37 +239,8 @@ const StoreEditModal = ({ onEditClose, store }) => {
             />
           </div>
 
-          <div className="flex flex-col sm:flex-row gap:2 md:gap-4">
-            {/* <div className="relative flex-grow">
-              <label>Executive</label>
-              <div className="relative mt-2 mb-2">
-                <input
-                  type="text"
-                  id="executive"
-                  {...register("executive")}
-                  placeholder="Executive"
-                  className="peer block min-h-[auto] h-12 w-full rounded-lg text-[#718EBF] border-slate-200 border-[1px] bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none focus:placeholder:opacity-100 motion-reduce:transition-none dark:autofill:shadow-autofill dark:peer-focus:text-primary"
-                  readOnly // Make the input read-only to prevent direct typing
-                />
-                <IoChevronDown
-                  className="absolute right-3 top-7 transform -translate-y-1/2 cursor-pointer text-gray-400"
-                  onClick={() => setShowExecutiveList(!showExecutiveList)}
-                />
-                {showExecutiveList && (
-                  <div className="absolute top-full left-0 w-full z-10 bg-white border border-gray-200 shadow-lg rounded-b-lg">
-                    {executives.map((executive) => (
-                      <div
-                        key={executive.id}
-                        className="px-4 py-2 cursor-pointer hover:bg-gray-100"
-                        onClick={() => handleExecutiveSelect(executive)}
-                      >
-                        {executive.name}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div> */}
+          <div className="grid  grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4">
+           
              <div className="flex  flex-col">
                 <label htmlFor="car">Executive</label>
                 <div className="">
@@ -270,6 +250,12 @@ const StoreEditModal = ({ onEditClose, store }) => {
                     id="executive"
                     {...register("executive")}
                     placeholder="Executive"
+                    style={{
+                      WebkitAppearance: "none", 
+                      MozAppearance: "none", 
+                      appearance: "none", 
+                      paddingRight: "30px" 
+                    }}
                     onChange={(e) => {
                       handleExecutiveSelect(
                         executives.find((executive) => executive.name === e.target.value)

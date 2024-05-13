@@ -35,7 +35,7 @@ const Return = () => {
       );
   return (
     <div>
-        <div className='w-full h-8 gap-4 bg-re md:pr-5 justify-end flex md:mb-2'>
+        <div className='w-full  gap-4 g-red-500 md:pr-5 justify-end flex md:mb-2'>
         <div onClick={handleInvoiceModal}>
         <Button title="+ Add Return" />
         </div>
@@ -43,8 +43,9 @@ const Return = () => {
 
         {/* <Table3 heading={""} DATA={returnData || []} COLUMNS={columns} /> */}
         {loading ? (
-                <p>Loading...</p> // Display loading message while data is being fetched
-            ) : (
+          <div className="flex items-center justify-center h-32">
+                    <p className="text-gray-600">Loading...</p> 
+                </div>                ) : (
                 <Table3 heading={""} DATA={returnData || []} COLUMNS={columns} />
             )}
 

@@ -18,6 +18,7 @@ const PerformanceCard = ({perfomanceColor,title,name,top}) => {
         <table className="border-collaps ">
           <thead>
             <tr className=' '>
+            {/* <th className="px-4 text-[#718EBF] font-normal t  py-2">SL.No</th> */}
               <th className="px-4 text-[#718EBF] font-normal text-start py-2">{name}</th>
               <th className="px-4 text-[#718EBF] font-normal py-2">Performance</th>
             </tr>
@@ -25,6 +26,7 @@ const PerformanceCard = ({perfomanceColor,title,name,top}) => {
           <tbody>
             {top?.map((item, index) => (
               <tr key={index}>
+                 {/* <td className="px-4 py-2 text-center">{index + 1}</td> */}
                 <td className="px-4 py-2 text-cente">{item.name}</td>
                 <td className={`${perfomanceColor} px-4 py-2 text-center`}>{item.performancePercentage}%</td>
               </tr>

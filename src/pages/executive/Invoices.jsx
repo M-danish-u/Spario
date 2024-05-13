@@ -24,17 +24,17 @@ const Invoices = () => {
     []
   );
 
-  // Display loading message while fetching data
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  // Render the component only if transactionData is available
-  return (
-    <div>
-      <Table3 heading={""} DATA={invoiceData || []} COLUMNS={columns} />
-    </div>
-  );
+  return(
+    <>
+    {loading ? (
+      <div className="flex items-center justify-center h-32">
+                    <p className="text-gray-600">Loading...</p> 
+                </div>            ) : (
+            <Table3 heading={""} DATA={invoiceData || []} COLUMNS={columns}/>
+        )}
+</>
+  )
+  
 };
 
 export default Invoices;

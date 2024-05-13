@@ -15,7 +15,10 @@ const ExecutiveEditModal = ({ onEditClose, executive }) => {
     name: Yup.string().required("Executive Name is required"),
     address: Yup.string().required("Address is required"),
     contact_one: Yup.string().required("Mobile 1 is required"),
-    contact_two: Yup.string(),
+    contact_two: Yup.string().matches(/^[0-9]{10}$/, {
+      message: 'Mobile 2 must be a valid 10-digit number',
+      excludeEmptyString: true, // Allow empty string
+    }),
     email: Yup.string().required("User Name is required"),
   });
   console.log(executive, "exxx");
@@ -84,10 +87,16 @@ const ExecutiveEditModal = ({ onEditClose, executive }) => {
       draggable
       pauseOnHover
     />
-      <div className="bg-white border flex-row py-8 rounded-xl px-8 md:px-20 b-slate-700 g-white relative">
-        <h2 className="font-medium text-xl text-[#343C6A]">Add Executive</h2>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col mt-4">
-          <div className="flex flex-col sm:flex-row gap:2 md:gap-4">
+      <div className="bg-white border flex-row p-8 rounded-xl  b-slate-700 g-white relative">
+      <div className="flex pb-4 border-b-[1px] justify-between w-full">
+        <h2 className="font-medium text-xl  text-[#343C6A]">Edit Executive</h2>
+        <div className=" " onClick={onEditClose}>
+          <button>
+            <IoClose className="" size={24} />
+          </button>
+        </div>
+        </div>            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col mt-4">
+          <div className="grid  grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4">
             <Input
               type="text"
               id="name"
@@ -105,7 +114,7 @@ const ExecutiveEditModal = ({ onEditClose, executive }) => {
               placeholder="Mobile"
             />
           </div>
-          <div className="flex flex-col sm:flex-row gap:2 md:gap-4">
+          <div className="grid  grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4">
             <Input
               type="text"
               id="address"
@@ -123,7 +132,7 @@ const ExecutiveEditModal = ({ onEditClose, executive }) => {
               placeholder="Mobile"
             />
           </div>
-          <div className="flex flex-col sm:flex-row gap:2 md:gap-4">
+          <div className="grid  grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4">
             <Input
               type="text"
               id="email"
@@ -132,7 +141,7 @@ const ExecutiveEditModal = ({ onEditClose, executive }) => {
               errors={errors}
               placeholder="User Name"
             />
-            <div className="mt-7">
+            <div className="mt-10">
               <button
                 type="submit"
                 className="px-2 py-2 w-[270px]  justify-center h-max bg-[#2723F4] text-white flex items-center rounded-md"
@@ -142,11 +151,7 @@ const ExecutiveEditModal = ({ onEditClose, executive }) => {
             </div>
           </div>
         </form>
-        <div className="absolute top-2 right-2" onClick={onEditClose}>
-          <button>
-            <IoClose className="mt-5" size={24} />
-          </button>
-        </div>
+        
       </div>
     </div>
   );

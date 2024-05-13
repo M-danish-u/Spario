@@ -23,6 +23,18 @@ export const ExecutiveTransCollumn = () => [
     ),
   },
   {
+    Header: "Payment Method",
+    accessor: "payment_method",
+    Cell: ({ row }) => (
+      <div className="flex flex-row items-center justify-cente">
+        <span>{row.original.payment_method}</span>
+        <span className="mx-2"> </span> {/* Separator between Payment Method and Reference No */}
+        <span>{row.original.reference_no}</span> {/* Displaying Reference No */}
+      </div>
+    ),
+  },
+  
+  {
     Header: "Date",
     accessor: "created_at",
     Cell: ({ row }) => {

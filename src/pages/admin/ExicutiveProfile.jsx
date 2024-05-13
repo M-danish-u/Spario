@@ -50,7 +50,7 @@ const ExicutiveProfile = () => {
         <Card title="No.of Store" Icon={FaHandHoldingDollar} iconColor="text-[#FF82AC]" color="bg-[#FFE0EB]" amount="100"/> */}
       </div>
 
-      <div className='w-full bg-white py-5 px-8 mt-4 md:mt-8 rounded-xl shadow-md'>
+      <div className='w-full bg-white p4 md:p-8 mt-4 md:mt-8 rounded-xl shadow-md'>
 <div className='border-b pb-5'>
 
 <h2 className="font-medium text-xl text-[#343C6A] md:pl-0 pl-10">Executive</h2>

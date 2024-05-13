@@ -2,7 +2,10 @@ import { useState } from "react";
 import Switch from "@mui/material/Switch";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 import { FaRegEdit, FaRegEye } from "react-icons/fa";
-
+import { FcApproval } from "react-icons/fc";
+import { IoIosClose } from "react-icons/io";
+import { FaCheck , } from "react-icons/fa6";
+import { IoClose } from "react-icons/io5";
 export const AdminExpenseCollumn = (handleStatus,handleStatusApprove) => {
   const handleStatusChange = (row) => {
     // Implement your logic to update the status here
@@ -45,25 +48,24 @@ export const AdminExpenseCollumn = (handleStatus,handleStatusApprove) => {
       
         if (status === "pending") {
           return (
-            <>
-              <button className=" bg-green-500 text-white px-2 py-1 rounded-md" onClick={() => handleStatusApprove(row.original)} >
-                Approve
-              </button>
-              <button className="ml-2 bg-red-500 text-white px-2 py-1 rounded-md" onClick={() => handleStatus(row.original)} >
-                Reject
-              </button>
-            </>
+            < div className="flex gap-4">
+              <FaCheck className=" text-3xl bg-green-600 text-white w-12 h-8 rounded-[4px]" onClick={() => handleStatusApprove(row.original)} />
+             
+              <IoClose className="text-3xl bg-red-600 text-white w-12 h-8 rounded-[4px]" onClick={() => handleStatus(row.original)} />
+              
+            
+            </div>
           );
         } else if (status === "approved") {
           return (
             <span className="text-green-500">
-              {status.toUpperCase()}
+              Approved
             </span>
           );
         } else if (status === "rejected") {
           return (
             <span className="text-red-500">
-              {status.toUpperCase()}
+              Rejected
             </span>
           );
         } else {

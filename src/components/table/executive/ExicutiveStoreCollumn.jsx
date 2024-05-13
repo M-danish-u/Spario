@@ -18,7 +18,7 @@ export const ExecutiveStoreCollumn = (handleViewStore, handleAddAmount) => [
     Header: " Total  ",
     accessor: "total_amount",
     Cell: ({ row }) => (
-      <div className="flex flex-row items-center justify-center">
+      <div className="flex flex-row items-center ">
         <LiaRupeeSignSolid /> {row.original.total_amount} {/* Add the Rupee icon */}
       </div>
     ),
