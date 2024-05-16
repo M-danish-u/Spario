@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../../../api/axios";
 import {
   addAmountAPI,
+  addStoreExecutive,
   createExpenseAPI,
   createReturnAPI,
   getBalanceAPI,
@@ -26,8 +27,8 @@ const initialState = {
   InvoiceData:null,
   createReturn:null,
   ReturnData:null,
-  ExpenseData:null
-
+  ExpenseData:null,
+  // StoreCreate:null,
 };
 
 export const getExecutiveDashboard = createAsyncThunk(
@@ -167,6 +168,20 @@ export const getExecutiveExpense = createAsyncThunk(
   }
 );
 
+// export const createExecutiveStore = createAsyncThunk(
+//   "admin/createExecutiveStore",
+//   async ({id,body}, { rejectWithValue }) => {
+//     try {
+//       // Assuming createStoreAPI is defined somewhere
+//       const response = await axios.post(`${addStoreExecutive}/${id}`,body);
+//       console.log(response.data, "store response");
+//       return response.data;
+//     } catch (error) {
+//       console.log(error.response.data.errors, 'checking the response from the backend');
+//       return rejectWithValue(error.response.data.errors);
+//     }
+//   }
+// );
 const executiveSlice = createSlice({
   name: "executive",
   initialState,
@@ -307,6 +322,20 @@ const executiveSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+
+      // .addCase(createExecutiveStore.pending, (state) => {
+      //   state.loading = true;
+      //   state.error = null;
+      // })
+      // .addCase(createExecutiveStore.fulfilled, (state, action) => {
+      //   state.loading = false;
+      //   state.StoreCreate.unshift(action.payload.return)
+      //   state.createExecutiveStore = action.payload;
+      // })
+      // .addCase(createExecutiveStore.rejected, (state, action) => {
+      //   state.loading = false;
+      //   state.error = action.payload;
+      // })
   },
 });
 

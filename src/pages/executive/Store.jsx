@@ -9,11 +9,18 @@ import { useNavigate } from 'react-router-dom';
 import Table3 from '../../components/table/executive/Table3';
 import { useDispatch, useSelector } from 'react-redux';
 import { getExecutiveStore, getSingleExecutiveStore,  } from '../../redux/featuer/executive/ExecutiveSlice';
+import Button from '../../components/commonComponents/Button';
+import AddStoreModal from './AddStoreModal';
+import ExecutiveStoreEditModal from './ExecutiveStoreEditModal';
 
 const Store = () => {
 
     const navigate=useNavigate()
     const [AmountshowModal, setAmountShowModal] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [editShowModal, setEditShowModal] = useState(false);
+    const [editingStore, setEditingStore] = useState({});
+
     const [selectedStore , setSelectedStore]=useState({})
     const executive_id = useSelector((state) => state?.adminAuth?.admin?.id);
     const loading = useSelector((state) => state?.executive?.loading);
@@ -40,6 +47,9 @@ const Store = () => {
 
   
   const storeData = useSelector((state) => state?.executive?.StoreData || []);
+  const handleModal = () => {
+    setShowModal(true);
+};
 
   // const dashBoardData = useSelector((state) => state?.executive?.DashboardData || []);
   // window.location.reload()
@@ -79,6 +89,10 @@ const Store = () => {
         setAmountShowModal(true); // Show the modal
        
       };
+      const handleEdit = (store) => {
+        setEditingStore(store);
+        setEditShowModal(true);
+    };
     // const storeDatas=[{no:'1',storeName:'Store 1',customerName:'Customer 1', total:'500000',due:'30000',paid:'3000',exicutive:'Exivutive 1' },
     // {no:'2',storeName:'Store 2',customerName:'Customer 2', total:'500000',due:'30000',paid:'3000',exicutive:'Exivutive 2',route:'calicut',mobile1:'1234567890',mobile2:'0987654321',address:'address 1', },
     // {no:'3',storeName:'Store 3',customerName:'Customer 3', total:'500000',due:'30000',paid:'3000',exicutive:'Exivutive 3' ,route:'calicut',mobile1:'1234567890',mobile2:'0987654321',address:'address 1',},
@@ -91,14 +105,19 @@ const Store = () => {
 
 
     const columns = useMemo(
-        () => ExecutiveStoreCollumn(handleViewStore,handleAddAmount),
+        () => ExecutiveStoreCollumn(handleViewStore,handleAddAmount,handleEdit),
         []
       );
 
       
 
   return (
-    <div>
+    <div> <div className='w-full  b-red-400 flex justify-end  ' >
+    <div onClick={handleModal}>
+        <Button className='' title="+ Add Store" />
+    </div>
+</div>
+
       {loading ? (
           <div className="flex items-center justify-center h-32">
                     <p className="text-gray-600">Loading...</p> 
@@ -107,6 +126,18 @@ const Store = () => {
             )}
 
 {/* <Table3 heading={"Store Details"} DATA={ storeData?.stores || []} COLUMNS={columns} /> */}
+
+{showModal && (
+                <AddStoreModal
+                    onClose={() => setShowModal(false)}
+                />
+            )}
+            {editShowModal && (
+                <ExecutiveStoreEditModal
+                    store={editingStore}
+                    onEditClose={() => setEditShowModal(false)}
+                />
+            )}
 
  {AmountshowModal && (
         <StoreAmoundAddModal

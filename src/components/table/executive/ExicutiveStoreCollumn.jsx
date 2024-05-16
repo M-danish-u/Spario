@@ -1,6 +1,8 @@
+import { FaRegEdit } from "react-icons/fa";
+import { FaEye } from "react-icons/fa6";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 
-export const ExecutiveStoreCollumn = (handleViewStore, handleAddAmount) => [
+export const ExecutiveStoreCollumn = (handleViewStore, handleAddAmount,handleEdit) => [
   {
     Header: "No",
     accessor: "id",
@@ -63,15 +65,24 @@ export const ExecutiveStoreCollumn = (handleViewStore, handleAddAmount) => [
     ),
   },
   {
-    Header: 'View Profile',
-    accessor: "viewprofile",
+    Header: "Actions",
+    accessor: "actions",
     Cell: ({ row }) => (
-      <button
-        onClick={() => handleViewStore(row.original)}
-        className="text-[#2723F4]"
-      >
-        View Store
-      </button>
+      <div className="flex flex-row space-x-2">
+         <button
+          onClick={() => handleViewStore(row.original)}
+          className="text-[#B1B1B1] text-xl  cursor-pointer mr-4"
+        >
+          <FaEye />
+        </button>
+        <button
+          onClick={() => handleEdit(row.original)}
+          className="text-[#B1B1B1] cursor-pointer text-xl " // Added mr-2 for right margin
+        >
+          <FaRegEdit />
+        </button>
+       
+      </div>
     ),
   },
   // Other columns...

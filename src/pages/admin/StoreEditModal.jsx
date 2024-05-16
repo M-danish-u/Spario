@@ -23,6 +23,7 @@ const StoreEditModal = ({ onEditClose, store }) => {
     }),
     executive: Yup.string().required("Executive is required"),
     route: Yup.string().required("Route is required"),
+    opening_balance:Yup.string(),
   });
 
   const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm({
@@ -35,6 +36,8 @@ const StoreEditModal = ({ onEditClose, store }) => {
       contact_two: store?.contact_two || "",
       executive: store?.executive?.name || "", // Default value for executive input
       route: store?.route.route_name || "", // Default value for route input
+      opening_balance:store?.opening_balance
+
     }
   });
 
@@ -117,7 +120,7 @@ const StoreEditModal = ({ onEditClose, store }) => {
       draggable
       pauseOnHover
     />
-      <div className="bg-white border flex-row p-8 rounded-xl  b-slate-700 g-white relative">
+      <div className="bg-white border flex-row px-8 pt-6 pb-8 rounded-xl  b-slate-700 g-white relative">
       <div className="flex pb-4 border-b-[1px] justify-between w-full">
         <h2 className="font-medium text-xl text-[#343C6A]">Edit Store</h2>
         <div className=" " onClick={onEditClose}>
@@ -145,7 +148,7 @@ const StoreEditModal = ({ onEditClose, store }) => {
             />
           </div>
 
-          <div className="grid  grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4">
+          <div className="grid md:mt-3 grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4">
             <Input
               type="text"
               id="address"
@@ -159,17 +162,17 @@ const StoreEditModal = ({ onEditClose, store }) => {
                 <label htmlFor="route">Route</label>
                 <div className="">
                   <select
-                    className="peer block min-h-[auto] h-12 w-[280px] mt-3 rounded-lg text-[#718EBF] border-slate-200 border-[1px] bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none focus:placeholder:opacity-100 motion-reduce:transition-none dark:peer-focus:text-primary"
+                    className="peer block min-h-[auto] h-12 w-[280px] mt-2 rounded-lg text-[#718EBF] border-slate-200 border-[1px] bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none focus:placeholder:opacity-100 motion-reduce:transition-none dark:peer-focus:text-primary"
                    
                     id="route"
                     {...register("route")}
                     placeholder="Route"
-                    style={{
-                      WebkitAppearance: "none", 
-                      MozAppearance: "none", 
-                      appearance: "none", 
-                      paddingRight: "30px" 
-                    }}
+                    // style={{
+                    //   WebkitAppearance: "none", 
+                    //   MozAppearance: "none", 
+                    //   appearance: "none", 
+                    //   paddingRight: "30px" 
+                    // }}
                     onChange={(e) => {
                       handleRouteSelect(
                         routes.find((route) => route.name === e.target.value)
@@ -187,40 +190,10 @@ const StoreEditModal = ({ onEditClose, store }) => {
                   </select>
                 </div>
                 </div>
-            {/* <div className="relative flex-grow">
-              <label>Route</label>
-              <div className="relative mt-2 mb-2">
-                <input
-                  type="text"
-                  id="route"
-                  {...register("route")}
-                  placeholder="Route"
-                  className="peer block min-h-[auto] h-12 w-full rounded-lg text-[#718EBF] border-slate-200 border-[1px] bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none focus:placeholder:opacity-100 motion-reduce:transition-none dark:autofill:shadow-autofill dark:peer-focus:text-primary"
-                  readOnly // Make the input read-only to prevent direct typing
-                />
-                <IoChevronDown
-                  className="absolute right-3 top-7 transform -translate-y-1/2 cursor-pointer text-gray-400"
-                  onClick={() => setShowRouteList(!showRouteList)}
-                />
-                {showRouteList && (
-                  <div className="absolute top-full left-0 w-full z-10 bg-white border border-gray-200 shadow-lg rounded-b-lg">
-                    {routes.map((route) => (
-                      <div
-                        key={route.id}
-                        className="px-4 py-2 cursor-pointer hover:bg-gray-100"
-                        onClick={() => handleRouteSelect(route)}
-                      >
-                        {route.name}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div> */}
-
+            
           </div>
 
-          <div className="grid  grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4">
+          <div className="grid md:mt-3 grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4">
             <Input
               type="text"
               id="contact_one"
@@ -239,23 +212,23 @@ const StoreEditModal = ({ onEditClose, store }) => {
             />
           </div>
 
-          <div className="grid  grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4">
+          <div className="grid md:mt-3 grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4">
            
              <div className="flex  flex-col">
                 <label htmlFor="car">Executive</label>
                 <div className="">
                   <select
-                    className="peer block min-h-[auto] h-12 w-[280px] mt-3 rounded-lg text-[#718EBF] border-slate-200 border-[1px] bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none focus:placeholder:opacity-100 motion-reduce:transition-none dark:peer-focus:text-primary"
+                    className="peer block min-h-[auto] h-12 w-[280px] mt-2 rounded-lg text-[#718EBF] border-slate-200 border-[1px] bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none focus:placeholder:opacity-100 motion-reduce:transition-none dark:peer-focus:text-primary"
                    
                     id="executive"
                     {...register("executive")}
                     placeholder="Executive"
-                    style={{
-                      WebkitAppearance: "none", 
-                      MozAppearance: "none", 
-                      appearance: "none", 
-                      paddingRight: "30px" 
-                    }}
+                    // style={{
+                    //   WebkitAppearance: "none", 
+                    //   MozAppearance: "none", 
+                    //   appearance: "none", 
+                    //   paddingRight: "30px" 
+                    // }}
                     onChange={(e) => {
                       handleExecutiveSelect(
                         executives.find((executive) => executive.name === e.target.value)
@@ -272,15 +245,24 @@ const StoreEditModal = ({ onEditClose, store }) => {
                   </select>
                 </div>
                 </div>
-            <div className="mt-10">
+                <Input
+              type="number"
+              id="opening_balance"
+              label="Opening Balance"
+              register={register}
+              errors={errors}
+              placeholder="Opening Balance"
+            /> 
+            
+          </div>
+          <div className="mt-3">
               <button
                 type="submit"
-                className="px-2 py-2 w-[270px]  justify-center h-max bg-[#2723F4] text-white flex items-center rounded-md"
+                className="px-2 py-[9px] w-[270px]  justify-center h-max bg-[#2723F4] text-white flex items-center rounded-md"
               >
                 Update
               </button>
             </div>
-          </div>
         </form>
         
       </div>

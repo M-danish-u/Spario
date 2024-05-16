@@ -4,7 +4,7 @@ import { CiSearch } from "react-icons/ci";
 const Filter = ({filter , setFilter}) => {
   return (
     <div className=" ">
-           <div className=" w-max flex items-center gap- border-[1px] overflow-hidden rounded-md border-slate-200 ">
+           <div className=" w-max flex items-center bg-red- gap- border-[1px] overflow-hidden rounded-md border-slate-200 ">
 
 <CiSearch className='h-5 w-8 text-slate-400' />
 {/* <p >Search:</p> */}

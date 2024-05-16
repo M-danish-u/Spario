@@ -7,6 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createStore,
+  editStore,
   getAllExecutive,
   getAllRoute,
 } from "../../redux/featuer/admin/AdminSlice";
@@ -26,33 +27,49 @@ const validationSchema = Yup.object().shape({
     message: 'Mobile 2 must be a valid 10-digit number',
     excludeEmptyString: true, // Allow empty string
   }),
-  executive: Yup.string().required("Executive is required"),
+//   executive: Yup.string().required("Executive is required"),
    opening_balance: Yup.string(),
 });
 
 
 
-const CreateStoreModal = ({ onClose }) => {
+const ExecutiveStoreEditModal = ({ onEditClose , store}) => {
   const [showRouteList, setShowRouteList] = useState(false);
   const [showExecutiveList, setShowExecutiveList] = useState(false);
+  console.log(store,'sssssss');
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
+    watch
   } = useForm({
     resolver: yupResolver(validationSchema),
+
+    defaultValues: {
+        store_name: store?.store_name || "", 
+        customer_name: store?.customer_name || "",
+        address: store?.address || "",
+        contact_one: store?.contact_one || "",
+        contact_two: store?.contact_two || "",
+        // executive: store?.executive?.name || "", // Default value for executive input
+        route: store?.route.route_name || "", // Default value for route input
+        opening_balance:store?.opening_balance
+      }
   });
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllRoute());
-    dispatch(getAllExecutive());
+    // dispatch(getAllExecutive());
   }, [dispatch]);
 
   const routeData = useSelector(
     (state) => state?.admin?.AllRouteData?.routes || []
   );
+
   const executiveData = useSelector(
     (state) => state?.admin?.AllExecutiveData?.executives || []
   );
@@ -61,10 +78,13 @@ const CreateStoreModal = ({ onClose }) => {
     id: route.id,
     name: route.route_name,
   }));
-  const executives = executiveData.map((executive) => ({
-    id: executive.id,
-    name: executive.name,
-  }));
+//   const executives = executiveData.map((executive) => ({
+//     id: executive.id,
+//     name: executive.name,
+//   }));
+
+const executive_id = useSelector((state) => state?.adminAuth?.admin?.id);
+
 
   const handleRouteSelect = (route) => {
     setValue("route", route.name);
@@ -73,36 +93,50 @@ const CreateStoreModal = ({ onClose }) => {
   };
   const navigate = useNavigate();
 
-  const handleExecutiveSelect = (executive) => {
-    console.log(executive);
-    setValue("executive", executive.name);
-    setValue("executive_id", executive.id); // Set the selected executive ID in the form state
-    setShowExecutiveList(false);
-  };
+//   const handleExecutiveSelect = (executive) => {
+//     console.log(executive);
+//     setValue("executive", executive.name);
+//     setValue("executive_id", executive.id); // Set the selected executive ID in the form state
+//     setShowExecutiveList(false);
+//   };
+const watchRoute = watch("route");
+//   const watchExecutive = watch("executive");
 
-  const onSubmit = (data) => {
-    dispatch(createStore({
-      ...data,
-      route_id: data.route_id,
-      executive_id: data.executive_id,
+const onSubmit = (data) => {
+    // Check if the route and executive fields have been modified
+    const routeId = watchRoute === store.route.route_name ? undefined : data.route_id;
+    // const executiveId = watchExecutive === store.executive?.name ? undefined : data.executive_id;
+    console.log(data, 'sssssss');
+    
+    // Dispatch action to edit store, including selected route and executive IDs
+    dispatch(editStore({
+      id: store.id,
+      data: {
+        ...data,
+        route_id: routeId || store.route.id, // Fixed typo: || instead of |
+        executive_id: executive_id // Fixed typo: || instead of |
+      }
     }))
-      .then((result) => {
-        if (createStore.fulfilled.match(result)) {
-          console.log("Store created successfully:", result.payload);
-          toast.success('Store created successfully');
-        } else if (createStore.rejected.match(result)) {
-          console.log('Error creating store:', result);
-          // Handle error if store creation fails
-          toast.error(result.payload[0]);
-        }
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+    .then((result) => {
+      if (editStore.fulfilled.match(result)) {
+        console.log("Store Edited successfully:", result.payload);
+        toast.success('Store Updated successfully');
+        // You can reload the page or perform any other action upon successful edit
+        window.location.reload();
+      } else if (editStore.rejected.match(result)) {
+        console.error('Error editing store:', result.error);
+        // Handle error if store editing fails
+        toast.error(result.payload.store_name[0] );
+        // console.log(result.payload.store_name,'loooood');
+      }
+    })
+    .catch((error) => {
+      // Handle other errors
+      console.error('Error:', error);
+      toast.error('An error occurred while editing store');
+    });
   };
+  
   
 
   return (
@@ -121,8 +155,8 @@ const CreateStoreModal = ({ onClose }) => {
       <div className="bg-white border flex-row px-8 pt-6 pb-8 rounded-xl  b-slate-700 g-white relative">
         {/* <h2 className="font-medium text-xl text-[#343C6A]">Create Store</h2> */}
         <div className="flex pb-4 border-b-[1px] justify-between w-full">
-        <h2 className="font-medium text-xl text-[#343C6A]">Add Store</h2>
-        <div className=" " onClick={onClose}>
+        <h2 className="font-medium text-xl text-[#343C6A]">Edit Store</h2>
+        <div className=" " onClick={onEditClose}>
           <button>
             <IoClose className="mt-" size={24} />
           </button>
@@ -133,7 +167,7 @@ const CreateStoreModal = ({ onClose }) => {
             <Input
               type="text"
               id="store_name"
-              label="Store Name."
+              label="Store Name"
               register={register}
               errors={errors}
               placeholder="Store Name"
@@ -212,7 +246,7 @@ const CreateStoreModal = ({ onClose }) => {
           </div>
 
           <div className="grid md:mt-3  grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4">
-            <div className="flex  flex-col">
+            {/* <div className="flex  flex-col">
               <label htmlFor="car">Executive</label>
               <div className="">
                 <select
@@ -220,12 +254,7 @@ const CreateStoreModal = ({ onClose }) => {
                   id="executive"
                   {...register("executive")}
                   placeholder="Executive"
-                  // style={{
-                  //   WebkitAppearance: "none", 
-                  //   MozAppearance: "none", 
-                  //   appearance: "none", 
-                  //   paddingRight: "30px" 
-                  // }}
+                
                   onChange={(e) => {
                     handleExecutiveSelect(
                       executives.find(
@@ -234,7 +263,6 @@ const CreateStoreModal = ({ onClose }) => {
                     );
                   }}
                 >
-                  {/* Map over stores array to generate options */}
                   <option>Select Executive</option>
                   {executives.map((executive) => (
                     <option key={executive.id} value={executive.name}>
@@ -243,7 +271,7 @@ const CreateStoreModal = ({ onClose }) => {
                   ))}
                 </select>
               </div>
-            </div>
+            </div> */}
            <Input
               type="number"
               id="opening_balance"
@@ -253,17 +281,18 @@ const CreateStoreModal = ({ onClose }) => {
               placeholder="Opening Balance"
             /> 
             
-          </div>
-
-          <div className="flex gap-4">
-          <div className="mt-2">
+            <div className="mt-9">
               <button
                 type="submit"
                 className="px-2 py-[9px] w-[280px]  justify-center h-max bg-[#2723F4] text-white flex items-center rounded-md"
               >
-                + Create Store
+                Update
               </button>
             </div>
+          </div>
+
+          <div className="flex gap-4">
+          
           </div>
         </form>
 
@@ -277,4 +306,4 @@ const CreateStoreModal = ({ onClose }) => {
   );
 };
 
-export default CreateStoreModal;
+export default ExecutiveStoreEditModal;

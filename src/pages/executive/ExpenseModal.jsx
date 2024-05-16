@@ -97,7 +97,7 @@ const ExpenseModal = ({ onClose }) => {
         draggable
         pauseOnHover
       />
-      <div className="bg-white border flex-row p-8 rounded-xl  b-slate-700 g-white relative">
+      <div className="bg-white border flex-row px-8 pt-6 pb-8 rounded-xl  b-slate-700 g-white relative">
         <div className="flex pb-4 border-b-[1px] justify-between w-full">
           <h2 className="font-medium text-xl text-[#343C6A]">Add Expense</h2>
           <div className="" onClick={onClose}>
@@ -116,12 +116,12 @@ const ExpenseModal = ({ onClose }) => {
                   id="storeName"
                   {...register("storeName")}
                   placeholder="Store Name"
-                  style={{
-                    WebkitAppearance: "none", 
-                    MozAppearance: "none", 
-                    appearance: "none", 
-                    paddingRight: "30px" 
-                  }}
+                  // style={{
+                  //   WebkitAppearance: "none", 
+                  //   MozAppearance: "none", 
+                  //   appearance: "none", 
+                  //   paddingRight: "30px" 
+                  // }}
                   onChange={(e) => {
                     handleStoreSelect(
                       storesWithPositiveBalance.find((store) => store.name === e.target.value)
@@ -161,7 +161,7 @@ const ExpenseModal = ({ onClose }) => {
 
          
 
-          <div className="grid  grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4">
+          <div className="grid md:mt-3 grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4">
 
           <Input
               type="number"
@@ -176,7 +176,7 @@ const ExpenseModal = ({ onClose }) => {
             <div className="md:mt-10">
               <button
                 type="submit"
-                className={`px-2 py-2 w-[270px]   justify-center h-max bg-[#2723F4] text-white flex items-center rounded-md ${isButtonDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className={`px-2 py-[9px] w-[270px]   justify-center h-max bg-[#2723F4] text-white flex items-center rounded-md ${isButtonDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
                 disabled={isButtonDisabled}
               >
                 + Add Expense

@@ -65,7 +65,7 @@ const RouteCreateModal = ({ onClose }) => {
       draggable
       pauseOnHover
     />
-            <div className="bg-white border flex-row py-8 rounded-xl px-8 md:px-20 b-slate-700 g-white relative">
+            <div className="bg-white border flex-row px-8 pt-6 pb-8 rounded-xl  b-slate-700 g-white relative">
             <div className="flex pb-4 border-b-[1px] justify-between w-full">
         <h2 className="font-medium text-xl text-[#343C6A]">Add Route</h2>
         <div className=" " onClick={onClose}>
@@ -88,7 +88,7 @@ const RouteCreateModal = ({ onClose }) => {
                     <div className="sm:mt-7">
                             <button
                                 type="submit"
-                                className="px-2 py-2 w-[270px] mt-3  justify-center h-max bg-[#2723F4] text-white flex items-center rounded-md"
+                                className="px-2 py-[9px] w-[270px] mt-3  justify-center h-max bg-[#2723F4] text-white flex items-center rounded-md"
                             >
                                 + Add Route
                             </button>

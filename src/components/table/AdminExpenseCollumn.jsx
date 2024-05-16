@@ -49,9 +49,9 @@ export const AdminExpenseCollumn = (handleStatus,handleStatusApprove) => {
         if (status === "pending") {
           return (
             < div className="flex gap-4">
-              <FaCheck className=" text-3xl bg-green-600 text-white w-12 h-8 rounded-[4px]" onClick={() => handleStatusApprove(row.original)} />
+              <FaCheck className=" text-3xl bg-green-600 text-white w-12 h-8 cursor-pointer rounded-[4px]" onClick={() => handleStatusApprove(row.original)} />
              
-              <IoClose className="text-3xl bg-red-600 text-white w-12 h-8 rounded-[4px]" onClick={() => handleStatus(row.original)} />
+              <IoClose className="text-3xl bg-red-600 text-white w-12 h-8 cursor-pointer rounded-[4px]" onClick={() => handleStatus(row.original)} />
               
             
             </div>

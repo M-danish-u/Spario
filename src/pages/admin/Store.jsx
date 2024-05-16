@@ -8,6 +8,8 @@ import Button from '../../components/commonComponents/Button';
 import StoreEditModal from './StoreEditModal';
 import Table3 from '../../components/table/executive/Table3';
 import Table4 from '../../components/table/Table4';
+import Table2 from '../../components/table/Table2';
+
 
 
 const Store = () => {

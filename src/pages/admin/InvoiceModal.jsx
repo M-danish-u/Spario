@@ -20,11 +20,12 @@ import "react-toastify/dist/ReactToastify.css";
 const validationSchema = Yup.object().shape({
   storeName: Yup.string().required("Store Name is required"),
   invoice_value: Yup.string().required("Invoice Value is required"),
-  advance_paid: Yup.string().required("Advance Paid is required"),
+  // advance_paid: Yup.string().required("Advance Paid is required"),
   due_date: Yup.date().required("Date is required"),
-  payment_method: Yup.string().required("Payment Method is required"),
-  reference_no: Yup.string(),
- 
+  // payment_method: Yup.string().required("Payment Method is required"),
+  // reference_no: Yup.string(),
+  invoice_number:Yup.string().required("Payment Method is required"),
+
 });
 
 const InvoiceModal = ({ onClose }) => {
@@ -66,20 +67,20 @@ const InvoiceModal = ({ onClose }) => {
 
   let invoiceCounter = 0; // Initialize the counter outside the function
 
-  const generateInvoiceNumber = () => {
-      // Increment the counter for each invoice
-      invoiceCounter++;
+  // const generateInvoiceNumber = () => {
+  //     // Increment the counter for each invoice
+  //     invoiceCounter++;
   
-      // Implement your logic to generate the invoice number here
-      // For example, you can use a combination of prefix, date, and the sequential number
-      const prefix = "INV";
-      const today = new Date();
-      const year = today.getFullYear();
-      const month = `${today.getMonth() + 1}`.padStart(2, "0");
-      const day = `${today.getDate()}`.padStart(2, "0");
-      const sequentialNumber = invoiceCounter.toString().padStart(4, "0"); // Convert counter to string and pad with zeros
-      return `${prefix}-${year}${month}${day}-${sequentialNumber}`;
-  };
+  //     // Implement your logic to generate the invoice number here
+  //     // For example, you can use a combination of prefix, date, and the sequential number
+  //     const prefix = "INV";
+  //     const today = new Date();
+  //     const year = today.getFullYear();
+  //     const month = `${today.getMonth() + 1}`.padStart(2, "0");
+  //     const day = `${today.getDate()}`.padStart(2, "0");
+  //     const sequentialNumber = invoiceCounter.toString().padStart(4, "0"); // Convert counter to string and pad with zeros
+  //     return `${prefix}-${year}${month}${day}-${sequentialNumber}`;
+  // };
 
   const [paymentMethods, setPaymentMethods] = useState({
     cash: false,
@@ -101,7 +102,7 @@ const InvoiceModal = ({ onClose }) => {
   const onSubmit = async (data) => {
     try {
       console.log(data);
-      data.invoice_number = generateInvoiceNumber(); // Generate invoice number before submission
+      // data.invoice_number = generateInvoiceNumber(); // Generate invoice number before submission
       const result = await dispatch(createInvoices(data));
       if (createInvoices.fulfilled.match(result)) {
         console.log("Invoice created successfully:", result.payload);
@@ -135,7 +136,7 @@ const InvoiceModal = ({ onClose }) => {
         draggable
         pauseOnHover
       />
-      <div className="bg-white border flex-row p-8 rounded-xl  b-slate-700 g-white relative ">
+      <div className="bg-white border flex-row px-8 pt-6 pb-8 rounded-xl  b-slate-700 g-white relative ">
         <div className="flex  border-b-[1px] g-red-400 pb-4 justify-between w-full">
         <h2 className="font-medium text-xl text-[#343C6A]">Add Invoice</h2>
         <div className=" " onClick={onClose}>
@@ -151,18 +152,18 @@ const InvoiceModal = ({ onClose }) => {
                 <label htmlFor="car">Select Store</label>
                 <div className="">
                   <select
-                    className=" min-h-[auto] h-12 w-[278px] mb-2 mt-3 rounded-lg text-[#718EBF] border-slate-200 border-[1px] bg-transparent px-4 py-[0.32rem] leading-[1.6] outline-none "
+                    className=" min-h-[auto] h-12 w-[278px] mb-2 mt-2 rounded-lg text-[#718EBF] border-slate-200 border-[1px] bg-transparent px-4 py-[0.32rem] leading-[1.6] outline-none "
                    
                     id="storeName"
                     {...register("storeName")}
                     placeholder="Store Name"
-                    style={{
-                      WebkitAppearance: "none", 
-                      MozAppearance: "none", 
-                      appearance: "none", 
-                      paddingRight: "30px" ,
-                      color: "#718EBF"
-                    }}
+                    // style={{
+                    //   WebkitAppearance: "none", 
+                    //   MozAppearance: "none", 
+                    //   appearance: "none", 
+                    //   paddingRight: "30px" ,
+                    //   color: "#718EBF"
+                    // }}
                     onChange={(e) => {
                       handleStoreSelect(
                         stores.find((store) => store.name === e.target.value)
@@ -182,7 +183,7 @@ const InvoiceModal = ({ onClose }) => {
          
               </div>
               
-              <div className="md:mt- flex flex-col gap-3">
+              <div className="md:mt- flex flex-col gap-2">
               Balance
               <p className="peer  min-h-[auto] w-[278px]  flex h-12 mb-2  items-center  rounded-lg text-[#718EBF] border-slate-200 border-[1px] bg-transparent px-3 py-[0.32rem] leading-[1.6]    ">
                 Balance:
@@ -197,7 +198,7 @@ const InvoiceModal = ({ onClose }) => {
             </div>
           </div>
 
-          <div className="grid  grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4">
+          <div className="grid  md:mt-3 grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4">
             <Input
               type="number"
               id="invoice_value"
@@ -207,19 +208,19 @@ const InvoiceModal = ({ onClose }) => {
               placeholder="Invoice Value"
             />
 
-            <Input
+<Input
               type="number"
-              id="advance_paid"
-              label="Advance Paid"
+              id="invoice_number"
+              label="Invoice Number"
               register={register}
               errors={errors}
-              placeholder="Advance Paid"
+              placeholder="Invoice Number"
             />
           </div>
 
-          <div className="grid  grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4">
+          {/* <div className="grid md:mt-3 grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4"> */}
 
-          <div className="">
+          {/* <div className="">
               <label className="block mb-2">Payment Method</label>
 <div className="flex gap-4 mt-4 md:mt-0 ">
               <div className="flex items-center">
@@ -249,7 +250,7 @@ const InvoiceModal = ({ onClose }) => {
               <p className="text-red-500 mt-1">{errors.payment_method.message}</p>
             )}
             {/* Input for check reference number */}
-            {watch("payment_method") === 'Cheque' && (
+            {/* {watch("payment_method") === 'Cheque' && (
               <div className="mt-4 md:mt-0">
               <Input
                 type="text"
@@ -260,12 +261,12 @@ const InvoiceModal = ({ onClose }) => {
                 placeholder=" Reference Number"
               />
               </div>
-            )}
+            )}  */}
 
           
             
-          </div>
-          <div className="md:mt-4  grid  grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4">
+          {/* </div> */}
+          <div className="md:mt-3  grid  grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4">
           <div className="mt- ">
               <label className="block mb-2">Due Date</label>
               <DatePicker
@@ -283,7 +284,7 @@ const InvoiceModal = ({ onClose }) => {
           <div className="  mt-10">
               <button
                 type="submit"
-                className="px-2 py-2 w-[270px]  justify-center h-max bg-[#2723F4] text-white flex items-center rounded-md"
+                className="px-2 py-[9px] w-[270px]  justify-center h-max bg-[#2723F4] text-white flex items-center rounded-md"
               >
                 + Add Invoice
               </button>

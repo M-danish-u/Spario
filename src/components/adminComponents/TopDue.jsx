@@ -14,11 +14,11 @@ const TopDue = ({ perfomanceColor, title, name, top }) => {
   return (
     <div>
       <h2 className="font-medium text-xl text-[#343C6A]">{title}</h2>
-      <div className="bg-white shadow-md  flex items-center justify-center py-4 mt-4 rounded-xl">
+      <div className="bg-white   flex items-center justify-center py-4 mt-4 rounded-xl">
         <table className="border-collapse">
           <thead>
             <tr className=" ">
-              {/* <th className="px-4 text-[#718EBF] font-normal t  py-2">SL.No</th> */}
+              <th className="px-4 text-[#718EBF] font-normal t  py-2">SL.No</th>
               <th className="px-4 text-[#718EBF] font-normal text-start py-2">
                 {name}
               </th>
@@ -31,7 +31,7 @@ const TopDue = ({ perfomanceColor, title, name, top }) => {
           <tbody>
             {top?.map((item, index) => (
               <tr key={index}>
-                {/* <td className="px-4 py-2 text-center">{index + 1}</td> */}
+                <td className="px-4 py-2 text-center">{index + 1}</td>
 
                 <td className="px-4 py-2 text-cente">{item.executive_name}</td>
                 <td className={`${perfomanceColor} px-4 py-2 text-center`}>

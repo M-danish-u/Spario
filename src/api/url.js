@@ -52,9 +52,9 @@ export const getRouteProfileAPI='/api/admin/routes'
 
 export const getAllStoreAPI='/api/admin/stores'
 
-export const createStoreAPI='/api/admin/stores'
+export const createStoreAPI='/api/stores'
 // (id)
-export const updateStoreAPI='/api/admin/stores'
+export const updateStoreAPI='/api/stores'
 
 // (id)
 export const getStoreProfileAPI="/api/stores" 
@@ -92,5 +92,6 @@ export const createReturnAPI='api/executive/returns'
 export const getExecutiveReturnAPI='api/executive/returns'
 export const createExpenseAPI='api/executive/expense'
 export const getExecutiveExpenseAPI='api/executive/expense'
+export const addStoreExecutive='api/executive/store'
 
 

@@ -15,6 +15,7 @@ const validationSchema = Yup.object().shape({
   // stores: Yup.string().required("Store Name is required"),
   payment_method: Yup.string().required("Payment Method is required"),
   reference_no: Yup.string(),
+  rtgs_number:Yup.string(),
 });
 
 const StoreAmountAddModal = ({ onClose, store,}) => {
@@ -69,7 +70,7 @@ const StoreAmountAddModal = ({ onClose, store,}) => {
       draggable
       pauseOnHover
     />
-      <div className="bg-white border flex-row p-8 rounded-xl  b-slate-700 g-white relative">
+      <div className="bg-white border flex-row px-8 pt-6 pb-8 rounded-xl  b-slate-700 g-white relative">
 
       
       <div className="flex  pb-4 border-b-[1px] justify-between w-full">
@@ -84,53 +85,78 @@ const StoreAmountAddModal = ({ onClose, store,}) => {
 
         <div className="grid  grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4">
 
-<div className="">
-    <label className="block mb-2">Payment Method</label>
-<div className="flex gap-4 mt-4">
-    <div className="flex items-center">
-      <input
-        type="radio"
-        id="cash"
-        name="payment_method"
-        value="cash"
-        {...register("payment_method")}
-      />
-      <label htmlFor="cash" className="ml-2">Cash</label>
-    </div>
 
-    <div className="flex items-center">
-      <input
-        type="radio"
-        id="Cheque"
-        name="payment_method"
-        value="Cheque"
-        {...register("payment_method")}
-      />
-      <label htmlFor="Cheque" className="ml-2">Cheque</label>
-    </div>
-    </div>
-  </div>
-  {errors.payment_method && (
-    <p className="text-red-500 mt-1">{errors.payment_method.message}</p>
-  )}
-  {/* Input for check reference number */}
-  {watch("payment_method") === 'Cheque' && (
-    <div className="mt-4 md:mt-0">
-    <Input
-      type="text"
-      id="reference_no"
-      label="Reference Number"
-      register={register}
-      errors={errors}
-      placeholder=" Reference Number"
-    />
-    </div>
-  )}
+        <div className="">
+              <label className="block mb-2">Payment Method</label>
+<div className="flex gap-4 ">
+              <div className="flex items-center">
+                <input
+                  type="radio"
+                  id="cash"
+                  name="payment_method"
+                  value="cash"
+                  {...register("payment_method")}
+                />
+                <label htmlFor="cash" className="ml-2">Cash</label>
+              </div>
 
+
+              <div className="flex items-center">
+                <input
+                  type="radio"
+                  id="Cheque"
+                  name="payment_method"
+                  value="Cheque"
+                  {...register("payment_method")}
+                />
+                <label htmlFor="Cheque" className="ml-2">Cheque</label>
+              </div>
+
+              <div className="flex items-center">
+                <input
+                  type="radio"
+                  id="RTGS"
+                  name="payment_method"
+                  value="RTGS"
+                  {...register("payment_method")}
+                />
+                <label htmlFor="RTGS" className="ml-2">RTGS</label>
+              </div>
+              </div>
+            </div>
+            {errors.payment_method && (
+              <p className="text-red-500 mt-1">{errors.payment_method.message}</p>
+            )}
+            {/* Input for check reference number */}
+            {watch("payment_method") === 'Cheque' && (
+              <div className="mt-4 md:mt-0">
+              <Input
+                type="text"
+                id="reference_no"
+                label="Reference Number"
+                register={register}
+                errors={errors}
+                placeholder=" Reference Number"
+              />
+              </div>
+            )}
+
+{watch("payment_method") === 'RTGS' && (
+              <div className="mt-4 md:mt-0">
+              <Input
+                type="text"
+                id="rtgs_number"
+                label="RTGS Number"
+                register={register}
+                errors={errors}
+                placeholder=" RTGS Number"
+              />
+              </div>
+            )}
 
   
 </div>
-          <div className="grid  grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4  mt-4 ">
+          <div className="grid md:mt-3 grid-cols-1 sm:grid-cols-2 gap:2 md:gap-4  mt-4 ">
             <Input
               type="text"
               id="amount"
@@ -143,7 +169,7 @@ const StoreAmountAddModal = ({ onClose, store,}) => {
             <div className="sm:mt-7">
               <button
                 type="submit"
-                className="px-2 py-2 w-[270px] mt-3  justify-center h-max bg-[#2723F4] text-white flex items-center rounded-md"
+                className="px-2 py-[9px] w-[270px] mt-3  justify-center h-max bg-[#2723F4] text-white flex items-center rounded-md"
               >
                 + Add Amount
               </button>

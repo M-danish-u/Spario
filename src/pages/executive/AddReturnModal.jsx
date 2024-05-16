@@ -95,7 +95,7 @@ const AddReturnModal = ({ onClose }) => {
         draggable
         pauseOnHover
       />
-      <div className="bg-white border flex-row p-8 rounded-xl  b-slate-700 g-white relative">
+      <div className="bg-white border flex-row px-8 pt-6 pb-8 rounded-xl  b-slate-700 g-white relative">
         <div className="flex pb-4 border-b-[1px] justify-between w-full">
           <h2 className="font-medium text-xl text-[#343C6A]">Add Return</h2>
           <div className="" onClick={onClose}>
@@ -110,16 +110,16 @@ const AddReturnModal = ({ onClose }) => {
               <label htmlFor="car">Select Store</label>
               <div className="">
                 <select
-                  className="peer block min-h-[auto] h-12 w-[278px] mb-2 mt-3 rounded-lg text-[#718EBF] border-slate-200 border-[1px] bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none focus:placeholder:opacity-100 motion-reduce:transition-none dark:peer-focus:text-primary"
+                  className="peer block min-h-[auto] h-12 w-[278px] mb-2 mt-2 rounded-lg text-[#718EBF] border-slate-200 border-[1px] bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none focus:placeholder:opacity-100 motion-reduce:transition-none dark:peer-focus:text-primary"
                   id="storeName"
                   {...register("storeName")}
                   placeholder="Store Name"
-                  style={{
-                    WebkitAppearance: "none", 
-                    MozAppearance: "none", 
-                    appearance: "none", 
-                    paddingRight: "30px" 
-                  }}
+                  // style={{
+                  //   WebkitAppearance: "none", 
+                  //   MozAppearance: "none", 
+                  //   appearance: "none", 
+                  //   paddingRight: "30px" 
+                  // }}
                   onChange={(e) => {
                     handleStoreSelect(
                       storesWithPositiveBalance.find((store) => store.name === e.target.value)
@@ -162,7 +162,7 @@ const AddReturnModal = ({ onClose }) => {
             <div className="md:mt-4">
               <button
                 type="submit"
-                className={`px-2 py-2 w-[270px]   justify-center h-max bg-[#2723F4] text-white flex items-center rounded-md ${isButtonDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className={`px-2 py-[9px] w-[270px]   justify-center h-max bg-[#2723F4] text-white flex items-center rounded-md ${isButtonDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
                 disabled={isButtonDisabled}
               >
                 + Add Return

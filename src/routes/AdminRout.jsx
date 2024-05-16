@@ -13,6 +13,12 @@ import AdminLogin from '../pages/admin/AdminLogin'
 import RouteStoreINvoices from '../pages/admin/RouteStoreINvoices'
 import Return from '../pages/admin/Return'
 import ExpenseListing from '../pages/admin/ExpenseListing'
+// import AdminLogin from "../pages/adminPortal/authentication/AdminLogin";
+import { jwtDecode } from "jwt-decode";
+import ProtectedRoute from "./ProtectedRoute";
+import Login from '../Auth/Login'
+
+
 
 
 const AdminPortalRoute = () => {
@@ -20,6 +26,10 @@ const AdminPortalRoute = () => {
       <div>  
          <Routes> 
          {/* <Route path="admin/login" element={<AdminLogin/>}></Route> */}
+         
+
+    <Route element={<ProtectedRoute requiredRole="admin" />}>
+
 
   
       <Route path='/admin' element={<AdminLayout />}>
@@ -37,12 +47,7 @@ const AdminPortalRoute = () => {
        <Route path="/admin/transactions" element={<Transactions/>} />
        <Route path="/admin/returns" element={<Return/>} />
        <Route path="/admin/expense" element={<ExpenseListing/>} />
-
-
-
-
-
-
+     </Route>
      </Route>
    </Routes> 
 </div>
